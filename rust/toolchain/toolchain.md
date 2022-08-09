@@ -35,7 +35,7 @@ A **toolchain specification** has the general format: ``<channel-name>``\[-``<da
     - ``sys`` (*OS*) = ``none``|``linux``|``win32``|``darwin``|``cuda``
     - ``abi`` = ``gnu``|``android``|``elf``|``eabi``. If ``abi`` is omitted, then default set of **CPU**/**FPU**/**ABI** flags will be chosen.
 
-**Target triple** (aka **host triple**) defines **target architecture** of host on which Rust toolchain will be run.
+**Target triple** (aka **host triple**) ``<target-triple>`` defines **target architecture** of host on which Rust toolchain will be run.
 
 <br>
 
