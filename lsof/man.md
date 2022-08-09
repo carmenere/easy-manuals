@@ -1,5 +1,5 @@
 ## Description
-Util **``lsof``** outputs information about all opened file descriptors and processes using them.
+Utility **``lsof``** outputs information about all opened file descriptors and processes using them.
 
 <br>
 
