@@ -46,5 +46,5 @@ Notes:
 <br>
 
 Examples:
-- ``stable``-``aarch64``-``apple-darwin``
-- ``1.58.1``-``aarch64``-``apple-darwin``
+- ``stable``-``aarch64``-``apple``-``darwin``
+- ``1.58.1``-``aarch64``-``apple``-``darwin``
