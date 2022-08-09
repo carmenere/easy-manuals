@@ -14,4 +14,4 @@
 |cargo **build** ``--release``|Just **compiles** for **production**. Creates ``target`` directory in ``src`` directory. Also creates ``release`` directory in ``src/target`` directory.|
 |cargo **check**|Runs **unit tests**.|
 |cargo **doc**|Generates **documentation**.|
-|cargo **install** ``<crate_name>``|Installs **binary** of **crate** with name ``<crate_name>``.|
+|cargo **install** ``<crate_name>``|Installs **binary** of **crate** with name ``<crate_name>`` from the default registry ``crates.io``.|
