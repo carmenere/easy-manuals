@@ -8,5 +8,5 @@ The **linter** (or **lint**), is a **static code analysis tool**.
 # ``clippy`` examples
 |Example|Explanation|
 |:------|:----------|
-|rustup **component add** ``clippy``|Adds ``clippy`` **component** to the **current toolchain**.|
+|rustup **component add** ``clippy``|Adds ``clippy`` **component** to the **active toolchain**.|
 |cargo ``clippy``|Runs ``clippy`` for the **current crate**.|

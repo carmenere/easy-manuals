@@ -43,10 +43,8 @@ Notes:
 - If ``<date>`` is omitted – **current date** is used.
 - Channel names ``stable``|``beta``|``nightly`` are *synonyms* for **appropriate toolchain versions** that are **actual for some date**. So, channel names ``stable``|``beta``|`nightly` __can refer to different toolchain versions__ **at different time**.
 
+<br>
+
 Examples:
 - ``stable``-``aarch64``-``apple-darwin``
 - ``1.58.1``-``aarch64``-``apple-darwin``
-
-
-
-

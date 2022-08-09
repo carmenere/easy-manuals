@@ -1,6 +1,6 @@
 # Description
 ``rustup`` is a **toolchain multiplexer**. <br>
-``rustup`` can **install** and **manage** <mark>many</mark> toolchains simultaneously. <br>
+``rustup`` can **install** and **manage** *many* toolchains simultaneously. <br>
 ``rustup`` provides mechanisms to easily change the **active** (**default**) toolchain.
 
 <br>
@@ -18,7 +18,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 **Profile** is a **group of components** you can choose to download while installing a *toolchain*. 
 
-The profiles available now
+The profiles available now:
 - ``minimal``
 - ``default``
 - ``complete``
