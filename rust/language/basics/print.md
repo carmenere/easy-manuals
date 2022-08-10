@@ -20,14 +20,16 @@ There are series of macros defined in ``std::fmt`` for printing:
 # Variants to pass arguments to ``println!``
 <table>
 <tr>
-<td> Variant </td> <td> Example </td>
+<td> <b>Variant</b> </td> <td> <b>Example</b> </td>
 </tr>
 <tr>
-<td> Positional args </td> 
+<td> <b>Positional</b> args </td> 
 <td>
+
 ```Rust
 println!("{0} and {1}.", a, b);
 ```
+
 </td>
 </tr>
 </table>
