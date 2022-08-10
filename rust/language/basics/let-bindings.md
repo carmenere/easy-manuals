@@ -6,13 +6,13 @@
 ``let``**``mut``**``<name>``\[``: <type>``\]\[``= <value>``\]``;``
 
 ## Examples
-- Declaration of **immutable** variables:
+- Declarations of **immutable** variables:
 ```Rust
 let a: i32;
 let b: i32 = 33;
 let c = 33;
 ```
-- Declaration of **mutable** variables:
+- Declarations of **mutable** variables:
 ```Rust
 let mut x: i32;
 let mut y: i32 = 33;
