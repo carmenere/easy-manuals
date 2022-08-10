@@ -77,15 +77,15 @@ Mapping foramatting sign to formatting trait:
 <ul>
 <li><i>nothing</i> ⇒ <code>Display</code> trait</li>
 <li><code>:?</code> ⇒ <code>Debug</code> trait</li>
-<li><code>:x?</code> ⇒ <code>Debug</code> with lower-case hexadecimal integers</li>
-<li><code>:X?</code> ⇒ <code>Debug</code> with upper-case hexadecimal integers</li>
-<li><code>:o</code> ⇒ <code>Octal</code></li>
-<li><code>:x</code> ⇒ <code>LowerHex</code></li>
-<li><code>:X</code> ⇒ <code>UpperHex</code></li>
-<li><code>:p</code> ⇒ <code>Pointer</code></li>
-<li><code>:b</code> ⇒ <code>Binary</code></li>
-<li><code>:e</code> ⇒ <code>LowerExp</code></li>
-<li><code>:E</code> ⇒ <code>UpperExp</code></li>
+<li><code>:x?</code> ⇒ <code>Debug</code> trait with lower-case hexadecimal integers</li>
+<li><code>:X?</code> ⇒ <code>Debug</code> trait with upper-case hexadecimal integers</li>
+<li><code>:o</code> ⇒ <code>Octal</code> trait</li>
+<li><code>:x</code> ⇒ <code>LowerHex</code> trait</li>
+<li><code>:X</code> ⇒ <code>UpperHex</code> trait</li>
+<li><code>:p</code> ⇒ <code>Pointer</code> trait</li>
+<li><code>:b</code> ⇒ <code>Binary</code> trait</li>
+<li><code>:e</code> ⇒ <code>LowerExp</code> trait</li>
+<li><code>:E</code> ⇒ <code>UpperExp</code> trait</li>
 </ul>
 </td>
 <td>
@@ -94,17 +94,12 @@ Mapping foramatting sign to formatting trait:
 println!("binary: {:b}.", 12);
 ```
 
-</td>
-</tr>
-<tr></tr>
-<tr>
-<td><b>Debug trait </b>
-
-</td>
-<td>
+```Rust
+println!("debug vector: {:?}.", vec![1, 2]);
+```
 
 ```Rust
-println!("Array: {:?}", [1, 2]);
+println!("binary: {:x}.", 12);
 ```
 
 </td>
