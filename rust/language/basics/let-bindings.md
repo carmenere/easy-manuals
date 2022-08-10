@@ -3,7 +3,7 @@
 - Declaration of **immutable** variables:``let <name>``\[``: <type>``\]\[``= <value>``\]``;``
 
 - Declaration of **immutable** variables:
-``let mut <name>``\[``: <type>``\]\[``= <value>``\]``;``
+``let``**``mut``**``<name>``\[``: <type>``\]\[``= <value>``\]``;``
 
 ## Examples
 - Declaration of **immutable** variables:
