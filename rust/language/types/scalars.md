@@ -22,5 +22,6 @@ let m = 1_000_000;
 Example:
 
 ```Rust
-v as bool;
+let v = true;
+let flag = v as i32;
 ```
