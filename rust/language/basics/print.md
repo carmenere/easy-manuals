@@ -1,11 +1,3 @@
-println!
-Positional args	println!("{0} and {1}.", a, b);
-Named args	println!("{a} and {b}.", a="x", b="y");
-Expressions	println!("a + b = {}.", 50 + 40);
-Explicit values	println!("{} and {}.", "x", 22);
-Printing traits	Println!("binary: {:b}.", 12);
-Debug trait	println!("Array: {:?}", [1, 2]);
-
 # Formatted print
 There are series of macros defined in ``std::fmt`` for printing:
 |Macros|Description|
