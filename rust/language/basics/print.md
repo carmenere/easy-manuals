@@ -70,40 +70,22 @@ println!("{} and {}.", "x", 22);
 <tr>
 <td><b>Formatting traits</b>.
 
+<br>
 Mapping foramatting sign to formatting trait:
+
+<br>
 <ul>
-<li>
-<i>nothing</i> ⇒ <code>Display</code> trait</li>
-<li>
-
-<code>:?</code> ⇒ ``Debug`` trait</li>
-<li>
-
-<code>:x?</code> ⇒ `Debug` with lower-case hexadecimal integers</li>
-<li>
-
-``:X?`` ⇒ `Debug` with upper-case hexadecimal integers</li>
-<li>
-
-``:o`` ⇒ `Octal`</li>
-<li>
-
-``:x`` ⇒ ``LowerHex``</li>
-<li>
-
-``:X`` ⇒ ``UpperHex``</li>
-<li>
-
-``:p`` ⇒ ``Pointer``</li>
-<li>
-
-``:b`` ⇒ ``Binary``</li>
-<li>
-
-``:e`` ⇒ ``LowerExp``</li>
-<li>
-
-``:E`` ⇒ ``UpperExp``</li>
+<li><i>nothing</i> ⇒ <code>Display</code> trait</li>
+<li><code>:?</code> ⇒ <code>Debug</code> trait</li>
+<li><code>:x?</code> ⇒ <code>Debug</code> with lower-case hexadecimal integers</li>
+<li><code>:X?</code> ⇒ <code>Debug</code> with upper-case hexadecimal integers</li>
+<li><code>:o</code> ⇒ <code>Octal</code></li>
+<li><code>:x</code> ⇒ <code>LowerHex</code></li>
+<li><code>:X</code> ⇒ <code>UpperHex</code></li>
+<li><code>:p</code> ⇒ <code>Pointer</code></li>
+<li><code>:b</code> ⇒ <code>Binary</code></li>
+<li><code>:e</code> ⇒ <code>LowerExp</code></li>
+<li><code>:E</code> ⇒ <code>UpperExp</code></li>
 </ul>
 </td>
 <td>
