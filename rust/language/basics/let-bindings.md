@@ -1,0 +1,25 @@
+# Variables declarations (aka let bindings)
+## Notations ("\[\]" means "optional")
+- Declaration of **immutable** variables:
+<br>
+``let <name>[: <type>] [= <value>];``
+
+- Declaration of **immutable** variables:
+<br>
+``let mut <name>[: <type>] [= <value>];``
+
+## Examples
+- Declaration of **immutable** variables:
+```Rust
+let a: i32;
+let b: i32 = 33;
+let c = 33;
+```
+- Declaration of **mutable** variables:
+```Rust
+let mut x: i32;
+let mut y: i32 = 33;
+let mut z = 33;
+```
+
+

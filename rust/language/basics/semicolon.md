@@ -13,7 +13,7 @@ Rust is an **expression-oriented language**. This means that **most things are e
 <br>
 
 Examples, when ``;`` is **necessary**:
-- After **control** and **match** blocks to drop their results:
+- After **loop**, **control** and **match** blocks to drop their results:
 ```Rust
 for { … };
 ```
