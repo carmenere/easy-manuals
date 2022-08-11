@@ -7,7 +7,7 @@ Vectors are **allocated** on the **heap**.<br>
 
 <br>
 
-## Vector *initialization* syntax
+## *Initialization* syntax
 ### Syntax options for *pre initialized* vectors:
 - **Comma-delimited** by ``vec!`` macros: explicit enumeration of values within square brackets \[\]:
 ```Rust
@@ -27,7 +27,7 @@ let v3: Vec<i64> = Vec::with_capacity(10);
 
 <br>
 
-## Vector *type declaration* syntax
+## *Type declaration* syntax
 - **Vec<T>**:
 ```Rust
 let v3: Vec<i64> = Vec::with_capacity(10);

@@ -4,7 +4,7 @@ Arrays are **allocated** on the **stack**.
 
 <br>
 
-## Array *initialization* syntax
+## *Initialization* syntax
 ### Syntax options for *pre initialized* arrays:
 - **Comma-delimited**: explicit enumeration of values within square brackets \[\]:
 ```Rust
@@ -28,7 +28,7 @@ len of a is 0.
 
 <br>
 
-## Array *type declaration* syntax
+## *Type declaration* syntax
 - **Repeat expression**: \[``T``; ``N``\], where the value of a **type** ``T`` is **repeated** ``N`` times:
 ```Rust
 let arr1: [u64; 3] = [0, 1, 2];
