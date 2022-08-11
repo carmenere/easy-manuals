@@ -28,7 +28,7 @@ let v3: Vec<i64> = Vec::with_capacity(10);
 <br>
 
 ## *Type declaration* syntax
-- **Vec<T>**:
+- **Vec<T>**
 ```Rust
 let v3: Vec<i64> = Vec::with_capacity(10);
 ```
