@@ -1,6 +1,5 @@
 # Newtype pattern
-There is one case when a tuple struct is very useful, though, and that is when it has only one element. 
-The ``newtype pattern`` allows to create a **new type** that is **distinct** from its contained value and also expresses its own semantic meaning.
+The ``newtype pattern`` allows to create a **new type** that is **distinct** from its contained value and also has its own semantic.
 
 <br>
 
@@ -31,7 +30,7 @@ struct Foo(i32);
 
 fn main() {
     let f = Foo(10);
-    let Foo(v) = f;
+    let Foo(v) = f;  // destructuring let
     println!("Value of 'v': {}.", v);
 }
 

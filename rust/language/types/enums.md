@@ -1,6 +1,6 @@
 # Enums
 An ``enum`` in Rust is **tagged union** or **sum type**.<br>
-``enum`` consts of ``variants``.<br>
+``enum`` consists of different ``variants``.<br>
 Each ``variant`` in the ``enum`` reperesents **some** ``type``.<br>
 A value of an ``enum`` type matches to **one specific** ``variant``.
 
@@ -15,7 +15,7 @@ enum <Name> {
     Variant_3,
 }
 ```
-where ``Variant_i`` - some type.
+where ``Variant_i`` is of some type.
 
 #### Example
 ```Rust
@@ -43,7 +43,7 @@ let v: MyEnum = MyEnum::Baz { x: 3, y: 4 };
 <br>
 
 ## Access to ``enum`` variant
-To access to ``variant`` of variable of ``enum`` type **pattern matching** is used.
+To access to **specific** ``variant`` of variable of ``enum`` type **pattern matching** is used.
 
 #### Example
 ```Rust

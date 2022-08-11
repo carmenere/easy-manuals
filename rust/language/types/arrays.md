@@ -5,7 +5,7 @@ Arrays are **allocated** on the **stack**.
 <br>
 
 ## Array *initialization* syntax
-### Syntax options for **pre initialized** arrays:
+### Syntax options for *pre initialized* arrays:
 - **Comma-delimited**: explicit enumeration of values within square brackets \[\]:
 ```Rust
 let arr = [0, 1, 2];
@@ -16,7 +16,7 @@ let arr = [0, 1, 2];
 let arr = [100; 5];
 ```
 
-### Syntax options for **empty** arrays:
+### Syntax options for *empty* arrays:
 - **Repeat expression** where ``N`` = 0:
 ```Rust
 let a = [100; 0];

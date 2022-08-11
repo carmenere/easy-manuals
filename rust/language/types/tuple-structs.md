@@ -1,6 +1,8 @@
 # Tuple structs
-``tuple struct`` is a hybrid between a ``tuple`` and a ``struct``.
+``tuple struct`` is a hybrid between a ``tuple`` and a ``struct``.<br>
 Unlike the ``struct`` type, the fields in the ``tuple struct`` don't have names.
+
+<br>
 
 ## Syntax
 ### *Type declaration* syntax

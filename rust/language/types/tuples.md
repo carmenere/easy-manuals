@@ -4,7 +4,7 @@ A ``tuple`` is an **ordered** and **fixed size** *collection* of elements of *di
 <br>
 
 ## *Initialization* syntax
-### Syntax options for **pre initialized** tuples:
+### Syntax options for *pre initialized* tuples:
 **Comma separated** list of **values** *enclosed* in **parentheses**, e.g., ``(val1, val2, val3)``.
 - **2-length tuple**
 ```Rust
@@ -26,7 +26,7 @@ let x: (i32, &str) = (1, "hello");
 <br>
 
 ## Access to fields of a tuple
-There is **dot notation** ``.<index_of_field>`` to access to fields of a tuple with index of ``<index_of_field>``.<br>
+There is **dot notation** ``.<index_of_field>`` to access to field in a tuple with index of ``<index_of_field>``.<br>
 
 Example:
 ```Rust

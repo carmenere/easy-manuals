@@ -1,5 +1,5 @@
 # Unit type ``()``
-**Unit type** or just **Unit** (denoted as ``()``) is **empty tuple**.
+**Unit type** or just **Unit** (denoted as ``()``) is an **empty tuple**.
 <br>
 
 **Unit** has **exactly one** value – ``()``.

@@ -22,6 +22,8 @@ struct Foo {
 }
 ```
 
+<br>
+
 ### *Initialization* syntax
 #### ``Struct`` constructor 
 ```Rust

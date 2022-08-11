@@ -5,8 +5,8 @@ Rust has two main types of strings: ``&str`` and ``String``.
 
 # ``&str``
 The ``&str`` type is called **string literal** or **string slice**.<br>
-*Strings* of ``&str`` type are statically allocated, i.e., they are hardcoded into binary and exists while programme is running.<br>
-*Strings* of ``&str`` type have a **fixed-size**, and **cannot be mutated**, i.e., they are **immutable**.<br>
+*Strings* of ``&str`` type are **statically allocated**, i.e., they are hardcoded into binary and exists while programme is running.<br>
+*Strings* of ``&str`` type have a **fixed-size** and **cannot be mutated**, i.e., they are **immutable**.<br>
 
 ### Examples
 ```Rust
@@ -16,15 +16,15 @@ let s: &str = "ABC";
 <br>
 
 # ``String``
-The ``String`` is provided by Rust's standard library and represent sequence of ``Unicode`` scalar that can **mutate** *at runtime*.
+The ``String`` is a sequence that is allowed to **grow** or **shrink** *in size* **at runtime** and is provided by Rust's standard library.
 
 ### Examples
-- Instantiating ``String`` variables from ``String`` **constructor** (``new()``):
+- Instantiating ``String`` variables by ``String`` **constructor** (``new()``):
 ```Rust
 let s: String = String::new();
 ```
 
-- Instantiating ``String`` variables from ``&str``:
+- Instantiating ``String`` variables from ``&str`` values:
 ```Rust
 let s1: String = String::from("ABC");
 ```
