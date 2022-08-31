@@ -1,4 +1,4 @@
-# Merge many branches ``SRC_BRANCH_i`` into branch ``DST_BRANCH``
+# Merge one branch ``SRC_BRANCH`` into branch ``DST_BRANCH``
 ## Prerequisites
 ```bash
 SRC_BRANCH=dev_1
@@ -48,7 +48,7 @@ git push origin "${LOCAL_DST_BRANCH}":"${LOCAL_DST_BRANCH}"
 git push origin "${LOCAL_DST_BRANCH}":"${LOCAL_DST_BRANCH}" \
     -o merge_request.create \
     -o merge_request.target=${DST_BRANCH} \
-    -o merge_request.title="SYNC: ${SRC_BRANCH} and ${SRC_BRANCH_2} => ${DST_BRANCH}" \
+    -o merge_request.title="SYNC: ${SRC_BRANCH} => ${DST_BRANCH}" \
     -o merge_request.remove_source_branch \
     -o merge_request.merge_when_pipeline_succeeds
 ```
