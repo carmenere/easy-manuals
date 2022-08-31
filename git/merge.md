@@ -1,21 +1,17 @@
 # Merge many branches ``SRC_BRANCH_i`` into branch ``DST_BRANCH``
 ## Prerequisites
 ```bash
-SRC_BRANCH_1=dev_1
-SRC_BRANCH_2=dev_2
+SRC_BRANCH=dev_1
 
 DST_BRANCH=some_dst_branch
 
-LOCAL_DST_BRANCH="merge_${SRC_BRANCH_1}_and_${SRC_BRANCH_2}_to_${DST_BRANCH}"
-COMMIT_MSG_1="Merge branch 'origin/${SRC_BRANCH_1}' into 'origin/${DST_BRANCH}'"
-COMMIT_MSG_2="Merge branch 'origin/${SRC_BRANCH_2}' into 'origin/${DST_BRANCH}'"
+LOCAL_DST_BRANCH="merge_${SRC_BRANCH}_to_${DST_BRANCH}"
+COMMIT_MSG="Merge branch 'origin/${SRC_BRANCH}' into 'origin/${DST_BRANCH}'"
 
-echo SRC_BRANCH_1=${SRC_BRANCH_1}
-echo SRC_BRANCH_2=${SRC_BRANCH_2}
+echo SRC_BRANCH=${SRC_BRANCH}
 echo DST_BRANCH=${DST_BRANCH}
 echo LOCAL_DST_BRANCH=${LOCAL_DST_BRANCH}
-echo COMMIT_MSG_1=${COMMIT_MSG_1}
-echo COMMIT_MSG_2=${COMMIT_MSG_2}
+echo COMMIT_MSG=${COMMIT_MSG}
 ```
 
 <br>
@@ -34,10 +30,9 @@ git checkout --no-track -b "${LOCAL_DST_BRANCH}" "origin/${DST_BRANCH}"
 
 <br>
 
-## Merge all ``SRC_BRANCH_i`` into ``LOCAL_DST_BRANCH``
+## Merge ``SRC_BRANCH`` into ``LOCAL_DST_BRANCH``
 ```bash
-git merge -m "${COMMIT_MSG_1}" "origin/${SRC_BRANCH_1}"
-git merge -m "${COMMIT_MSG_2}" "origin/${SRC_BRANCH_2}"
+git merge -m "${COMMIT_MSG}" "origin/${SRC_BRANCH}"
 ```
 
 <br>
@@ -53,7 +48,7 @@ git push origin "${LOCAL_DST_BRANCH}":"${LOCAL_DST_BRANCH}"
 git push origin "${LOCAL_DST_BRANCH}":"${LOCAL_DST_BRANCH}" \
     -o merge_request.create \
     -o merge_request.target=${DST_BRANCH} \
-    -o merge_request.title="SYNC: ${SRC_BRANCH_1} and ${SRC_BRANCH_2} => ${DST_BRANCH}" \
+    -o merge_request.title="SYNC: ${SRC_BRANCH} and ${SRC_BRANCH_2} => ${DST_BRANCH}" \
     -o merge_request.remove_source_branch \
     -o merge_request.merge_when_pipeline_succeeds
 ```
