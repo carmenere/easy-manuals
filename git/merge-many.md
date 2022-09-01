@@ -60,7 +60,23 @@ git push origin "${LOCAL_DST_BRANCH}":"${LOCAL_DST_BRANCH}" \
 
 <br>
 
-## Remove ``LOCAL_DST_BRANCH``
+## Remove ``${LOCAL_DST_BRANCH}``
+### Delete ``local branch`` with name ${LOCAL_DST_BRANCH}
 ```bash
 git branch -D "${LOCAL_DST_BRANCH}"
+```
+
+### Delete ``upstream branch`` with name ${LOCAL_DST_BRANCH}
+```bash
+git push origin --delete "${LOCAL_DST_BRANCH}"
+```
+
+### Delete ``remote branch`` with name ${LOCAL_DST_BRANCH}
+```bash
+git branch --delete --remotes origin/"${LOCAL_DST_BRANCH}"
+```
+
+### Delete all stale ``remote branches``
+```bash
+git fetch --all --prune
 ```
