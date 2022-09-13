@@ -7,8 +7,19 @@
 
 # Installation
 Install ``rustup``:
+### Latest toolchain
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+<br>
+
+### Customized toolchain
+```bash
+TARGET=aarch64-unknown-linux-musl
+VERSION=1.58.1
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain ${VERSION}-${TARGET}
 ```
 
 <br>
@@ -30,8 +41,9 @@ The profiles available now:
 |:---------|:----------|
 |rustup **show**|Print **default** *target triple* and other information.|
 |rustup **toolchain list**|List **all** installed toolchains.|
-|rustup **toolchain install** ``nightly``|Installs last toolchain for release channel ``nightly`` for current date.|
-|rustup **default** ``nightly``|Sets the **default toolchain** to ``nightly``.|
+|rustup **toolchain install** ``toolchain``|Installs last toolchain for release channel ``toolchain`` for current date.|
+|rustup **default** ``toolchain``|Sets the **default toolchain** to ``toolchain``.|
+|rustup **target add** ``toolchain``|Enables **cross compilation** for ``target-triple`` of ``toolchain``.|
 |rustup **update**|Updates **default toolchain**.|
 |rustup **component list**|Lists of **available** and **installed** components.|
 |rustup **component add** ``rust-docs``|Adds component ``rust-docs`` to default toolchain.|
