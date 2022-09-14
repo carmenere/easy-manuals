@@ -1,14 +1,13 @@
 # Main options
 |Option|Comment|
 |:-----|:------|
-|``-f``|File where to save result, if ommited, **tar** will output result to **stdout**.|
-|``-c``|Create archive.|
+|``-f ${FILE}``|File ``${FILE}`` where to save result, if ommited, **tar** will output result to **stdout**.|
 |``-z``|Compress/decompress archive with **gzip**.|
 |``-j``|Compress/decompress  archive with **bzip2**.|
 |``-J``|Compress/decompress  archive with **xz**.|
 |``--lzma``|Compress/decompress  archive with **lzma**.|
+|``-c``|Create archive.|
 |``-x``|Extract files from an archive.|
-|``-C ${DIR}``|The ``-C`` option defines:<br>• a directory ``${DIR}`` where it will extract files.<br>• a directory from which it takes files for archiving.|
 
 <br>
 
