@@ -4,7 +4,7 @@
 set SRC_BRANCH_1 dev_1
 set SRC_BRANCH_2 dev_2
 
-set DST_BRANCHsome_dst_branch
+set DST_BRANCH some_dst_branch
 
 set LOCAL_DST_BRANCH merge_"$SRC_BRANCH_1"_and_"$SRC_BRANCH_2"_to_$DST_BRANCH
 set COMMIT_MSG_1 Merge branch 'origin/$SRC_BRANCH_1' into 'origin/$DST_BRANCH'
