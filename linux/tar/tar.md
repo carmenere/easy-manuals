@@ -15,6 +15,12 @@
 ## Crate archive
 ```bash
 tar -czvf arch.tar.gz ./test
+```
+
+<br>
+
+Output:
+```bash
 a ./test
 a ./test/file2.txt
 a ./test/file1.txt
@@ -27,6 +33,12 @@ Takes files from **./test** and creates new archive **arch.tar.gz**.
 ## Extract files from an archive
 ```bash
 tar -xzvf arch.tar.gz
+```
+
+<br>
+
+Output:
+```bash
 x ./test/
 x ./test/file2.txt
 x ./test/file1.txt
