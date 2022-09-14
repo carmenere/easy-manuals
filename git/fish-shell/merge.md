@@ -5,8 +5,8 @@ set SRC_BRANCH dev_1
 
 set DST_BRANCH some_dst_branch
 
-LOCAL_DST_BRANCH merge_"$SRC_BRANCH"_to_"$DST_BRANCH"
-COMMIT_MSG "Merge branch 'origin/$SRC_BRANCH' into 'origin/$DST_BRANCH'"
+set LOCAL_DST_BRANCH merge_"$SRC_BRANCH"_to_$DST_BRANCH
+set COMMIT_MSG Merge branch 'origin/$SRC_BRANCH' into 'origin/$DST_BRANCH'
 
 echo SRC_BRANCH $SRC_BRANCH
 echo DST_BRANCH $DST_BRANCH
