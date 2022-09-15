@@ -22,7 +22,7 @@ A B C
 # Mode 2
 - xargs reads ``stdin``;
 - forms args list using separators (by default) ``\n``, ``\t``, ``\s`` and remembers all line feeds for ``-L`` option;
-- passes **N args** to commnad ``${CMD}`` if **-n**<N> option was specified or passes **N lines** to commnad ``${CMD}`` if **-L**<N> option was specified.
+- passes **N args** to commnad ``${CMD}`` if **-n**``<N>`` option was specified or passes **N lines** to commnad ``${CMD}`` if **-L**``<N>`` option was specified.
 
 <br>
 
@@ -55,4 +55,4 @@ C
 |``-d<delimeter>``|Sets ``<delimiter>`` for args read from ``stdin``. Example: ``-d,``. <br>By default ``xargs`` uses ``\n``, ``\t``, ``\s`` as delimiter for args read from ``stdin``.|
 |``-I{}``|Sets symbol ``{}`` for **placeholder**. **Placeholder** can be inserted in any place in command ``${CMD}``.|
 |``--null``|Tells ``xargs`` use **null byte** as string separator for stream in ``stdin``.|
-|``-P<N>``|Runs <N> threads.|
+|``-P<N>``|Runs ``<N>`` threads.|
