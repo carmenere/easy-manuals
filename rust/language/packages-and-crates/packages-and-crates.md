@@ -42,7 +42,7 @@ Every **target** describes **settings for some crate**.
 There are **2 types** of **crates**:
 - **binary crate**: defined in ``[[bin]]``.
 - **library crate**: defined in ``[lib]``. 
-- 
+
 The **double-bracket section** like ``[[bin]]`` is an **array-of-tables**. It means you can write **more than one** ``[[bin]]`` section to describe several crates in 1 package.
 So, 
 - there **can only be 1 library crate** within package; 
