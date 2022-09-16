@@ -19,6 +19,8 @@ Module can be placed in **the same file** by ``mod <name> { … }`` or in **diff
 - If you write ``mod bar;`` in ``d/mod.rs`` rustc will search for ``d/bar.rs``.
 - **Rust 2018 changes**: if you write ``mod bar;`` in ``d/foo.rs`` then rustc will search for ``d/foo/bar.rs``.
 
+<br>
+
 # Items paths
 In Rust items are
 - Functions
@@ -38,6 +40,8 @@ Only **pub items** can be accessed **from any point** of crate by its path.
 
 For example, the path ``foo::bar::Baz`` refers to the ``Baz`` *item* within the ``bar`` *item* within the ``foo`` *item*.
 
+<br>
+
 # Types of items paths
 |Path|Description|
 |:---|:----------|
@@ -45,10 +49,14 @@ For example, the path ``foo::bar::Baz`` refers to the ``Baz`` *item* within the 
 |**Relative path: super**|Using ``super::`` you can access **any pub** item in *parent* item of *current* item.<br>``super::`` is like ``../`` in file system.|
 |**Absolute path**|Using ``crate::`` you can access **any pub** item **from any point** of crate.<br>**Absolute path** is prefixed with ``crate::``.<br>Prefix ``crate::`` refers to **root module**.|
 
+<br>
+
 # ``use`` keyword
 ``use`` keyword is used **to bring names into scope**, to make item’s path shorter.
 
 For example, to make ``foo`` accessible in current scope directly include ``use path::to::foo;`` in current module.
+
+<br>
 
 ### Notations
 |Notation|Description|
@@ -57,12 +65,18 @@ For example, to make ``foo`` accessible in current scope directly include ``use 
 |``use rand::random;``|Only name ``random`` from item ``rand`` can be used directly in current scope. Name ``random`` must be **pub**.|
 |``use abc::{x, y, z};``|Only names ``x``, ``y``, ``z`` from item ``abc`` can be used directly in current scope. Names ``x``, ``y``, ``z`` must be **pub**.|
 
+<br>
+
 ### ``as`` keyword
-``as`` keyword allows create **aliases** for identifiers.
+``as`` keyword allows create **aliases** for identifiers.<br>
 ``use futures as f;`` means ``futures`` can be used directly in current scope by ``f`` name not by ``futures``.
+
+<br>
 
 ### Globally available crates
 If crate is defined in ``[dependencies]`` section it becomes **globally available**. It means we don't have to write ``use`` keyword to access the crate and it is **available in any point** of current package.
+
+<br>
 
 # Items visibility
 By default, **everything in Rust is private**, with two **exceptions**: 
@@ -81,6 +95,8 @@ The rules for ``pub`` **keyword restrictions**:
 |``pub(crate) item``|Makes an item *visible* only within the **current crate**.|
 |``pub(super) item``|Makes an item *visible* within the **parent module** and **all parent module’s descendants**.|
 |``pub(self) item``|Makes an item **private**.|
+
+<br>
 
 ### Example
 In the code below ``E`` is **accessible in** ``B`` and ``C``, but **not in** ``A``:
