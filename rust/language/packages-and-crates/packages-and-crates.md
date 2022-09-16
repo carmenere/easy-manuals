@@ -35,7 +35,7 @@ More details here: https://doc.rust-lang.org/cargo/reference/manifest.html.
 <br>
 
 # Targets
-``[lib]`` and ``[[bin]]`` sections are also called **target tables** (aka **targets**).
+``[lib]``, ``[[bin]]``, ``[[example]]``, ``[[test]]`` and ``[[bench]]`` sections are also called **target tables** (aka **targets**).
 
 Every **target** describes **settings for some crate**.
 
