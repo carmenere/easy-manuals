@@ -16,8 +16,8 @@ For **auto discovered crates**:
 Module can be placed in **the same file** by ``mod <name> { … }`` or in **different file**.
 
 - If you write ``mod bar;`` in ``d/foo.rs`` file, then compiler will search  for ``d/bar.rs`` and then (if it doesn’t exists) for ``d/bar/mod.rs``.
-- If you write ``mod bar;`` in ``d/mod.rs`` rustc will search for ``bar.rs`` in directory ``d/``.
-- **Rust 2018 changes**: if you write ``mod bar;`` in ``d/foo.rs`` then rustc will search for ``bar.rs`` in ``d/foo/``.
+- If you write ``mod bar;`` in ``d/mod.rs`` rustc will search for ``d/bar.rs``.
+- **Rust 2018 changes**: if you write ``mod bar;`` in ``d/foo.rs`` then rustc will search for ``d/foo/bar.rs``.
 
 # Items paths
 In Rust items are

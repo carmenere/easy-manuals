@@ -1,17 +1,18 @@
 # Registry
 A **registry** is a storage for **packages**. 
 
-The *crates.io* is the Rust community’s **package registry**. 
-Each package can be published on https://crates.io independently. 
-Each package can be fetched from https://crates.io.
+The *crates.io* is the Rust community’s **package registry**. <br>
+Each package can be published on https://crates.io independently. <br>
+Each package can be fetched from https://crates.io. <br>
 
 <br>
 
 # Packages and Crates
 A **package** is a *collection* of **crates**.  
 
-Every **package** contains **at least 1 crate**.
-Every **package** has **Cargo.toml** file also called **package’s manifest**. **Directory** with *Cargo.toml* file is called **package root**.
+Every **package** contains **at least 1 crate**.<br>
+Every **package** has **Cargo.toml** file also called **package’s manifest**. <br>
+**Directory** with *Cargo.toml* file is called **package root**.<br>
 
 - *Cargo.toml* file contains **settings for package**.
 - *Cargo.toml* file is written in the **TOML format**. 
