@@ -69,7 +69,7 @@ For example, to make ``foo`` accessible in current scope directly include ``use 
 
 ### ``as`` keyword
 ``as`` keyword allows create **aliases** for identifiers.<br>
-``use futures as f;`` means ``futures`` can be used directly in current scope by ``f`` name not by ``futures``.
+``use futures as f;`` means ``futures`` can be used directly in current scope by ``f`` name, not by ``futures``.
 
 <br>
 
