@@ -6,7 +6,7 @@ A **module** is a **collection of items**. **Module** acts as **namespace for it
 Crates vs. Modules: **crates** are for *code sharing between projects*, **modules** are for *code organization within a project*.
 
 The **module tree** *must be built manually*. It means **every** ``.rs`` file in package is included to *module tree* **explicitly** by ``mod`` **keyword**:
-- ``mod`` *keyword* is used to **add** module to *module tree*. 
+- ``mod`` *keyword* is used to **add** *module* to *module tree*. 
 - ``mod`` *keyword* can be used **once** for *module*. 
 
 For **auto discovered crates**:
