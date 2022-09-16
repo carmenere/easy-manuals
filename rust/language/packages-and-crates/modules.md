@@ -52,6 +52,7 @@ For example, to make ``foo`` accessible in current scope directly include ``use 
 
 ### Notations
 |Notation|Description|
+|:-------|:----------|
 |``use rand::*;``|**All pub names** inside ``rand`` can be used directly in current scope.|
 |``use rand::random;``|Only name ``random`` from item ``rand`` can be used directly in current scope. Name ``random`` must be **pub**.|
 |``use abc::{x, y, z};``|Only names ``x``, ``y``, ``z`` from item ``abc`` can be used directly in current scope. Names ``x``, ``y``, ``z`` must be **pub**.|
