@@ -1,19 +1,27 @@
 # Modules
+## Crate’s module tree
 A **crate** consists of a **hierarchy of modules**, called **crate’s module tree**.
 
+Every **module** corresponds to:
+- ``.rs`` **file**;
+- **module item**: ``mod <name> { … }``.
+- 
 A **module** is a **collection of items**. **Module** acts as **namespace for items**.
 
-Crates vs. Modules: **crates** are for *code sharing between projects*, **modules** are for *code organization within a project*.
+Every *module tree* has a **root module**. 
 
-The **module tree** *must be built manually*. It means **every** ``.rs`` file in package is included to *module tree* **explicitly** by ``mod`` **keyword**:
-- ``mod`` *keyword* is used to **add** *module* to *module tree*. 
-- ``mod`` *keyword* can be used **once** for *module*. 
+- The *root module* is an **entry point** into *crate*. 
+- The *root module* **always** corresponds to some ``.rs`` file in *package*.
 
 For **auto discovered crates**:
 - the **root module** of a **library crate** corresponds to ``src/lib.rs``;
 - the **root module** of a **binary crate** corresponds to ``src/ main.rs``.
 
-Module can be placed in **the same file** by ``mod <name> { … }`` or in **different file**.
+The **module tree** *must be built manually*. It means **every** ``.rs`` file in *package* is included to *module tree* **explicitly** by ``mod`` *keyword*.<br>
+
+``mod`` *keyword*:
+- is used to **add** *module* to *module tree*. 
+- can be used **once** for particular *module*. 
 
 - If you write ``mod bar;`` in ``d/foo.rs`` file, then compiler will search  for ``d/bar.rs`` and then (if it doesn’t exists) for ``d/bar/mod.rs``.
 - If you write ``mod bar;`` in ``d/mod.rs`` rustc will search for ``d/bar.rs``.
