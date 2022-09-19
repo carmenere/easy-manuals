@@ -10,7 +10,6 @@ Each package can be fetched from https://crates.io. <br>
 # Packages and Crates
 A **package** is a *collection* of **crates**.  
 
-Every **package** contains **at least 1 crate**.<br>
 Every **package** has **Cargo.toml** file also called **package’s manifest**. <br>
 **Directory** with *Cargo.toml* file is called **package root**.<br>
 
@@ -44,17 +43,20 @@ There are **2 types** of **crates**:
 - **binary crate**: defined in ``[[bin]]``.
 - **library crate**: defined in ``[lib]``. 
 
-The **double-bracket section** like ``[[bin]]`` is an **array-of-tables**. It means you can write **more than one** ``[[bin]]`` section to describe several crates in 1 package.
-So, 
-- there **can only be 1 library crate** within package; 
-- there **can be more than 1 binary crate** within package.
+The **double-bracket section** like ``[[bin]]`` is an **array-of-tables**. It means you can write **more than one** ``[[bin]]`` section to describe several crates in 1 package.<br>
+So,
+- every **package** contains **at least 1 crate**;
+- there can be **only one** library crate within package; 
+- there can be **more than one** binary crate within package.
 
 Compiler will produce **executable** for *binary crate* and **library** for *library crate*.
+
+So, **crate** is an **independent compilation unit** within package.
 
 <br>
 
 # Crate’s module tree
-A **crate** consists of a **hierarchy of modules**, called **crate’s module tree**, i.e., crate is an **independent compilation unit** within package.
+A **crate** consists of a **hierarchy of modules**, called **crate’s module tree**.
 
 A **module** is a **collection of items**. **Module** acts as **namespace for items**.
 
