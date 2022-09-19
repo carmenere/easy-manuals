@@ -5,7 +5,7 @@ A **crate** consists of a **hierarchy of modules**, called **crate’s module tr
 Every **module** corresponds to:
 - ``.rs`` **file**;
 - **module item**: ``mod <name> { … }``.
-- 
+
 A **module** is a **collection of items**. **Module** acts as **namespace for items**.
 
 Every *module tree* has a **root module**. 
