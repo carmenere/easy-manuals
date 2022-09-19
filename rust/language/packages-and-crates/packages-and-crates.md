@@ -60,26 +60,26 @@ A **crate** consists of a **hierarchy of modules**, called **crate’s module tr
 
 A **module** is a **collection of items**. **Module** acts as **namespace for items**.
 
-The **module tree** *must be built manually*. It means **every .rs file in package** is included to *module tree* **explicitly** by ``mod`` **keyword**.
+The **module tree** *must be built manually*. It means **every** ``.rs`` file in *package* is included to *module tree* **explicitly** by ``mod`` *keyword*.
 
 Every *module tree* has a **root module**. 
 
 - The *root module* is an **entry point** into *crate*. 
-- The *root module* **always corresponds to some .rs fil**e in *package*.
+- The *root module* **always** corresponds to some ``.rs`` file in *package*.
 
 <br>
 
 # Crate auto-discovery
-Cargo uses the **automatic target discovery** by default. 
+Cargo uses the **automatic target discovery** by default. *Automatic target discovery* **can be disabled**.
 
-*Automatic target discovery* uses **package layout convention**. *Automatic target discovery* **can be disabled**.
+*Automatic target discovery* uses **package layout convention**. 
 
 **Package layout’s convention**:
 - ``Cargo.toml`` and ``Cargo.lock`` are stored in **package root**.
 - Directory ``src`` contains **source code**.
 - File ``src/lib.rs`` corresponds to the **root module** of **library crate**.
 - File ``src/main.rs`` corresponds to the **root module** of **binary crate**.
-- Directory ``src/bin`` for other crates.
+- Directory ``src/bin`` is for other crates.
 
 <br>
 
