@@ -46,8 +46,8 @@ There are **2 types** of **crates**:
 The **double-bracket section** like ``[[bin]]`` is an **array-of-tables**. It means you can write **more than one** ``[[bin]]`` section to describe several crates in 1 package.<br>
 So,
 - every **package** contains **at least 1 crate**;
-- there can be **only one** library crate within package; 
-- there can be **more than one** binary crate within package.
+- there can be **only one** library crate within a package; 
+- there can be **more than one** binary crate within a package.
 
 Compiler will produce **executable** for *binary crate* and **library** for *library crate*.
 
@@ -86,10 +86,9 @@ Cargo uses the **automatic target discovery** by default.
 # The ``[package]`` section settings
 Fields ``name`` and ``version`` are **required**.
 
-The **package name** is an identifier used to refer to the package. 
-It is used when listed as a dependency in another package.
+The **package name** is an identifier used to refer to the package. It is used when listed as a dependency in another package.
 
-By default, the ``name`` *field* of the ``[package]`` *section* is **used as name** for *auto discovered crate* with *root module* ``src/main.rs``.
+By default, the ``name`` *field* of the ``[package]`` *section* is **used as name** for *auto discovered binary crate* (with *root module* ``src/main.rs``).<br>
 **Any dashes** in the ``name`` *field* of the ``[package]`` *section* are **replaced** with **underscores**.
 
 <br>
