@@ -35,7 +35,7 @@ What **standard library prelude** is chosen depends on **Rust edition**.<br>
 <br>
 
 ## Extern prelude
-**Extern prelude** *consists* of the *names from* **external crates**.<br>
+**Extern prelude** *consists* of the *names* **of external crates**.<br>
 
 *External crate* **declaration** is ``extern crate <name> [as <alias>]``.<br>
 
