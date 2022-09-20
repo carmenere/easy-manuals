@@ -42,7 +42,7 @@ What **standard library prelude** is chosen depends on **Rust edition**.<br>
 If the *external crate* **declaration** ``extern crate <name> ... `` appears in the **root module**, then the ``<name>`` is also added to the **extern prelude**.<br>
 
 Editions:
-- **In 2015 edition** you needed both, a package in the Cargo.toml [dependencies] section and extern crate <name> to bring crate from some package into scope.
+- **In 2015 edition** you needed both, a package in the Cargo.toml ``[dependencies]`` section and ``extern crate <name> ... `` to bring crate from some package into scope.
 - **In 2018 edition** if crate is defined in ``[dependencies]`` section it becomes **globally available**, i.e., **such crate** is automatically added to the **extern prelude**. It means we don't have to write ``use`` keyword to access the crate and it is **available in any point** of current package.
 
 **sysroot crates**: 
