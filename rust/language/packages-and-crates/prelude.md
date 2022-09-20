@@ -39,7 +39,7 @@ What **standard library prelude** is chosen depends on **Rust edition**.<br>
 
 *External crate* **declaration** is ``extern crate <name> [as <alias>]``.<br>
 
-If the *external crate* **declaration** ``extern crate <name> ... `` appears in the **root module**, then the ``<name>`` is also added to the **extern prelude**.<br>
+If the *external crate* **declaration** ``extern crate <name> ...`` appears in the **root module**, then the ``<name>`` is also added to the **extern prelude**.<br>
 
 Editions:
 - **In 2015 edition** you needed both, a package in the Cargo.toml ``[dependencies]`` section and ``extern crate <name> ... `` to bring crate from some package into scope.
