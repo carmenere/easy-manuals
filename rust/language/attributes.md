@@ -17,7 +17,7 @@ In Rust items are
 
 <br>
 
-There are 2 kinds of attributes:
+There are 2 types of attributes:
 - **inner** attributes;
 - **outer** attributes.
 
