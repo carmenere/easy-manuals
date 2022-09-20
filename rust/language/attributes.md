@@ -115,7 +115,7 @@ type int8_t = i8;
 - Preludes
     - ``no_std``
 - Modules
-    - path
+    - ``path``
 - Limits
     - ``recursion_limit``
     - ``type_length_limit``
