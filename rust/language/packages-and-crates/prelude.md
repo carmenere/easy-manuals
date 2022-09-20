@@ -51,8 +51,8 @@ Editions:
 - ``alloc`` crate;
 - ``test`` crate.
 
-The ``core`` crate is always added to the **extern prelude**.
-The ``std`` crate is added to the **extern prelude** unless the ``#![no_std]`` is put in the **root module**.
+The ``core`` crate is always added to the **extern prelude**.<br>
+The ``std`` crate is added to the **extern prelude** unless the ``#![no_std]`` is put in the **root module**.<br>
 Crates ``alloc`` and `test` are **not** automatically added to the **extern prelude**. They must be brought into scope with an ``extern crate <name>``, e**ven in the 2018 edition**:
 
 ```Rust
