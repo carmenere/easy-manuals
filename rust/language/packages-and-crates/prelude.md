@@ -9,14 +9,14 @@ There are several different preludes:
 <br>
 
 ## Standard library prelude
-**Standard library prelude** *consists* of the *names from* **standard library module**.<br>
+**Standard library prelude** *consists* of the *names from* **standard library crate**.<br>
 
-There are 2 *standard library* **modules** in Rust: 
-- **std**
-- **core**
+There are 2 *standard library* **crates** in Rust: 
+- ``std`` crate
+- ``core`` crate
 <br>
 
-What *standard library* **module** is chosen (**std** or **core**) depends on ``no_std`` **attribute**.<br>
+What *standard library* **crate** is chosen (``std`` or ``core``) depends on ``no_std`` **attribute**.<br>
 What **standard library prelude** is chosen depends on **Rust edition**.<br>
 
 ``no_std`` attribute is declared in **global section** of **root module**, e.g.:
