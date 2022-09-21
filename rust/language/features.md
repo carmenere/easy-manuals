@@ -55,6 +55,8 @@ serde = { version = "1.0.118", features = ["derive"] }
 flate2 = { version = "1.0.3", default-features = false, features = ["zlib"] }
 ```
 
+<br>
+
 ## Default features
 
 #### Example
@@ -71,6 +73,7 @@ Ways to disable **default feature** *in dependecy*:
 - The command-line flag ``--no-default-features`` disables the default features of the package.
 - The key value pair: ``default-features = false`` can be specified in a **dependency declaration**.
 
+<br>
 
 ## Optional dependencies
 Dependencies can be marked **optional**, which means they **will not be compiled by default**.
