@@ -11,10 +11,6 @@ Properties of features:
 - Empty array means that feature does not enable any other features;
 - *By default*, **all features are disabled** unless **explicitly enabled** or **listed in default feature**.
 
-The **default feature** is enabled which in turn enables the listed features. This behavior can be changed by:
-
-
-
 <br>
 
 #### Example
