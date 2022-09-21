@@ -44,7 +44,7 @@ pub mod bar;
 |:--------|:----------|
 |``features=["foo", "bar"]``|Comma separated **list of features** to activate.|
 |``default-features=true/false``|**Enables** or **disables** **default feature** of dependency.|
-|``optional=true``|``optional=true`` means that such dependency **will not be compiled by default**.|
+|``optional=true``|``optional=true`` makes dependency **optional**. It means that such dependency **will not be compiled by default**.|
 
 #### Example
 ```Rust
