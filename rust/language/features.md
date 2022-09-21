@@ -28,7 +28,7 @@ pub mod bar;
 <br>
 
 ## Ways to manage features
-- *Features* for the **package being built** are managed by **command-line flags**.
+- *Features* of **package being built** are managed by **command-line flags**.
 - *Features* of **dependencies** are managed in the **dependency declaration**;
 - *Features* of **dependencies** are also managed in the ``[features]`` table,  the syntax is ``feature_name = ["package-name/feature-name"]``.
 
@@ -44,7 +44,7 @@ Attributes to manage dependencies in ``[dependencies]`` section:
 |Attribute|Description|
 |:--------|:----------|
 |``features=["foo", "bar"]``|Comma separated **list of features** to activate.|
-|``default-features=true/false``|**Enables** or **disables** any **defaults** provided by the dependency.|
+|``default-features=true/false``|**Enables** or **disables** **default feature** of dependency.|
 |``optional=true``|``optional=true`` means that such dependency **will not be compiled by default**.|
 
 #### Example
