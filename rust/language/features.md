@@ -40,7 +40,6 @@ pub mod bar;
 |``--all-features``|Activates all available features of all packages|
 
 ### Dependency declaration attributes to mange features
-Attributes to manage dependencies in ``[dependencies]`` section:
 |Attribute|Description|
 |:--------|:----------|
 |``features=["foo", "bar"]``|Comma separated **list of features** to activate.|
