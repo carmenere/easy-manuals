@@ -25,7 +25,7 @@ pub mod bar;
 - Each *feature* specifies an **array** of **other features**;
 - If *feature* is enabled it in turn enables the listed features in array;
 - Empty array means that feature does not enable any other features;
-- By default, all features are **disabled** unless **explicitly enabled** or **listed in default feature**.
+- *By default*, **all features are disabled** unless **explicitly enabled** or **listed in default feature**.
 
 <br>
 
@@ -43,7 +43,7 @@ The following command-line flags can be used to control which features are enabl
 
 <br>
 
-## Dependency features
+## Dependency declaration syntax
 **Features of dependencies** can be enabled within the **dependency declaration** syntax in ``Cargo.toml``.
 
 <br>
@@ -53,4 +53,30 @@ The following command-line flags can be used to control which features are enabl
 [dependencies]
 serde = { version = "1.0.118", features = ["derive"] }
 flate2 = { version = "1.0.3", default-features = false, features = ["zlib"] }
+```
+
+## Default features
+
+#### Example
+```Rust
+[features]
+default = ["ico", "webp"]
+bmp = []
+png = []
+ico = ["bmp", "png"]
+webp = []
+```
+
+Ways to disable **default feature** *in dependecy*:
+- The command-line flag ``--no-default-features`` disables the default features of the package.
+- The key value pair: ``default-features = false`` can be specified in a **dependency declaration**.
+
+
+## Optional dependencies
+Dependencies can be marked **optional**, which means they **will not be compiled by default**.
+
+Example:
+```Rust
+[dependencies]
+gif = { version = "0.11.1", optional = true }
 ```
