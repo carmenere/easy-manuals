@@ -3,15 +3,12 @@
 **Features** are defined in the ``[features]`` section of ``Cargo.toml`` file.<br>
 **Each feature** can either be **enabled** or **disabled**.
 
-<br>
 
 Properties of features:
 - Each *feature* specifies an **array** of **other features** or **optional dependencies** that it enables;
 - If *feature* is enabled it in turn enables the listed features in array;
 - Empty array means that feature does not enable any other features;
 - *By default*, **all features are disabled** unless **explicitly enabled** or **listed in default feature**.
-
-<br>
 
 #### Example
 ```Rust
@@ -38,7 +35,7 @@ pub mod bar;
 ### Command-line flags to mange features
 |CLI flag|Description|
 |:---|:----------|
-|``--features FEATURES``|Here ``FEATURES`` is a **space** or **comma** separated **list of features** to activate. Example:`` --features "foo bar"``|
+|``--features FEATURES``|Here ``FEATURES`` is a **space** or **comma** separated **list of features** to activate.<br>Example:`` --features "foo bar"``|
 |``--no-default-features``|**Disables default feature**|
 |``--all-features``|Activates all available features of all packages|
 
