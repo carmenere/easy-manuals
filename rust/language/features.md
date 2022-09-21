@@ -97,7 +97,7 @@ webp = []
 gif = { version = "0.11.1", optional = true }
 ```
 
-By default, above optional dependency ``gif`` **implicitly defines a feature** ``gif`` that looks like this:
+By default, above **optional dependency** ``gif`` **implicitly defines a feature** ``gif`` that looks like this:
 ```Rust
 [features]
 gif = ["dep:gif"]
