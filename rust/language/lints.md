@@ -41,9 +41,9 @@ Maping between **lint level** and **type of message** that is produced by linter
 <br>
 
 ## Lint groups
-All lints are divided into lint groups.
+All lints are divided into **lint groups**.
 
-Lint groups:
+**Lint groups** are:
 - **warnings**;
 - **nonstandard-style** (for instance, non-camel-case-type);
 - **unused** (for instance, unused-variables).
