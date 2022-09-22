@@ -77,7 +77,7 @@ Notes:
 - the **order** of **lint flags** is **taken into account**.
 
 #### Example
-The following command **allows** the ``unused-variables`` lint, because it is the last argument for that lint:<br>
+The following commands **allows** the ``unused-variables`` lint, because it is the last:<br>
 ``rustc lib.rs --crate-type=lib -D unused -A unused-variables``<br>
 ``rustc lib.rs --crate-type=lib -D unused-variables -A unused-variables``
 
