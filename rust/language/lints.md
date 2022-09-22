@@ -84,7 +84,7 @@ The following commands **allows** the ``unused-variables`` lint, because it is t
 
 <br>
 
-If ``cargo`` is used, then env ``RUSTFLAGS`` is used to pass flags, e.g.,<br>``RUSTFLAGS="-D unused" cargo run``.
+If ``cargo`` is used, then **env** ``RUSTFLAGS`` is used to pass **lint flags**, e.g.,<br>``RUSTFLAGS="-D unused" cargo run``.
 
 <br>
 
