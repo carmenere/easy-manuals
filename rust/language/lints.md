@@ -1,0 +1,107 @@
+# Lints
+**Linter**, is a static code *analysis tool* used to flag programming **errors**, **bugs**, **stylistic errors** and **suspicious constructs**.<br>
+The term originates from a Unix utility that examined C language source code.
+
+**Lint** ia a **piece of check**.
+
+The Rust compiler has b**uiltin linter** that **runs lints** at compile time.<br>
+These lints may produce a **warning**, an **error**, or **nothing**, depending on **lint level**.
+
+The command ``rustc -W`` help will print **all lints** and its **default levels** and **all lint groups**.
+
+<br>
+
+## Lint levels
+In ``rustc``, all lints are divided into **5 levels**:
+- **allow**
+- **warn**
+- **force-warn**
+- **deny**
+- **forbid**
+
+**Each lint** has a **default level**. The **level** of any lint **can be changed**.
+
+The **allow** lint level produces a **nothing** if you violate the lint. 
+The **warn** lint level produces a **warning** if you violate the lint.
+The **deny** lint level produces a **error** if you violate the lint.
+
+**Force-warn** is the *same as warn*, but unlike the warn level:
+- the **force-warn** level **cannot** be capped via ``--cap-lints LEVEL`` flag.
+- the **force-warn** level **cannot** be capped via compiler lint flags.
+
+**Forbid** is the *same as deny*, but unlike the deny level:
+- the **forbid** level **cannot** be capped via compiler lint flags. 
+- however, the **forbid** level **can be** capped with ``--cap-lints LEVEL`` flag.
+
+<br>
+
+## Lint groups
+All lints are divided into lint groups.
+
+Lint groups:
+- **warnings**;
+- **nonstandard-style** (for instance, non-camel-case-type);
+- **unused** (for instance, unused-variables).
+- **future-incompatible**;
+- **rust-2018-compatibility**;
+- **rust-2018-idioms**;
+- **rust-2021-compatibility**;
+
+<br>
+
+## Configuring lint levels
+The level of any lint or whole lint group can be changed:
+- via **compiler flags**;
+- via **attribute** in the source code.
+
+<br>
+
+### Via ``rustc`` lint flag
+|Flag|Lint level|
+|:---|:---------|
+|``-A <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **allowed** level.|
+|``-W <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **warn** level.|
+|``--force-warn <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **force-warn** level.|
+|``-D <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **deny** level.|
+|``-F <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **forbid** level.|
+
+<br>
+
+Notes:
+- it is possible to pass each flag more than once for changing **multiple lints**.
+- the **order** of lint flags **is taken into account**.
+
+#### Example
+The following command **allows** the ``unused-variables`` lint, because it is the last argument for that lint:<br>
+``rustc lib.rs --crate-type=lib -D unused -A unused-variables``<br>
+``rustc lib.rs --crate-type=lib -D unused-variables -A unused-variables``
+
+
+<br>
+
+If ``cargo`` is used, then env ``RUSTFLAGS`` is used to pass flags, e.g.,<br>``RUSTFLAGS="-D unused" cargo run``.
+
+<br>
+
+### Via attribute in the source code
+|Attribute|Lint level|
+|:--------|:---------|
+|``#![allow(<lint>)]``|Sets lint ``<lint>`` into **allowed** level.|
+|``#![warn(<lint>)]``|Sets lint ``<lint>`` into **warn** level.|
+|``#![deny(<lint>)]``|Sets lint ``<lint>`` into **deny** level.|
+|``#![forbid(<lint>)]``|Sets lint ``<lint>`` into **forbid** level.|
+
+<br>
+
+There is **no way** to set a lint to **force-warn** using an **attribute**.
+
+<br>
+
+## Capping lints
+``rustc`` supports a flag ``--cap-lints LEVEL`` that sets the **lint cap level**.  (cap – ограничивать)
+
+The lint cap level **limits global level** for all lints.
+
+Examples:
+1.	Set all lints to **warn** level: rustc lib.rs ``--cap-lints warn``;
+2.	Set all lints to **allow** level: rustc lib.rs ``--cap-lints allow``.
