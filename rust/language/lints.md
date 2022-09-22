@@ -56,7 +56,7 @@ All lints are divided into **lint groups**.
 
 ## Configuring lint levels
 The level of any lint or whole lint group can be changed:
-- via **compiler flags**;
+- via **compiler lint flags**;
 - via **attribute** in the source code.
 
 <br>
