@@ -16,9 +16,8 @@ In ``rustc``, all lints are divided into **5 levels**:
 - **deny**
 - **forbid**
 
-**Each lint** has a **default level**. The **level** of any lint **can be changed**.
-
-The command ``rustc -W help`` will print **all lints** and its **default levels** and **all lint groups**.
+**Each lint** has a **default level**. The **level** of any lint **can be changed**.<br>
+The command ``rustc -W help`` will print **all lints** and its **default levels** and **all lint groups**.<br>
 
 When **linter** finds **lint violation** it produces a **message of particular type** depending on **lint level**.<br>
 
@@ -27,9 +26,13 @@ Maping between **lint level** and **type of message** that is produced by linter
 - If lint of **warn** level is violated then linter produces a **warning**;
 - If lint of **deny** level is violated then linter produces a **error**.
 
+<br>
+
 **Force-warn** is the *same as warn*, but unlike the warn level:
 - the **force-warn** level **cannot** be capped via ``--cap-lints LEVEL`` flag.
 - the **force-warn** level **cannot** be capped via compiler lint flags.
+
+<br>
 
 **Forbid** is the *same as deny*, but unlike the deny level:
 - the **forbid** level **cannot** be capped via compiler lint flags. 
