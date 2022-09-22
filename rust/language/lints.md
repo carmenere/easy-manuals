@@ -2,12 +2,9 @@
 **Linter**, is a static code *analysis tool* used to flag programming **errors**, **bugs**, **stylistic errors** and **suspicious constructs**.<br>
 The term originates from a Unix utility that examined C language source code.
 
-**Lint** ia a **piece of check**.
+**Lint** is a **piece of check**.
 
 The Rust compiler has b**uiltin linter** that **runs lints** at compile time.<br>
-These lints may produce a **warning**, an **error**, or **nothing**, depending on **lint level**.
-
-The command ``rustc -W`` help will print **all lints** and its **default levels** and **all lint groups**.
 
 <br>
 
@@ -21,9 +18,14 @@ In ``rustc``, all lints are divided into **5 levels**:
 
 **Each lint** has a **default level**. The **level** of any lint **can be changed**.
 
-The **allow** lint level produces a **nothing** if you violate the lint. 
-The **warn** lint level produces a **warning** if you violate the lint.
-The **deny** lint level produces a **error** if you violate the lint.
+The command ``rustc -W help`` will print **all lints** and its **default levels** and **all lint groups**.
+
+When **linter** finds **lint violation** it produces a **message of particular type** depending on **lint level**.<br>
+
+Maping between **lint level** and **type of message** that is produced by linter:
+- If lint of **allow** level is violated then linter produces a **nothing**;
+- If lint of **warn** level is violated then linter produces a **warning**;
+- If lint of **deny** level is violated then linter produces a **error**.
 
 **Force-warn** is the *same as warn*, but unlike the warn level:
 - the **force-warn** level **cannot** be capped via ``--cap-lints LEVEL`` flag.
