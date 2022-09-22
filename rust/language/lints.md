@@ -108,5 +108,5 @@ There is **no way** to set a lint to **force-warn** using an **attribute**.
 The **lint cap level** *sets* **global level** for all lints.
 
 Examples:
-1.	Set all lints to **warn** level: rustc lib.rs ``--cap-lints warn``;
-2.	Set all lints to **allow** level: rustc lib.rs ``--cap-lints allow``.
+1.	Set all lints to **warn** level: ``rustc lib.rs --cap-lints warn``;
+2.	Set all lints to **allow** level: ``rustc lib.rs --cap-lints allow``.
