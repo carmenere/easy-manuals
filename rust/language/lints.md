@@ -73,7 +73,7 @@ The level of any lint or whole lint group can be changed:
 <br>
 
 Notes:
-- it is possible to pass each flag more than once for changing **multiple lints**.
+- it is possible to pass each **lint flag** more than once for changing **multiple lints**.
 - the **order** of lint flags **is taken into account**.
 
 #### Example
