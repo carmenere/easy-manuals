@@ -2,9 +2,9 @@
 **Linter**, is a static code *analysis tool* used to flag programming **errors**, **bugs**, **stylistic errors** and **suspicious constructs**.<br>
 The term originates from a Unix utility that examined C language source code.
 
-**Lint** is a **piece of check**.
-
 The Rust compiler has b**uiltin linter** that **runs lints** at compile time.<br>
+
+**Lint** is a **piece of check**.
 
 <br>
 
