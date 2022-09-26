@@ -2,7 +2,7 @@
 **Linter**, is a static code *analysis tool* used to flag programming **errors**, **bugs**, **stylistic errors** and **suspicious constructs**.<br>
 The term originates from a Unix utility that examined C language source code.
 
-The Rust compiler has b**uiltin linter** that **runs lints** at compile time.<br>
+The Rust compiler has **builtin linter** that **runs lints** at compile time.<br>
 
 **Lint** is a **piece of check**.
 
@@ -110,3 +110,44 @@ The **lint cap level** *sets* **global level** for all lints.
 Examples:
 1.	Set all lints to **warn** level: ``rustc lib.rs --cap-lints warn``;
 2.	Set all lints to **allow** level: ``rustc lib.rs --cap-lints allow``.
+
+
+# Ways to disable some compiler warnings
+#### Using *outer* **allow attribute**
+```Rust
+#[allow(dead_code)]
+struct SemanticDirection;
+```
+
+<br>
+
+#### Using *inner* **allow attribute**
+```Rust
+#![allow(dead_code)]
+```
+
+<br>
+
+#### Using ``rustc`` **lint flags**
+```Rust
+rustc -A unused_variables main.rs
+```
+
+<br>
+
+#### Via ``cargo`` ``RUSTFLAGS`` env
+```Rust
+RUSTFLAGS="$RUSTFLAGS -A unused_variables" cargo build
+```
+
+<br>
+
+# Some useful warnings
+Some usefull warnings:
+- ``unused_variables``
+- ``unused_assignments``
+- ``unused_macros``
+- ``non_snake_case``
+- ``dead_code``
+- ``unused_mut``
+- ``non_camel_case_types``
