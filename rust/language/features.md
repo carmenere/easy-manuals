@@ -260,7 +260,7 @@ ABC!
 
 <br>
 
-#### 4.2 Enabling certain package by assigning alias to some package, e.g., ``<abc>``, and passing it to cli argument ``--features`` of ``cargo``
+#### 4.2 Enabling certain package by assigning alias to this package, e.g., ``<abc>``, and passing it to cli argument ``--features`` of ``cargo``
 ```toml
 [package]
 name = "ololo"
