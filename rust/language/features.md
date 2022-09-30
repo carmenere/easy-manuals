@@ -166,7 +166,7 @@ an.romanov@NB0737 ~/P/play-rust (master)> cargo run
 ABC!
 ```
 
-## 2. Enabling certain features of particular package inside ``[features]`` section and assigning aliases for they
+## 2. Enabling certain features of particular package inside ``[features]`` section and assigning aliases for them
 ```toml
 [package]
 name = "ololo"
