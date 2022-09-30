@@ -166,7 +166,7 @@ an.romanov@NB0737 ~/P/play-rust (master)> cargo run
 ABC!
 ```
 
-## 2. Enable certain features of particular package inside ``[features]`` section
+## 2. Enabling certain features of particular package inside ``[features]`` section and assigning aliases for they
 ```toml
 [package]
 name = "ololo"
@@ -203,7 +203,7 @@ ABC!
 
 <br>
 
-## 3. Disable ``default-features`` of certain package inside dependency declaration
+## 3. Disabling ``default-features`` of certain package inside dependency declaration
 ```toml
 [package]
 name = "ololo"
@@ -235,7 +235,7 @@ ABC!
 <br>
 
 ## 4. Optional dependency (``optional = true``)
-#### 4.1 Disable certain package
+#### 4.1 Disabling certain package
 ```toml
 [package]
 name = "ololo"
@@ -260,7 +260,7 @@ ABC!
 
 <br>
 
-#### 4.2 Enable certain package by passing <feature_name> to cli argument ``--features <feature_name>`` of ``cargo``
+#### 4.2 Enabling certain package by assigning alias to some package, e.g., ``<abc>``, and passing it to cli argument ``--features`` of ``cargo``
 ```toml
 [package]
 name = "ololo"
@@ -301,6 +301,50 @@ an.romanov@NB0737 ~/P/play-rust (master)> cargo run --features "abc"
    Compiling futures v0.3.24
    Compiling ololo v0.1.0 (/Users/an.romanov/Projects/play-rust)
     Finished dev [unoptimized + debuginfo] target(s) in 5.63s
+     Running `target/debug/ololo`
+ABC!
+```
+
+<br>
+
+#### 4.3 Enabling certain package, e.g., ``futures``, by passing its name to cli argument ``--features`` of ``cargo``
+```toml
+[package]
+name = "ololo"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+futures = {version = "0.3", optional = true }
+```
+
+<br>
+
+```bash
+an.romanov@NB0737 ~/P/play-rust (master)> rm -rf target
+an.romanov@NB0737 ~/P/play-rust (master)> cargo run --features "futures"
+   Compiling proc-macro2 v1.0.44
+   Compiling quote v1.0.21
+   Compiling unicode-ident v1.0.4
+   Compiling autocfg v1.1.0
+   Compiling futures-core v0.3.24
+   Compiling syn v1.0.100
+   Compiling memchr v2.5.0
+   Compiling futures-task v0.3.24
+   Compiling futures-channel v0.3.24
+   Compiling futures-sink v0.3.24
+   Compiling futures-util v0.3.24
+   Compiling pin-utils v0.1.0
+   Compiling pin-project-lite v0.2.9
+   Compiling futures-io v0.3.24
+   Compiling slab v0.4.7
+   Compiling futures-macro v0.3.24
+   Compiling futures-executor v0.3.24
+   Compiling futures v0.3.24
+   Compiling ololo v0.1.0 (/Users/an.romanov/Projects/play-rust)
+    Finished dev [unoptimized + debuginfo] target(s) in 5.58s
      Running `target/debug/ololo`
 ABC!
 ```
