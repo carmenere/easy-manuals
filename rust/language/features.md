@@ -94,17 +94,17 @@ webp = []
 #### Example
 ```toml
 [dependencies]
-gif = { version = "0.11.1", optional = true }
+foo = { version = "0.11.1", optional = true }
 ```
 
-By default, above **optional dependency** ``gif`` **implicitly defines a feature** ``gif`` that looks like this:
+By default, above **optional dependency** ``foo`` **implicitly defines a feature** ``foo`` that looks like this:
 ```toml
 [features]
-gif = ["dep:gif"]
+foo = ["dep:foo"]
 ```
 
-This means that **dependency** ``gif`` will only be included if the ``gif`` **feature** is **enabled**.<br>
-The same ``cfg(feature = "gif")`` syntax can be used in the code, and the dependency can be enabled by ``--features gif``.
+This means that **dependency** ``foo`` will only be included if the ``foo`` **feature** is **enabled**.<br>
+The same ``cfg(feature = "foo")`` syntax can be used in the code, and the dependency can be enabled by ``--features foo``.
 
 In some cases, you may not want to expose a feature that has the same name as the optional dependency.<br>
 For example, perhaps the optional dependency is an internal detail, or you want to group multiple optional dependencies together, or you just want to use a better name.<br>

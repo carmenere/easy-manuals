@@ -64,7 +64,7 @@ The level of any lint or whole lint group can be changed:
 ### Via ``rustc`` lint flag
 |Flag|Lint level|
 |:---|:---------|
-|``-A <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **allowed** level.|
+|``-A <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **allow** level.|
 |``-W <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **warn** level.|
 |``--force-warn <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **force-warn** level.|
 |``-D <lint> \| <lint-group>``|Sets lint ``<lint>`` or lint-group ``<lint-group>`` into **deny** level.|
