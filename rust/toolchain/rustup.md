@@ -40,11 +40,11 @@ The profiles available now:
 |Subcommand|Explanation|
 |:---------|:----------|
 |rustup **show**|Print **default** *target triple* and other information.|
-|rustup **toolchain list**|List **all** installed toolchains.|
+|rustup **toolchain list**|Lists all installed toolchains.|
 |rustup **toolchain install** ``toolchain``|Installs last toolchain for release channel ``toolchain`` for current date.|
 |rustup **default** ``toolchain``|Sets the **default toolchain** to ``toolchain``.|
 |rustup **target add** ``toolchain``|Enables **cross compilation** for ``toolchain`` for **current toolchain**.|
 |rustup **update**|Updates **default toolchain**.|
-|rustup **component list**|Lists of **available** and **installed** components.|
+|rustup **component list**|Lists all **available** and **installed** components.|
 |rustup **component add** ``rust-docs``|Adds component ``rust-docs`` to default toolchain.|
 |rustup **set profile** ``minimal``|To select the ``minimal`` **profile** you can use.|
