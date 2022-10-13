@@ -136,6 +136,7 @@ fn makes_copy(some_integer: i32) { // variable some_integer comes into scope
 <br>
 
 ### Semantics when returning values from function:
+```Rust
 fn returns_ownership() -> String { 	// gives_ownership will move its return value
 						// into the function that calls it
     let some_string = String::from("hello");	// some_string comes into scope
@@ -144,6 +145,7 @@ fn returns_ownership() -> String { 	// gives_ownership will move its return valu
 							// to the calling function
 							// The memory will not be freed.
 }
+```
 
 <br>
 
