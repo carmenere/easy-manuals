@@ -20,7 +20,7 @@ There are **2 kinds of references** in Rust:
 
 <br>
 
-**Borrowing** the action of **creating a reference**.<br>
+**Borrowing** is the action of **creating a reference**.<br>
 **Borrower** is an **identifier** (**variable**) which **owns** some **reference**.<br>
 Both, **immutable** and **mutable** **borrowers** can contain **mutable** or **immutable** **references**.<br>
 
