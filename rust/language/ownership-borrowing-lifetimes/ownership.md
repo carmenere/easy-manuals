@@ -61,9 +61,9 @@ Types of copying:
 Any value in Rust has either **Move type** or **Copy type**.
 
 Types:
-1.	**Move types** are types that **don't implement** the **Copy trait**. 
+1.	**Move types** are types that **don't** *implement* the **Copy trait**. 
     - If type is the **Move type** it *may* implement or *may not* implement **Clone trait**.
-2.	**Copy types** are types that implement the **Copy trait**. 
+2.	**Copy types** are types that *implement* the **Copy trait**. 
     - **Clone trait** is a supertrait of **Copy trait**, if type is the **Copy type** it also must implement **Clone trait**.
 3.	**Clone types** are types that implement the **Clone trait**.
 
