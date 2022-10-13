@@ -25,12 +25,12 @@ There are **2 kinds of references** in Rust:
 Both, **immutable** and **mutable** **borrowers** can contain **mutable** or **immutable** **references**.<br>
 
 So, there are **2 kinds of borrowers** in Rust:
-1. **Immutable borrower**:
+1. **Immutable borrower** ``b``:
 ```Rust
 let b: &T;
 let b: &mut T;
 ```
-2. **Mutable borrower**:
+2. **Mutable borrower** ``b``:
 ```Rust
 let mut b: &T;
 let mut b: &mut T;
