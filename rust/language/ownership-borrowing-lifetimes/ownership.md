@@ -9,7 +9,7 @@
 |**Move**|Associate identifier with **bitwise copied** value and **invalidate the original identifier**.|
 |**Clone**|Associate identifier with **completely independed duplicate** of value and **keep the original identifier valid**.|
 |**Mutate**|Change the value associated with a mutable identifier. By default, Rust data is immutable - it can't be changed.|
-|**Borrow**|The **action of creating a reference**. Reference is a named pointer to some value.|
+|**Borrowing**|The **action of creating a reference**. Reference is a named pointer to some value.|
 
 <br>
 
