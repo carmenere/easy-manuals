@@ -149,10 +149,9 @@ Rust **will never automatically** create deep copies of your data.<br>
 
 ## Copy trait
 **Copy trait** is **marker trait**.<br>
-In Rust language **Copy type** is also called **primitive type**.<br>
 **Copy trait** is implemented in Rust language on:
-- all the **atomic primitive types**.
-- all the **composite primitive types** if all their constituent /kənstɪtʃuənt/ types implement the **Copy trait**.
+- the **atomic primitive types**;
+- the **composite primitive types** if all their constituent /kənstɪtʃuənt/ types implement the **Copy trait**;
 - **shared references**.
 
 <br>
@@ -282,19 +281,18 @@ else {
 ## Primitive and Non-primitive types
 In Rust language:
 1. If type has a **known size** *at compile time* (**fixed size**) it is called **primitive type**.
-- primitive types implement **Copy trait**. 
-- primitive types have **copy semantics**.
-- primitive types are stored **entirely on the stack**.
+- all **primitive types** implement **Copy trait** and have **copy semantics**.
+- all **primitive types** are stored entirely on the **stack****.
 2. If type has an **unknown size** a*t compile time* it is called **complex type**. 
-- complex types have **move semantics**.
-- **static part** (aka **control part**) of complex type is stored **entirely on the stack** and it is used to manage **dynamic part**.
-- **dynamic part** of complex type is dynamically changed at run time and it is stored in the heap.
+- **complex types** have **move semantics**.
+- **static part** (aka **control part**) of complex type is stored entirely on the **stack** and it is used to manage **dynamic part**.
+- **dynamic part** of complex type is **dynamically changed** *at run time* and it is stored in the **heap**.
 
 So, in Rust language **Copy type** is **primitive type**.
 
 Examples:
-- ``&str`` type (string literal) in Rust (e.g. ``let s: &str = "ABC"``) has **known size** at compile time. So the text is hardcoded directly into the executable.  
-- **String type** in Rust (e.g. S``tring::from("ABC")``) has **unknown size** at compile time. It is growable piece of text. Memory for ``String`` is requested and dynamically changed at run time.
+- ``&str`` **type** (**string literal**), e.g., ``let s: &str = "ABC"``, has **known size** *at compile time*. So the text is **hardcoded directly into the executable**.  
+- ``String`` **type**, e.g., ``String::from("ABC")``, has **unknown size** *at compile time*. It is growable piece of text. Memory for ``String`` is **requested** and **dynamically changed** *at run time*.
 
 <br>
 
