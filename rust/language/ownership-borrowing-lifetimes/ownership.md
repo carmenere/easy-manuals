@@ -67,8 +67,6 @@ Types:
     - **Clone trait** is a supertrait of **Copy trait**, if type is the **Copy type** it also must implement **Clone trait**.
 3.	**Clone types** are types that implement the **Clone trait**.
 
-In Rust language **Copy type** is also called **primitive type**.<br>
-
 Following operations in Rust:
 - assignment;
 - passing a value to function;
@@ -154,6 +152,7 @@ Rust **will never automatically** create deep copies of your data. **Deep copy**
 
 ## Copy trait
 **Copy trait** is **marker trait**.<br>
+In Rust language **Copy type** is also called **primitive type**.<br>
 **Copy trait** is implemented in Rust language on:
 - all the **atomic primitive types**.
 - all the **composite primitive types** if all their constituent /kənstɪtʃuənt/ types implement the **Copy trait**.
