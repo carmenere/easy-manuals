@@ -153,13 +153,21 @@ Rust **will never automatically** create deep copies of your data. **Deep copy**
 <br>
 
 ## Copy trait
-**Copy trait** is **marker trait**.
+**Copy trait** is **marker trait**.<br>
+**Copy trait** is implemented in Rust language on:
+- all the **atomic primitive types**.
+- all the **composite primitive types** if all their constituent /kənstɪtʃuənt/ types implement the **Copy trait**.
+- **shared references**.
+
+<br>
 
 Example of implementing **Copy trait** manually:
 ```Rust
 struct MyStruct;
 impl Copy for MyStruct {}
 ``` 
+
+<br>
 
 ``Clone::clone`` implementation for **Copy type** should just be a ``memcpy()`` and it is enough to return ``*self``, example:
 ```Rust
@@ -291,11 +299,6 @@ So, in Rust language **Copy type** is **primitive type**.
 Examples:
 - ``&str`` type (string literal) in Rust (e.g. ``let s: &str = "ABC"``) has **known size** at compile time. So the text is hardcoded directly into the executable.  
 - **String type** in Rust (e.g. S``tring::from("ABC")``) has **unknown size** at compile time. It is growable piece of text. Memory for ``String`` is requested and dynamically changed at run time.
-
-**Copy trait** is implemented in Rust language on:
-- all the **atomic primitive types**.
-- all the **composite primitive types** if all their constituent /kənstɪtʃuənt/ types implement the **Copy trait**.
-- **shared references**.
 
 <br>
 
