@@ -5,7 +5,7 @@
 ## Basic terms
 |Term|Meaning|
 |:---|:------|
-|**Type**|Is a **set of allowed values** and **memory layout** for values and **allowed operations** for values.|
+|**Type**|Is a *set of* 1) **allowed values**; 2) **memory layout** for values; 3) **allowed operations** for values.|
 |**Owner**|Identifier that is owning value.|
 |**Bind**|Associate identifier with a value.|
 |**Copy**|Associate identifier with **bitwise copied** value and **keep the original identifier valid**.|
