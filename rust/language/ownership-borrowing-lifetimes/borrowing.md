@@ -7,7 +7,7 @@ A **reference** is the **address** of **some value**.<br>
 **Reference doesn’t own value it points to**, i.e., when *reference* **goes out of scope**, the **borrow ends**, and the **value** *reference* points to **isn't destroyed**.<br>
 
 There are **2 kinds of references** in Rust:
-1. **Shared reference **(aka **immutable reference**):
+1. **Shared reference** (aka **immutable reference**):
 ```Rust
 &T
 &'a T   // with lifetime
