@@ -67,11 +67,7 @@ Types:
     - **Clone trait** is a supertrait of **Copy trait**, if type is the **Copy type** it also must implement **Clone trait**.
 3.	**Clone types** are types that implement the **Clone trait**.
 
-Following operations in Rust:
-- assignment;
-- passing a value to function;
-- returning a value from function;
-have **semantics**. <br>
+Following operations in Rust **assignment**/**passing a value to function**/**returning a value from function** have **semantics**. <br>
 
 **Semantics of operation** is determined by **semantics of type**:
 - *Copy types* have **copy semantics**.
