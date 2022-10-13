@@ -1,11 +1,22 @@
 # What is reference
 What if we want to let a function use a value **without transferring ownership**? Rust has feature for this concept, called **borrowing**.<br>
+
+<br>
+
 A **reference** is the **address** of **some value**.<br>
 **Reference doesn’t own value it points to**, i.e., when *reference* **goes out of scope**, the **borrow ends**, and the **value** *reference* points to **isn't destroyed**.<br>
+
+<br>
+
 **Borrowing** the action of **creating a reference**.<br>
 **Borrower** is an **identifier** (**variable**) which **owns** some **reference**.<br>
 Both, **immutable** and **mutable** **borrowers** can contain **mutable** or **immutable** **references**.<br>
+
+<br>
+
 If an **identifier** (**variable**) declared as **immutable**, it **isn’t possible** get a **mutable reference** to **it**.<br>
+
+<br>
 
 #### Operators
 |**Operator**|**Name**|**Description**|
