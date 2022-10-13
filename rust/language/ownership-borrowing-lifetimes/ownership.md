@@ -1,7 +1,4 @@
 # Ownership
-
-<br>
-
 ## Basic terms
 |Term|Meaning|
 |:---|:------|
