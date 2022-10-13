@@ -316,8 +316,8 @@ Examples:
 ### Composite primitive types
 |**Type**|**Description**|
 |:-------|:--------------|
-|**Arrays** and **slices**|Array ``[T; N]``: contains ``N`` elements of the type ``T``.|
-|**Tuples**|The tuple type ``(T1, T2, ..., Tn)`` contains a sequence of elements where each element may be a different type.|
+|**Arrays** and **slices**|Array ``[T; N]`` contains ``N`` elements of the type ``T``.|
+|**Tuples**|The tuple type ``(T1, T2, ..., Tn)`` contains a sequence of elements where each element may be of a different type.|
 
 Composite primitive types automatically implement the **Copy trait** if all their constituent types implement the **Copy trait**.
 
