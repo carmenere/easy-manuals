@@ -282,7 +282,7 @@ else {
 In Rust language:
 1. If type has a **known size** *at compile time* (**fixed size**) it is called **primitive type**.
 - all **primitive types** implement **Copy trait** and have **copy semantics**.
-- all **primitive types** are stored entirely on the **stack****.
+- all **primitive types** are stored entirely on the **stack**.
 2. If type has an **unknown size** a*t compile time* it is called **complex type**. 
 - **complex types** have **move semantics**.
 - **static part** (aka **control part**) of complex type is stored entirely on the **stack** and it is used to manage **dynamic part**.
