@@ -73,7 +73,7 @@ Following operations in Rust **assignment**/**passing a value to function**/**re
 - *Copy types* have **copy semantics**.
 - *Move types* have **move semantics**.
 
-In Rust language: **copy semantics** and a **move semantics** are **mechanically the same** – they **both** implicitly **use bitwise copy**, e.g., ``memcpy()``.
+In Rust language: **copy semantics** and a **move semantics** are **mechanically the same** – they **both** implicitly **use bitwise copy**, e.g., ``memcpy()``.<br>
 
 **Copy semantics** and a **move semantics** are differ in ownership:
 |**Type’s semantics**|**Ownership**|**Original (source) identifier**|
@@ -141,7 +141,8 @@ fn returns_ownership() -> String { 	// gives_ownership will move its return valu
 <br>
 
 ## Clone trait
-Rust **will never automatically** create deep copies of your data. **Deep copy** in Rust **is always explicit action**: ``x.clone()``. 
+Rust **will never automatically** create deep copies of your data.<br>
+**Deep copy** in Rust **is always explicit action**: ``x.clone()``.<br>
 **Clone trait** is used to implement **deep copy** in ``clone()`` method.
 
 <br>

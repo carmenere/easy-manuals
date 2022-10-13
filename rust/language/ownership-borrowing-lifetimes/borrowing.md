@@ -55,10 +55,10 @@ Here:
 - ``val`` mutable value
 - ``&val``  shared reference
 - ``&mut val``	mutable reference
-- ``b1`` immutable borrowers 
-- ``b2`` immutable borrowers
-- ``b3`` mutable borrowers
-- ``b4`` mutable borrowers
+- ``b1`` immutable borrower
+- ``b2`` immutable borrower
+- ``b3`` mutable borrower
+- ``b4`` mutable borrower
 
 <br>
 
