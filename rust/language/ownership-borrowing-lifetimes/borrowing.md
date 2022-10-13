@@ -6,26 +6,6 @@ What if we want to let a function use a value **without transferring ownership**
 A **reference** is the **address** of **some value**.<br>
 **Reference doesn’t own value it points to**, i.e., when *reference* **goes out of scope**, the **borrow ends**, and the **value** *reference* points to **isn't destroyed**.<br>
 
-<br>
-
-**Borrowing** the action of **creating a reference**.<br>
-**Borrower** is an **identifier** (**variable**) which **owns** some **reference**.<br>
-Both, **immutable** and **mutable** **borrowers** can contain **mutable** or **immutable** **references**.<br>
-
-<br>
-
-If an **identifier** (**variable**) declared as **immutable**, it **isn’t possible** get a **mutable reference** to **it**.<br>
-
-<br>
-
-#### Operators
-|**Operator**|**Name**|**Description**|
-|:-------|:---|:----------|
-|``&``|**Reference operator**|To **borrow value**, i.e., take a reference.|
-|``*``|**Dereference operator**|To **use a borrowed value**.|
-
-<br>
-
 There are **2 kinds of references** in Rust:
 1. **Shared reference **(aka **immutable reference**):
 ```Rust
@@ -40,6 +20,10 @@ There are **2 kinds of references** in Rust:
 
 <br>
 
+**Borrowing** the action of **creating a reference**.<br>
+**Borrower** is an **identifier** (**variable**) which **owns** some **reference**.<br>
+Both, **immutable** and **mutable** **borrowers** can contain **mutable** or **immutable** **references**.<br>
+
 So, there are **2 kinds of borrowers** in Rust:
 1. **Immutable borrower**:
 ```Rust
@@ -51,6 +35,8 @@ let b: &mut T;
 let mut b: &T;
 let mut b: &mut T;
 ```
+
+If an **identifier** (**variable**) declared as **immutable**, it **isn’t possible** get a **mutable reference** to **it**.<br>
 
 <br>
 
@@ -90,10 +76,21 @@ Here:
 
 <br>
 
+#### Operators
+|**Operator**|**Name**|**Description**|
+|:-------|:---|:----------|
+|``&``|**Reference operator**|To **borrow value**, i.e., take a reference.|
+|``*``|**Dereference operator**|To **use a borrowed value**.|
+
+<br>
+
+# Restrictions of references
 Since references do not own the value, **references cannot move the value**.<br>
 But **references can copy value**.<br>
 
-**Case 1**: **move by mutable reference**
+<br>
+
+#### Move by mutable reference
 ```Rust
 fn main() {
     struct Foo(i32);
@@ -122,7 +119,7 @@ error: could not compile `playrs` due to previous error
 
 <br>
 
-**Case 2**: **move by shared reference**
+#### Move by shared reference
 ```Rust
 fn main() {
     struct Foo(i32);
@@ -151,7 +148,7 @@ error: could not compile `playrs` due to previous error
 
 <br>
 
-**Case 3**: **copy value**
+#### Copy value
 ```Rust
 fn main() {
     let mut i1 = 100;
@@ -175,6 +172,8 @@ Consider ``b`` is **borrower**:
 - if ``b`` contains *shared reference*, it is possible to **reborrow** *shared reference*: ``let b1 = &*b``.
 - if ``b`` contains *mutable reference*, it is possible to **reborrow** *mutable reference*: ``let b1 = &mut *b``.
 
+<br>
+
 Following code **does not work**:
 ```Rust
 fn some_fn(p: &mut Foo) {
@@ -195,7 +194,7 @@ fn main() {
 }
 ```
 
-To fix this code it is needed to use **reborrow**: ``&mut *``.
+To fix this code it is needed to use **reborrow**: ``&mut *``.<br>
 
 Following code **works**:
 ```Rust
