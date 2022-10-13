@@ -3,6 +3,8 @@ A **lifetime** is a **scope** within a **reference** is **valid**.
 
 **Reference** has **non lexical lifetime** (**NLL**). It means **scope** of reference starts **from** the **point at which it was declared** by ``let`` keyword **until** the **last time reference is used**.
 
+<br>
+
 NLL rules:
 1. Scope of **mutable reference** ``&mut T`` **can’t** *intersect* with scope of any other reference to type ``T``.
 2. Scope of **shared reference** ``&T`` **can** *intersect* with scope of any other reference to type ``T``.
@@ -17,6 +19,7 @@ Rules 1 and 2 are means: **at any given time there can be**:
 OR 
 - **any number** of *shared references* ``&T``.
 
+<br>
 
 **Owner restrictions** during borrowing:
 1. During a **shared borrow**, the **owner can’t**:
@@ -27,6 +30,8 @@ OR
 2. During a **mutable borrow**, the **owner can’t**:
 - have **any access** (**read** or **mutate**) to the *value*;
 - **lend** (**mutably** or **immutably**) the *value*.
+
+<br>
 
 #### Example
 ```Rust
@@ -39,6 +44,8 @@ fn main() {
 }
 ```
 
+<br>
+
 # Non-lexical lifetime
 It's easiest to understand what **non-lexical lifetimes** (**NLL**) are by understanding what **lexical lifetimes** (**LL**) are.<br>
 
@@ -46,6 +53,7 @@ It's easiest to understand what **non-lexical lifetimes** (**NLL**) are by under
 - **LL** means that borrow lasts until the **end of the block** (until ``{``).
 - **NLL** means that borrow lasts until the **end of the block** (until ``{``) **until** the **last time reference is used**..
 
+<br>
 
 ## Examples
 ### 1. NLL of p0 and NLL of p1 start and end at the point at which they were borrowed and do not intersect with NLL of owner
