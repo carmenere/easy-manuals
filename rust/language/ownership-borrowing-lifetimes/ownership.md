@@ -276,6 +276,8 @@ else {
 }
 ```
 
+<br>
+
 ## Primitive and Non-primitive types
 In Rust language:
 1. If type has a **known size** *at compile time* (**fixed size**) it is called **primitive type**.
