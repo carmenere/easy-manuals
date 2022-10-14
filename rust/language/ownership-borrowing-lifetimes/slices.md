@@ -81,7 +81,7 @@ Because **string literals** are **string slices** already, it is possible to pas
 
 ## Get last element of dynamically growing collection
 There are 2 ways to access to the last lement of collection:
-1. Using slices:
+1. Calling ``last`` on **slice**:
 ```Rust
 fn main() {
     let mut v = vec![1,2,3,4,5];
@@ -91,7 +91,7 @@ fn main() {
     println!("{:?}", &v[..].last());
 }
 ```
-2. Using ``last_mut`` method. 
+2. Calling ``last`` or ``last_mut`` on ``Vec`` directly:
 ```Rust
 fn main() {
     let v = &mut vec![0, 1, 2];
