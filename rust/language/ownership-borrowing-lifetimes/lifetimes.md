@@ -102,6 +102,8 @@ fn main() {
 }
 ```
 
+<br>
+
 ## 'static
 The lifetime named ``'static`` is a special lifetime. It signals that something has the **lifetime of the entire program**. For example, ``&'static str`` is equal to ``&str``.
 
@@ -114,6 +116,8 @@ fn create_string() -> &'static str {
     &s
 }
 ```
+
+<br>
 
 ## Lifetime subtyping
 Consider following code:
