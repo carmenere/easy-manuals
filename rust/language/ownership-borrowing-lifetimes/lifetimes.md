@@ -1,14 +1,14 @@
 # Lifetime
 A **lifetime** is the **scope** within which a **reference** is **valid**.<br>
 
-The ``'a`` is read the **lifetime** ``a``.<br>
+The lifetime notation is ``'a`` and it is **lifetime** ``a``.<br>
 
 Technically, **every reference** **has** some **lifetime** associated with it, but the compiler lets you **elide** them in common cases.<br>
 It is called **lifetime elision** or **implicit lifetime annotation**. It is because the Rust compiler is smart enough to infer lifetimes in many cases.<br>
-But sometimes it is needed to specify lifetimes **explicitly**. That’s because of how the lifetime elision works. When a function accepts **multiple references**, they’re **each** given **their own lifetime**.<br>
+But sometimes it is needed to specify lifetimes **explicitly**. That’s because of how the lifetime elision works.<br>
+When a function accepts **multiple references**, they’re **each** given **their own lifetime**.<br>
 
-From Rust point of view, signature:``fn f (s1: &str, s2: &str) → &str ``<br>
-is **equal** to signature:``fn f<'a, 'b> (s1: &'a str, s2: &'b str) → &'??? str``<br>
+From Rust point of view, signature:``fn f (s1: &str, s2: &str) → &str `` is **equal** to signature:``fn f<'a, 'b> (s1: &'a str, s2: &'b str) → &'??? str``<br>
 
 So, rustc sets to ``s1`` and ``s2`` **different** lifetimes and rustc **doesn't** know what lifetime to assign to **returning value**.<br>
 That is why compiler return error. So we must **explicitly** set lifetimes for input and output parameters.<br>
