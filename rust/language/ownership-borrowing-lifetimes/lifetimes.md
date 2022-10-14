@@ -105,8 +105,7 @@ fn main() {
 <br>
 
 ## 'static
-The lifetime named ``'static`` is a special lifetime. It signals that something has the **lifetime of the entire program**. For example, ``&'static str`` is equal to ``&str``.
-
+The lifetime named ``'static`` is a special lifetime. It signals that something has the **lifetime of the entire program**.<br>
 **String literal** has the type ``&str``, but under the hood, ``&str`` is ``&'static str`` because the **reference** is **always alive**: it's **hardcoded into the data segment of the final binary**.
 
 ``'static`` *lifetime* **allows return reference to value from function**:
