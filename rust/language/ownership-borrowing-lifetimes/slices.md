@@ -106,5 +106,5 @@ fn main() {
 <br>
 
 Notes:
- - ``last_mut`` returns a **mutable pointer** to the **last item** in the collection;
- - ``last_mut`` signature: ``pub fn last_mut(&mut self) -> Option<&mut T>``;
+ - ``last_mut`` method returns a **mutable pointer** to the **last item** in the collection;
+ - signature of ``last_mut`` method: ``pub fn last_mut(&mut self) -> Option<&mut T>``.
