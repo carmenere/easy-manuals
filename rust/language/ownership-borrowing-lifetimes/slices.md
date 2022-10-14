@@ -59,7 +59,7 @@ We could use that value 5 with the variable ``s`` to try to extract the first wo
 <br>
 
 ## String slice
-**String slice** is a reference to part of a ``String``. **String slice** is denoted as ``&str``.<br>
+**String slice** is a reference to part of a ``String``.<br>
 
 Example:
 ```Rust
