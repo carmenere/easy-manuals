@@ -1,7 +1,7 @@
 # Lifetime
 A **lifetime** is the **scope** within which a **reference** is **valid**.<br>
 
-The lifetime notation is ``'a`` and it is **lifetime** ``a``.<br>
+The notation ``'a`` is **lifetime** ``a``.<br>
 
 Technically, **every reference** **has** some **lifetime** associated with it, but the compiler lets you **elide** them in common cases.<br>
 It is called **lifetime elision** or **implicit lifetime annotation**. It is because the Rust compiler is smart enough to infer lifetimes in many cases.<br>
