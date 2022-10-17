@@ -39,6 +39,7 @@ fn main() {
 
 </td>
     </tr>
+    <tr></tr>
     <tr>
         <td>Generic function</td>
 <td>
@@ -76,6 +77,7 @@ fn main() {
 
 </td>
     </tr>
+    <tr></tr>
     <tr>
         <td>Generic enum</td>
 <td>
@@ -89,6 +91,7 @@ enum Colors<T> {
 
 </td>
     </tr>
+    <tr></tr>
     <tr>
         <td>Generic trait</td>
 <td>
