@@ -92,7 +92,7 @@ error: could not compile `playrs` due to previous error
 
 <br>
 
-## Overlapping Rule
+## Overlapping rule
 **Rule**: You can never have two ``impl`` of **the same trait** for **the same type**.<br>
 
 - This implementation will **not** compile:
