@@ -119,7 +119,10 @@ fn main() {
 ```
 
 <br>
-When a **trait** has a <b>generic parameter</b>, it can be implemented for a some type, e.g., ``Mytype`` **multiple times**, changing the concrete types of the generic type parameters each time, example:
+
+
+When a <b>trait</b> has a <b>generic parameter</b>, it can be implemented for a some type, e.g., ``Mytype`` <b>multiple times</b>, changing the concrete types of the generic type parameters each time, example:
+
 
 ```Rust
 trait SomeTrait<T> {
