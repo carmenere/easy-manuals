@@ -108,6 +108,8 @@ fn get_animal(rand_number: f64) -> Box<dyn Animal> {
 }
 ```
 
+<br>
+
 # Associated Types
 When using **generics** **control** *over* **type var** is **on calling side** and compiler decides which concrete type will be used instead ``T``.<br>
 
