@@ -36,6 +36,7 @@ fn main() {
     let float = Point {x: 1.0, y: 4.0};
 }
 ```
+
         </td>
     </tr>
     <tr>
@@ -72,6 +73,7 @@ fn main() {
     // bark(cat); → ERROR
 }
 ```
+
         </td>
     </tr>
     <tr>
@@ -89,6 +91,7 @@ enum Colors<T> {
     <tr>
         <td>Generic trait</td>
         <td>
+
 ```Rust
 #[allow(unused_variables)]
 #[allow(unused_assignments)]
@@ -113,6 +116,7 @@ fn main() {
     // println!("sum float = {}", b.sum()); → ERROR, not implemented for float!
 }
 ```
+
 <br>
 When a **trait** has a **generic parameter**, it can be implemented for a some type, e.g., ``Mytype`` **multiple times**, changing the concrete types of the generic type parameters each time, example:
 
@@ -133,6 +137,7 @@ impl SomeTrait<f64> for Mytype {
     };
 }
 ```
+
         </td>
     </tr>
 </table>
