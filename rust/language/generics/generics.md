@@ -21,6 +21,7 @@ fn bark<T: Bark> (b: T) { ... }
         <th>Kind</th>
         <th>Example</th>
     </tr>
+    <tr></tr>
     <tr>
         <td>Generic struct</td>
 <td>
