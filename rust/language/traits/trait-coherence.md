@@ -54,6 +54,7 @@ Rust enforces **trait coherence** through **2 rules**:
 
 For example, ``impl<T: Debug>`` trait for ``T`` overlaps with ``impl<T: Display>`` trait for ``T`` because some types might implement both ``Debug`` and ``Display``, so you can't write both.
 
+<br>
 
 ## Orphan rule
 **Rule**: ``impl SomeTrait for SomeType`` is valid if:
