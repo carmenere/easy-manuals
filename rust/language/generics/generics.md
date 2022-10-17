@@ -23,7 +23,7 @@ fn bark<T: Bark> (b: T) { ... }
     </tr>
     <tr>
         <td>Generic struct</td>
-        <td>
+<td>
 
 ```Rust
 struct Point<T, V> {
@@ -37,11 +37,11 @@ fn main() {
 }
 ```
 
-        </td>
+</td>
     </tr>
     <tr>
         <td>Generic function</td>
-        <td>
+<td>
 
 ```Rust
 trait Bark {
@@ -74,11 +74,11 @@ fn main() {
 }
 ```
 
-        </td>
+</td>
     </tr>
     <tr>
         <td>Generic enum</td>
-        <td>
+<td>
 
 ```Rust
 enum Colors<T> {
@@ -86,11 +86,12 @@ enum Colors<T> {
     Blue(T)
 }
 ```
-        </td>
+
+</td>
     </tr>
     <tr>
         <td>Generic trait</td>
-        <td>
+<td>
 
 ```Rust
 #[allow(unused_variables)]
@@ -138,6 +139,6 @@ impl SomeTrait<f64> for Mytype {
 }
 ```
 
-        </td>
+</td>
     </tr>
 </table>
