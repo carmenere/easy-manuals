@@ -18,8 +18,8 @@ fn bark<T: Bark> (b: T) { ... }
 ## Generic kinds
 <table>
     <tr>
-        <th>**Kind**</th>
-        <th>**Example**</th>
+        <th>Kind</th>
+        <th>Example</th>
     </tr>
     <tr>
         <td>Generic struct</td>
