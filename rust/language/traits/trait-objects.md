@@ -4,7 +4,7 @@
 
 <br>
 
-``dyn Trait`` **reference** contains **2 pointers**: 
+``dyn SomeTrait`` **reference** contains **2 pointers**: 
 - a pointer to an **instance** **of** a **type** ``T`` that implements ``SomeTrait``; 
 - a pointer to an ``T``'s **vtable**. 
 

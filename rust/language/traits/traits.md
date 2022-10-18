@@ -111,7 +111,7 @@ fn get_animal(rand_number: f64) -> Box<dyn Animal> {
 <br>
 
 # Associated Types
-When using **generics** **control** *over* **type var** is **on calling side** and compiler decides which concrete type will be used instead ``T``.<br>
+When using *generics* **control over type var** is **on calling side** and **compiler decides** which concrete type will be used instead ``T``.<br>
 
 **Associated type** is **type** that is **controlled** inside **implemetation** of **trait**.<br>
 
@@ -142,7 +142,10 @@ impl Iterator for MyType {
 }
 ```
 
-What is the difference between using **generics** and **associated types**?
+<br>
+
+# Generics vs. Associated types
+What is the difference between using **generics** and **associated types**?<br>
 
 Version of trait ``Iterator`` with **type var**:
 ```Rust
@@ -151,9 +154,7 @@ pub trait Iterator<T> {
 }
 ```
 
-<br>
-
-# Generics vs. Associated types
+Generics vs. Associated types:
 - When using **generics** we must annotate the types in each implementation.<br>
 - We can have **multiple implementations** of ``Iterator`` for ``MyType``, in other words, when a trait has a **generic parameter**, it can be implemented for a type **multiple times**, changing the concrete types of the **generic type parameters** each time.<br>
 - With **associated types**, we don’t need to annotate types because we **can’t** implement a trait on a type **multiple times**.<br>
