@@ -65,7 +65,7 @@ Rust calls ``deref`` again to turn the ``&String`` into ``&str``, which matches 
 
 <br>
 
-# How Deref Coercion interacts with mutability
+# How Deref coercion interacts with mutability
 
 Similar to how you use the ``Deref`` trait to override the ``*`` operator on **immutable** **references**, you can use the ``DerefMut`` trait to override the ``*`` operator on **mutable** **references**.
 
