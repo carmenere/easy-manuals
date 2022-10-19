@@ -70,7 +70,7 @@ Rust calls ``deref`` again to turn the ``&String`` into ``&str``, which matches 
 Similar to how you use the ``Deref`` trait to override the ``*`` operator on **immutable** **references**, you can use the ``DerefMut`` trait to override the ``*`` operator on **mutable** **references**.
 
 Rust does **deref coercion** when it finds types and trait implementations in three cases:
-- from ``&T``     to ``&U ``    if ``T: Deref<Target=U>``;
+- from ``&T``     to ``&U``    if ``T: Deref<Target=U>``;
 - from ``&mut T`` to ``&mut U`` if ``T: DerefMut<Target=U>``;
 - from ``&mut T`` to ``&U``     if ``T: Deref<Target=U>``.
 
