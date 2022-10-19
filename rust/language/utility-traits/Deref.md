@@ -76,9 +76,9 @@ Rust does **deref coercion** when it finds types and trait implementations in th
 
 <br>
 
-The first case states that if you have a ``&T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U`` **transparently**. 
-The second case states that if you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, you can get a ``&mut U`` **transparently**.
-The third case states that if you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U``. Rust will also coerce a **mutable** reference to an **immutable** one. 
+The first case states that if you have a ``&T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U`` **transparently**.<br>
+The second case states that if you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, you can get a ``&mut U`` **transparently**.<br>
+The third case states that if you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U``. Rust will also coerce a **mutable** reference to an **immutable** one.
 
 <br>
 
