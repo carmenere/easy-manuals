@@ -1,5 +1,5 @@
 # Interior mutability
-**Interior mutability** is **property of type** that allows to **change internal** state even instance of such type was declared as **immutable**.
+**Interior mutability** is **property of type** that allows to **change internal** state even if instance of such type was declared as **immutable**.
 There are 2 types that allow implement **interior mutability**: ``Cell<T>`` and ``RefCell<T>``.
 
 <br>
