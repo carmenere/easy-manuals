@@ -107,9 +107,9 @@ Rust performs following **deref chain**:
 Rust performs **deref coercion** in three cases:
 |From => To|Trait boudary|Description|
 |:---------|:-------------|:----------|
-|``&T`` => ``&U``|if ``T: Deref<Target=U>``|If you have a ``&T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U`` **transparently**|
-|``&mut T`` => ``&mut U``|if ``T: DerefMut<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, you can get a ``&mut U`` **transparently**|
-|``&mut T`` => ``&U``|if ``T: Deref<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U``. Rust will also **coerce** a **mutable** reference to an **immutable** one|
+|``&T`` => ``&U``|if ``T: Deref<Target=U>``|If you have a ``&T``, and ``T`` implements ``Deref`` to some type ``U``, compiler will **coerce** ``&T`` into ``&U`` **transparently**.|
+|``&mut T`` => ``&mut U``|if ``T: DerefMut<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, compiler will **coerce** ``&mut T`` into ``&mut U`` **transparently**.|
+|``&mut T`` => ``&U``|if ``T: Deref<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, compiler will **coerce** ``&mut T`` into ``&U`` **transparently**.|
 
 <br>
 
