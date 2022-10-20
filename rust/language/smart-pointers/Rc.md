@@ -2,10 +2,9 @@
 In the majority of cases, ownership is clear: you know exactly which variable owns a given value.<br>
 However, there are cases when a single value might have multiple owners.<br>
 
-To enable multiple ownership there is type ``Rc<T>`` in Rust. **Rc** is abbreviation for **reference counting**.<br>
-Using ``Rc<T>`` allows a **single value** to have **multiple owners**, and the **count** ensures that the value remains valid as long as any of the owners still exist.<br>
+To enable **multiple ownership** there is type ``Rc<T>`` in Rust, **Rc** is abbreviation for **reference counting**.<br>
 
-We use the ``Rc<T>`` type when we want to allocate some data on the heap for multiple parts of our program to read and we can’t determine at compile time which part will finish using the data last.<br>
+In other words, we use the ``Rc<T>`` type when we want to allocate some data on the heap for **multiple** parts of our program to read and we **can’t** determine *at compile time* which part will finish using the data last.<br>
 
 **Note** that ``Rc<T>`` is only for use in **single-threaded** scenarios.<br>
 

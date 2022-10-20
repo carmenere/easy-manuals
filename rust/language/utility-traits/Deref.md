@@ -3,22 +3,25 @@
 
 <br>
 
-# Dereferenceable types
-What types can be **dereferenced**?
-A type can be **dereferenced** if it **reference** type.<br>
+# Reference type and Dereferenceable type
+What types can be **dereferenced**?<br>
+A type can be **dereferenced** if it **dereferenceable type**.<br>
+**Dereferenceable type** is a type that implements the ``Deref`` and/or ``DerefMut`` traits.<br>
+**Reference type** is a type of **reference** that was created by ``&`` **reference operator**. Compiler automatically adds ``Deref`` and/or ``DerefMut`` traits for **reference types**.<br>
+So, **reference type** is **dereferenceable type**.<br>
+
 Non-pointer types like ``bool`` or ``char`` or ``(u8, u8)`` **cannot** be **dereferenced**: they **don't** implement the ``Deref`` trait and **don't** act like pointers to some other type.<br>
 
 ```Rust
 fn foo(b: &bool) -> bool { *b }
 ```
 
-All **dereferenceable types** implement the ``Deref`` and/or ``DerefMut`` traits, and can be **dereferenced** with the ``*`` operator.<br>
-
 <br>
 
 # ``Deref`` trait
-Path to ``Deref`` trait is ``std::ops::Deref``.
+Path to ``Deref`` trait is ``std::ops::Deref``. <br>
 
+Defenition of traint:
 ```Rust
 pub trait Deref {
     type Target: ?Sized;
@@ -27,8 +30,30 @@ pub trait Deref {
 }
 ```
 
+### Example
+```Rust
+use std::ops::Deref;
+
+struct DerefExample<T> {
+    value: T
+}
+
+impl<T> Deref for DerefExample<T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        &self.value
+    }
+}
+
+let x = DerefExample { value: 'a' };
+assert_eq!('a', *x);
+```
+
+<br>
+
 ``deref`` method returns a **reference** to the value we want to access with the ``*`` operator.<br>
-Without the ``Deref`` trait, the compiler can only **dereference** ``& references``.<br>
+Without the ``Deref`` trait, the compiler can only **dereference** **reference type**.<br>
 The ``deref`` method gives the compiler the ability to take a value of any type that implements ``Deref`` and call the ``deref`` method to get a ``& reference`` that it knows how to dereference.
 
 When we type ``*y`` in our code, behind the scenes Rust actually converts it to: ``*(y.deref())``.<br>
