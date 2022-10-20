@@ -82,8 +82,9 @@ fn main() {
 ```
 
 Here we’re calling the ``hello`` function with the argument ``&m``, which is a **reference** to a ``MyBox<String>`` value.<br>
-Because we implemented the ``Deref`` trait on ``MyBox<T>``, Rust can turn ``&MyBox<String>`` into ``&String`` by calling ``deref`` method.<br>
-The standard library provides an implementation of ``Deref`` on ``String`` that returns a ``string slice``, and Rust calls ``deref`` again to turn the ``&String`` into ``&str``, which matches the ``hello`` function’s definition.<br>
+Rust performs following **deref chain**: 
+- ``&MyBox<String>`` -> ``&String`` (because ``MyBox<T>`` implements ``Deref`` trait such that it returns ``&String``);
+- ``&String`` -> ``&str`` (because ``String`` implements ``Deref`` trait such that it returns ``&str``).
 
 <br>
 
