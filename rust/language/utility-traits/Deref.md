@@ -77,10 +77,9 @@ When we type ``*y`` in our code, behind the scenes Rust actually converts it to:
 <br>
 
 # Deref coercion
-**Deref coercion** converts a *reference* to a **type** that implements the ``Deref`` trait into a *reference* to **another type**.
-For example, **deref coercion** can convert ``&String`` to ``&str`` because ``String`` implements the ``Deref`` trait such that it returns ``&str``.
+**Deref coercion** converts a *reference* to a **dereferenceable type** into a *reference* to **another type**.
 
-To see **deref coercion** in action, consider following function that has the parameter name of type ``&str``:
+To see **deref coercion** in action, consider function ``hello`` that has the parameter ``name`` of type ``&str``:
 ```Rust
 fn hello(name: &str) {
     println!("Hello, {name}!");
