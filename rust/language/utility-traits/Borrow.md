@@ -18,23 +18,7 @@ trait BorrowMut<Borrowed: ?Sized> {
 ```
 
 ### Example
-Consider collection ``HashMap``:
-```Rust
-struct HashMap<K, V, S = RandomState> { ... }
-```
-
-The ``K`` parameter is the type of **key**. 
-
-``HashMap`` has a get method ``get``:
-```Rust
-fn get<Q: ?Sized>(&self, k: &Q) -> Option<&V>
-    where K: Borrow<Q>,
-          Q: Hash + Eq
-```
-
-We can use ``get(key: Q)`` when the key implements ``Borrow<Q>``.<br>
-
-That way, we can make a ``HashMap`` which inserts ``String`` keys, but uses ``&strs`` for searching:
+We can **insert** **key** of ``String`` type into ``HashMap`` and then use **key** of ``&strs`` type for **searching**:
 ```Rust
 use std::collections::HashMap;
 
