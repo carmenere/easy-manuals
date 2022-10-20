@@ -8,7 +8,7 @@
 
 In other words, for types ``A`` and ``B``:
 - ``impl AsRef<B> for A`` indicates that a ``A`` can be converted to a ``&B``.
-- ``impl AsMut<B> for A`` indicates that a ``mut A`` can be converted to a ``&mut B``.
+- ``impl AsMut<B> for A`` indicates that a ``A`` can be converted to a ``&mut B``.
 
 This is useful for **performing** *type conversions* **without** **copying** or **moving** values.<br>
 
