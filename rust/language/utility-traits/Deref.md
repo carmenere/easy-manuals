@@ -103,20 +103,13 @@ Rust performs following **deref chain**:
 
 <br>
 
-# How Deref coercion interacts with mutability
-
-Similar to how you use the ``Deref`` trait to override the ``*`` operator on **immutable** **references**, you can use the ``DerefMut`` trait to override the ``*`` operator on **mutable** **references**.
-
-Rust does **deref coercion** when it finds types and trait implementations in three cases:
-- from ``&T``     to ``&U``    if ``T: Deref<Target=U>``;
-- from ``&mut T`` to ``&mut U`` if ``T: DerefMut<Target=U>``;
-- from ``&mut T`` to ``&U``     if ``T: Deref<Target=U>``.
-
-<br>
-
-The **first** case states that if you have a ``&T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U`` **transparently**.<br>
-The **second** case states that if you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, you can get a ``&mut U`` **transparently**.<br>
-The **third** case states that if you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U``. Rust will also coerce a **mutable** reference to an **immutable** one.
+# Deref coercion cases
+Rust performs **deref coercion** in three cases:
+|From|To|Implementation|Description|
+|:---|:-|:-------------|:----------|
+|From ``&T``|To ``&U``|If ``T: Deref<Target=U>``|If you have a ``&T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U`` **transparently**|
+|From ``&mut T``|To ``&mut U``|If ``T: DerefMut<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, you can get a ``&mut U`` **transparently**|
+|From ``&mut T``|To ``&U``|If ``T: Deref<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U``. Rust will also **coerce** a **mutable** reference to an **immutable** one|
 
 <br>
 
