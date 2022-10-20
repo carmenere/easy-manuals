@@ -105,11 +105,11 @@ Rust performs following **deref chain**:
 
 # Deref coercion cases
 Rust performs **deref coercion** in three cases:
-|From|To|Implementation|Description|
-|:---|:-|:-------------|:----------|
-|From ``&T``|To ``&U``|If ``T: Deref<Target=U>``|If you have a ``&T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U`` **transparently**|
-|From ``&mut T``|To ``&mut U``|If ``T: DerefMut<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, you can get a ``&mut U`` **transparently**|
-|From ``&mut T``|To ``&U``|If ``T: Deref<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U``. Rust will also **coerce** a **mutable** reference to an **immutable** one|
+|From => To|Trait boudary|Description|
+|:---------|:-------------|:----------|
+|``&T`` => ``&U``|if ``T: Deref<Target=U>``|If you have a ``&T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U`` **transparently**|
+|``&mut T`` => ``&mut U``|if ``T: DerefMut<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, you can get a ``&mut U`` **transparently**|
+|``&mut T`` => ``&U``|if ``T: Deref<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, you can get a ``&U``. Rust will also **coerce** a **mutable** reference to an **immutable** one|
 
 <br>
 
