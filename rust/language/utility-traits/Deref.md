@@ -19,6 +19,7 @@ fn foo(b: &bool) -> bool { *b }
 <br>
 
 # ``Deref`` trait
+``Deref`` trait is used for **immutable** dereferencing operations, like ``let v = *s;``.<br>
 Path to ``Deref`` trait in **std**: ``std::ops::Deref``. <br>
 
 **Defenition** of ``Deref`` trait:
@@ -57,6 +58,21 @@ Without the ``Deref`` trait, the compiler can only **dereference** **reference t
 The ``deref`` method gives the compiler the ability to take a value of any type that implements ``Deref`` and call the ``deref`` method to get a **reference type** that it knows how to dereference.
 
 When we type ``*y`` in our code, behind the scenes Rust actually converts it to: ``*(y.deref())``.<br>
+
+<br>
+
+# ``DerefMut`` trait
+``DerefMut`` trait is used for **mutable** dereferencing operations, like ``*v = 5;``.<br>
+Path to ``DerefMut`` trait in **std**: ``std::ops::DerefMut``. <br>
+
+**Defenition** of ``Deref`` trait:
+```Rust
+pub trait DerefMut: Deref {
+    fn deref_mut(&mut self) -> &mut Self::Target;
+}
+```
+
+When we type ``*y`` in our code, behind the scenes Rust actually converts it to: ``*(y.deref_mut())``.<br>
 
 <br>
 
