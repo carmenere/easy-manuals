@@ -111,10 +111,12 @@ Rust performs **deref coercion** in three cases:
 |``&mut T`` => ``&mut U``|if ``T: DerefMut<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``DerefMut`` to some type ``U``, compiler will **coerce** ``&mut T`` into ``&mut U`` **transparently**.|
 |``&mut T`` => ``&U``|if ``T: Deref<Target=U>``|If you have a ``&mut T``, and ``T`` implements ``Deref`` to some type ``U``, compiler will **coerce** ``&mut T`` into ``&U`` **transparently**.|
 
+**Note**, that compiler **will not** *coerce* **immutable** *reference* to **mutable** *reference*.
+
 <br>
 
 # Dot ``.`` operator
-When you use dot operator ``.``, the compiler will insert as many ``*`` (dereferencing operations) as necessary to find the appropriate method. As **this happens** **at compile tim**e, there is **no** **runtime cost** of finding the method.
+When you use **dot operator** ``.``, the compiler will insert as many ``*`` (dereferencing operations) as necessary to find the appropriate method. As **this happens** **at compile tim**e, there is **no** **runtime cost** of finding the method.
 
 For example, if ``x`` has type ``&i32``, then writing ``x.count_ones()`` is shorthand for ``(*x).count_ones()``, because the ``count_ones`` method requires an ``i32``.
 
