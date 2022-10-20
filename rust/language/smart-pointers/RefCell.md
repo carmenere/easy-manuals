@@ -10,10 +10,12 @@ Path to type in **std**: ``std::cell::RefCell``.
 
 Some usefull methods of ``RefCell<T>`` methods:
 - ``RefCell::new(somevalue)`` creates new ``RefCell``, moving value ``somevalue`` into it;
-- ``.borrow()`` returns **shared reference** to value inside ``RefCell``; panics if the value is already **mutably** *borrowed*;
-- ``.borrow_mut()`` returns **mutable reference **to value in ``RefCell``; panics if the value is already *borrowed*;
-- ``.try_borrow()`` returns ``Result``, if the value is already **mutably** *borrowed* it returns ``Err``;
-- ``.try_borrow_mut()`` returns ``Result``, if the value is already *borrowed* it returns ``Err``.
+- ``.borrow()`` returns **shared reference** to value inside ``RefCell``; panics if the value is **already** **mutably** *borrowed*;
+- ``.borrow_mut()`` returns **mutable reference** to value in ``RefCell``; panics if the value is **already** *borrowed*;
+- ``.try_borrow()`` returns ``Result``, returns ``Err`` if the value is already **mutably** *borrowed*;
+- ``.try_borrow_mut()`` returns ``Result``, returns ``Err`` if the value is **already** *borrowed*.
+
+<br>
 
 ### Example
 ```Rust
@@ -63,7 +65,7 @@ fn main() {
 }
 ```
 
-Output:
+**Output**:
 ```bash
 string: abc
 string: abc!
