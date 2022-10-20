@@ -58,8 +58,6 @@ The ``deref`` method gives the compiler the ability to take a value of any type 
 
 When we type ``*y`` in our code, behind the scenes Rust actually converts it to: ``*(y.deref())``.<br>
 
-Rust substitutes the ``*`` operator with a call to the ``deref`` method and then a plain dereference so we don’t have to think about whether or not we need to call the ``deref`` method. 
-
 <br>
 
 # Deref coercion
