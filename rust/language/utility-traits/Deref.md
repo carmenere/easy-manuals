@@ -19,9 +19,9 @@ fn foo(b: &bool) -> bool { *b }
 <br>
 
 # ``Deref`` trait
-Path to ``Deref`` trait is ``std::ops::Deref``. <br>
+Path to ``Deref`` trait in **std**: ``std::ops::Deref``. <br>
 
-Defenition of traint:
+**Defenition** of ``Deref`` trait:
 ```Rust
 pub trait Deref {
     type Target: ?Sized;
@@ -52,9 +52,9 @@ assert_eq!('a', *x);
 
 <br>
 
-``deref`` method returns a **reference** to the value we want to access with the ``*`` operator.<br>
-Without the ``Deref`` trait, the compiler can only **dereference** **reference type**.<br>
-The ``deref`` method gives the compiler the ability to take a value of any type that implements ``Deref`` and call the ``deref`` method to get a ``& reference`` that it knows how to dereference.
+``deref`` method returns a **reference** to the value we want to access with the ``*`` **dereference operator**.<br>
+Without the ``Deref`` trait, the compiler can only **dereference** **reference types**.<br>
+The ``deref`` method gives the compiler the ability to take a value of any type that implements ``Deref`` and call the ``deref`` method to get a **reference type** that it knows how to dereference.
 
 When we type ``*y`` in our code, behind the scenes Rust actually converts it to: ``*(y.deref())``.<br>
 
