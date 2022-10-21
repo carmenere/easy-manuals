@@ -124,7 +124,7 @@ fn expect(self, msg: &str) -> T
 <td>
 
 ```Rust
-unwrap_or_else<F>(self, f: F) -> T
+fn unwrap_or_else<F>(self, f: F) -> T
 where
     F: FnOnce() -> T
 
