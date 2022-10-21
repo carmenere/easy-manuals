@@ -17,7 +17,6 @@ The `if let` construct reads: if ``let`` destructures ``some_value`` into ``Some
 <br>
 
 # Combinators for ``Option`` type
-## Links
 - https://doc.rust-lang.org/std/option/
 
 <br>
