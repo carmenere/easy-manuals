@@ -157,24 +157,6 @@ fn unwrap_or(self, default: T) -> T
 <td>
 
 ```Rust
-fn expect(self, msg: &str) -> T
-```
-
-</td>
-<td>
-
-- If the result is ``Some(v)`` returns **inner value** of type ``T``.
-- If the result is ``None`` **panics** with a **custom message** provided by ``msg``.
-
-</td>
-</tr>
-
-<tr></tr>
-
-<tr>
-<td>
-
-```Rust
 fn unwrap_or_else<F>(self, f: F) -> T
 where
     F: FnOnce() -> T
@@ -186,24 +168,6 @@ where
 
 - If the result is ``Some(v)`` returns **inner value** of type ``T``.
 - If the result is ``None`` calls **closure** ``f()`` and returns **its result** of type ``T``.
-
-</td>
-</tr>
-
-<tr></tr>
-
-<tr>
-<td>
-
-```Rust
-fn expect(self, msg: &str) -> T
-```
-
-</td>
-<td>
-
-- If the result is ``Some(v)`` returns **inner value** of type ``T``.
-- If the result is ``None`` **panics** with a **custom message** provided by ``msg``.
 
 </td>
 </tr>

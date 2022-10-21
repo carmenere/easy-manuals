@@ -201,24 +201,6 @@ where
 <td>
 
 ```Rust
-fn expect(self, msg: &str) -> T
-```
-
-</td>
-<td>
-
-- If the result is ``Ok(v)`` returns **inner value** ``v`` of type ``T``.
-- If the result is ``Err(e)`` **panics** with a **custom message** provided by ``msg``.
-
-</td>
-</tr>
-
-<tr></tr>
-
-<tr>
-<td>
-
-```Rust
 fn unwrap_or_default(self) -> T
 where
     T: Default
