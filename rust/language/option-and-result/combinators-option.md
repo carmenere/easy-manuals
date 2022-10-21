@@ -14,7 +14,7 @@
 <td>
 
 ```Rust
-fn is_some() -> bool
+fn is_some(&self) -> bool
 ```
 
 </td>
@@ -32,7 +32,7 @@ If the ``self`` is ``None`` it returns ``false``.<br>If the ``self`` is ``Some(t
 <td>
 
 ```Rust
-fn is_none() -> bool
+fn is_none(&self) -> bool
 ```
 
 </td>

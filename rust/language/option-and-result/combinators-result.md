@@ -14,7 +14,7 @@
 <td>
 
 ```Rust
-fn is_ok() -> bool
+fn is_ok(&self) -> bool
 ```
 
 </td>
@@ -32,7 +32,7 @@ If the ``self`` is ``Err`` it returns ``false``.<br>If the ``self`` is ``Ok`` it
 <td>
 
 ```Rust
-fn is_err() -> bool
+fn is_err(&self) -> bool
 ```
 
 </td>
