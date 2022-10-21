@@ -303,11 +303,11 @@ The ``and_then()`` and ``or_else()`` methods take a function ``f`` as input, and
 ```Rust
 fn and<U>(self, optb: Option<U>) -> Option<U>;
 
+fn or(self, optb: Option<T>) -> Option<T>;
+
 fn and_then<U, F>(self, f: F) -> Option<U>
 where
     F: FnOnce(T) -> Option<U>;
-
-fn or(self, optb: Option<T>) -> Option<T>;
 
 fn or_else<F>(self, f: F) -> Option<T>
 where
