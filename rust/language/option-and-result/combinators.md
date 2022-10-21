@@ -267,7 +267,7 @@ where
 
 <br>
 
-### Transform Option<> to Option<>:
+### Transform ``Option<>`` to ``Option<>``:
 - ``map(f)``
     - if the ``self`` is ``None`` it returns ``None``;
     - if the ``self`` is ``Some(t)`` it transforms ``T`` into ``U`` by applying the provided function ``f`` to the value ``t`` of the ``Some`` variant.
@@ -282,7 +282,7 @@ where
 
 <br>
 
-### Transform an Option<T> into a value of a possibly different type U:
+### Transform an ``Option<T>`` into a value of a **possibly** **different** type ``U``:
 - ``map_or(default, f)``
     - if the ``self`` is ``Some(v)`` it applies the provided function ``f`` to the value ``t`` of the ``Some`` variant, where ``f(t)`` returns U;
     - if the ``self`` is ``None`` it returns the provided default value by default.
