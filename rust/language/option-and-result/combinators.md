@@ -37,13 +37,7 @@ The `if let` construct reads: if ``let`` destructures ``some_value`` into ``Some
 <br>
 
 # Methods for extracting the contained value
-|Method|Description|
-|:-----|:----------|
-|fn unwrap(self) -> T||
-|fn expect(self, msg: &str) -> T||
-|||
-|||
-|||
+
 
 <table>
     <tr>
@@ -174,3 +168,4 @@ where
 
 </td>
 </tr>
+</table>
