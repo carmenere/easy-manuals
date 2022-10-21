@@ -275,8 +275,8 @@ where
 - ``filter(f)``
     - if the ``self`` is ``None`` it returns ``None``.
     - if the ``self`` is ``Some(t)`` it applies the provided function ``f`` to the value ``t`` of the ``Some`` variant and returns:
-	``Some(t)`` if ``f(t)`` returns ``true``;
-	``None`` if ``f(t)`` returns ``false``.
+        - ``Some(t)`` if ``f(t)`` returns ``true``;
+        - ``None`` if ``f(t)`` returns ``false``.
 
 - ``flatten()`` converts from ``Option<Option<T>>`` to ``Option<T>``
 
@@ -284,9 +284,9 @@ where
 
 ### Transform an ``Option<T>`` into a value of a **possibly** **different** type ``U``:
 - ``map_or(default, f)``
-    - if the ``self`` is ``Some(v)`` it applies the provided function ``f`` to the value ``t`` of the ``Some`` variant, where ``f(t)`` returns U;
-    - if the ``self`` is ``None`` it returns the provided default value by default.
+    - if the ``self`` is ``Some(v)`` it applies the provided function ``f`` to the value ``t`` of the ``Some`` variant, where ``f(t)`` returns ``U``;
+    - if the ``self`` is ``None`` it returns the provided **default value** by default.
 
 - ``map_or_else(d, f) ``
     - if the ``self`` is ``Some(v)`` it applies the provided function ``f`` to the value ``t`` of the ``Some`` variant;
-    - if the ``self`` is ``None`` it returns d(), where d() returns value of type U.
+    - if the ``self`` is ``None`` it returns ``d()``, where ``d()`` returns value of type ``U``.
