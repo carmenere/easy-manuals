@@ -170,26 +170,6 @@ where
 <td>
 
 - If the result is ``Ok(v)`` returns **inner value** ``v`` of type ``T``.
-- If the result is ``Err(e)`` **panics** with a **custom message** provided by ``msg``.
-
-</td>
-</tr>
-
-<tr></tr>
-
-<tr>
-<td>
-
-```Rust
-fn unwrap_or_default(self) -> T
-where
-    T: Default
-```
-
-</td>
-<td>
-
-- If the result is ``Ok(v)`` returns **inner value** ``v`` of type ``T``.
 - If the result is ``Err(e)`` calls **closure** ``f()`` and returns **its result** of type ``T``.
 
 </td>
@@ -209,8 +189,8 @@ where
 </td>
 <td>
 
-- If the result is ``Ok(v)`` returns **inner value** ``v`` of type ``T``;
-- If the result is ``Err(e)`` returns the **default value** tor type ``T``. Type ``T`` must implement ``Default`` trait.
+- If the result is ``Ok(v)`` returns **inner value** ``v`` of type ``T``.
+- If the result is ``Err(e)`` returns the **default value** tor type ``T``. Type ``T`` must implement ``Default`` trait..
 
 </td>
 </tr>
