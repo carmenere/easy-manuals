@@ -110,7 +110,7 @@ Converts from ``&mut Option<T>`` to ``Option<&mut T>``.
 
 <br>
 
-# Methods for extracting the contained value
+## Methods for extracting the contained value
 <table>
     <tr>
         <th>Method</th>
@@ -247,3 +247,46 @@ where
 </tr>
 
 </table>
+
+<br>
+
+## Methods for transforming the contained value
+### Transform ``Option<>`` to ``Result<>``
+- ``ok_or(err)`` transforms ``Option<T>`` to ``Result<T, E>``:
+    - ``Some(v)`` to ``Ok(v)``;
+    - ``None`` to ``Err(err)``, where err of type ``E``.
+
+- ``ok_or_else(f)`` transforms ``Option<T>`` to ``Result<T, E>``:
+    - ``Some(v)`` => ``Ok(v)``
+    - ``None`` => ``f()``, where ``f()`` returns value of type ``E``.
+
+- ``transpose()`` transposes ``Option<Result<i32, E>>`` => ``Result<Option<i32>, E>``
+    - ``None`` => ``Ok(None)``
+    - ``Some(Ok(v))`` => ``Ok(Some(v)) ``
+    - ``Some(Err(e))`` => ``Err(e)``
+
+<br>
+
+### Transform Option<> to Option<>:
+- ``map(f)``
+    - if the ``self`` is ``None`` it returns ``None``;
+    - if the ``self`` is ``Some(t)`` it transforms ``T`` into ``U`` by applying the provided function ``f`` to the value ``t`` of the ``Some`` variant.
+
+- ``filter(f)``
+    - if the ``self`` is ``None`` it returns ``None``.
+    - if the ``self`` is ``Some(t)`` it applies the provided function ``f`` to the value ``t`` of the ``Some`` variant and returns:
+	``Some(t)`` if ``f(t)`` returns ``true``;
+	``None`` if ``f(t)`` returns ``false``.
+
+- ``flatten()`` converts from ``Option<Option<T>>`` to ``Option<T>``
+
+<br>
+
+### Transform an Option<T> into a value of a possibly different type U:
+- ``map_or(default, f)``
+    - if the ``self`` is ``Some(v)`` it applies the provided function ``f`` to the value ``t`` of the ``Some`` variant, where ``f(t)`` returns U;
+    - if the ``self`` is ``None`` it returns the provided default value by default.
+
+- ``map_or_else(d, f) ``
+    - if the ``self`` is ``Some(v)`` it applies the provided function ``f`` to the value ``t`` of the ``Some`` variant;
+    - if the ``self`` is ``None`` it returns d(), where d() returns value of type U.
