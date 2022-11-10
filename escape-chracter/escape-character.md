@@ -43,7 +43,7 @@ To display **control character** *escape character* must be used.
 Generally, an **escape character** is not **control characters**, nor vice versa.<br>
 
 ASCII table layout: 
-- ASCII reserves the **first** **32** codes (**from** *hex*:``0`` **to** *hex*:``1F``) and **last code** (*dec*:``127`` or *hex*:``7F``) as **NPC**. For example, character *hex*:``0A`` represents the **line feed**, and character *hex*:``0D`` represents **carriage return**.
+- ASCII reserves the **first** **32** codes (**from** *hex*:``0`` **to** *hex*:``1F``) and **last code** (*dec*:``127`` or *hex*:``7F``) as **NPC**, e.g., character *hex*:``0A`` represents the **line feed**, and character *hex*:``0D`` represents **carriage return**.
 - there are **95** **printable** characters in ASCII table, **from** *hex*:``20`` **to** *hex*:``7E``;
 
 <br>
@@ -52,6 +52,3 @@ Notes:
 - *in the telecommunications* escape sequences can be control sequencies if they have special meaning for device or terminal;
 - *in programming* *escape characters* are **graphic** and hence are **not** *control characters*. 
 - *control characters* that are **not** *used for escaping* other are **not** *escape characters*.
-
-<br>
-
