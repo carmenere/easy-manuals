@@ -71,7 +71,7 @@ echo $COLORTERM
 
 <br>
 
-### Bright** colors
+### Bright colors
 |**Color**|**FG** color code|**BG** color code|
 |:---------|:-----------|:------------|
 |Bright Black|``90``|``100``|
