@@ -34,7 +34,7 @@ ASCII code of character after ``^`` is equal to the **its control code + code of
 <br>
 
 #### Example
-**ASCII code** of ``ESC`` is ``[``, because ``0x1B`` + ``0x40`` = ``5B`` and ``5B`` code has symbol ``[``.<br>
+**ASCII code** of ``ESC`` is ``[``, because ``0x1B`` + ``0x40`` = ``5B`` and ``5B`` code corresponds to the ASCII character ``[``.<br>
 
 <br>
 
