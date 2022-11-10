@@ -71,6 +71,15 @@ echo $COLORTERM
 
 <br>
 
+#### Examples
+```bash
+ESC="\033"
+CSI="${ESC}["
+echo "${CSI}1;3;4;9;32;43m ABC"
+```
+
+<br>
+
 ### Bright colors
 |**Color**|**FG** color code|**BG** color code|
 |:---------|:-----------|:------------|
@@ -89,7 +98,7 @@ echo $COLORTERM
 ```bash
 ESC="\033"
 CSI="${ESC}["
-echo "${CSI}1;3;4;9;42;33m ABC"
+echo "${CSI}1;3;4;9;92;103m ABC"
 ```
 
 <br>
