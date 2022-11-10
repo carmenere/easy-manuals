@@ -6,7 +6,6 @@ In telecommunications:
 <br>
 
 # ANSI escape sequences
-
 **ANSI escape sequences** (or just **ANSI sequences**) are *character sequences* that starting with an **ASCII escape character**.<br>
 
 **ANSI escape sequences** are a standard for *in-band signaling* to control:
@@ -32,9 +31,12 @@ The **caret notation** of ``ESC`` **character**  is ``^[``.<br>
 The notation consists of a caret ``^`` followed by a **single printable character**.<br>
 ASCII code of character after ``^`` is equal to the **its control code + code of** ``A``.<br>
 
-#### Example
-**ASCII code** of ``ESC`` is ``[``, because ``0x1B`` + ``0x40`` = ``5B`` and ``5B`` code has symbol ``[``.
+<br>
 
+#### Example
+**ASCII code** of ``ESC`` is ``[``, because ``0x1B`` + ``0x40`` = ``5B`` and ``5B`` code has symbol ``[``.<br>
+
+<br>
 
 ## Sequences
 There are some types of **escape sequences**:
@@ -92,6 +94,8 @@ All *common sequences* just use the **parameters** as a **series** of **semicolo
 If **no** codes are given, ``CSI m`` is treated as ``CSI 0 m`` and means **reset all display attributes to their defaults**.<br>
 
 > **Note**: **Several** attributes can be set in the same sequence, separated by **semicolons**.<br>
+
+<br>
 
 #### Example
 Code below:
