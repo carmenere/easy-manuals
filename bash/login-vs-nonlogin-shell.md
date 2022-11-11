@@ -1,9 +1,13 @@
 # Modes of shell
 There are 4 **modes** of shell:
-|  |Login shell|Non-login shell|
-|:-|:----------|:--------------|
-|**Interactive shell**|- **Log** into a **remote** computer via `ssh`.<br>- **Log** into a **local** computer via `tty`.<br>- Run shell **with** `--login` or `-l` option.|Run shell **without** `--login` or `-l` option.|
-|**Non-interactive shell**|**Executing** or **sourcing** a script **with** `--login` or `-l` option.|**Executing** or **sourcing** a script **without** `--login` or `-l` option.|
+|Login shell||
+
+|Mode|Description|
+|:---|:----------|
+|**interactive** + **login** *shell*|- **Log** into a **remote** computer via `ssh`.<br>- **Log** into a **local** computer via `tty`.<br>- Run shell **with** `--login` or `-l` option.|
+|**interactive** + **non-login** *shell*|Run shell **without** `--login` or `-l` option.|
+|**non-interactive** + **login** *shell*|**Executing** or **sourcing** a script **with** `--login` or `-l` option.|
+|**non-interactive** + **non-login** *shell*|**Executing** or **sourcing** a script **without** `--login` or `-l` option.|
 
 <br>
 
@@ -53,4 +57,4 @@ So,
 
 <br>
 
-After **logout** with exit cmmand, bash sources file: `~/.bash_logout`.
+After **logout** with **exit** command, ``bash`` sources file: `~/.bash_logout`.
