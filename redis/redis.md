@@ -84,31 +84,21 @@ Rules about **keys**:
 ### Basic commands
 - `RENAME key newkey` renames `key` to `newkey`, it returns an **error** when `key` **does not exist**.
 - `EXISTS key [key ...]` returns the **number of keys that exist** from those specified as arguments.
-- `TTL key` returns TTL in seconds for key `key`.
-- `EXPIRE key seconds [NX | XX | GT | LT]` sets a **timeout** on key.
-- `PERSIST key` remove the existing timeout on key, turning the key from **volatile** to **persistent**.
+- `TTL key` returns:
+  - TTL in seconds for key `key`.
+  - `-2` if the `key` **does not exist**.
+  - `-1` if the `key` **exists** but **has no** *associated expire*.
+- `EXPIRE key seconds [NX | XX | GT | LT]` sets a **timeout** on `key`, returns:
+  - `1` if the timeout was set.
+  - `0` if the timeout was not set. e.g. `key` doesn't exist
+- `PERSIST key` remove the existing timeout on `key`, turning the `key` from **volatile** to **persistent**, returns:
+  - `1` if the timeout was removed.
+  - `0` if `key` does not exist or does not have an associated timeout.
 
-<br>
 
-`EXPIRE`:
+**Notes**:
 - After the timeout has expired, the key `key` will automatically be deleted. 
 - A key with an **associated timeout** is often said to be **volatile** in Redis terminology.
-- Returns:
-  - `1` if the timeout was set.
-  - `0` if the timeout was not set. e.g. key doesn't exist
-
-<br>
-
-`TTL`:
-- The command returns `-2` if the `key` **does not exist**.
-- The command returns `-1` if the `key` **exists** but **has no** *associated expire*.
-
-<br>
-
-`PERSIST`:
-- returns:
-  - `1` if the timeout was removed.
-  - `0` if key does not exist or does not have an associated timeout.
 
 <br>
 
@@ -229,9 +219,9 @@ EXEC
 - `LTRIM key start stop` reduces a list to the specified range of elements.
 - `LRANGE key start stop` returns the specified elements of the list stored at `key`. 
 
-Notes:
-- index `-1` is the **last** element of the list.
-- index `-2` the **penultimate** element of the list.
+> Notes:
+> - index `-1` is the **last** element of the list.
+> - index `-2` the **penultimate** element of the list.
 
 <br>
 
