@@ -216,9 +216,10 @@ EXEC
 
 <br>
 
-> Notes:
-> - index `-1` is the **last** element of the list.
-> - index `-2` the **penultimate** element of the list.
+> **Note**:
+> Special values for `stop` argument:
+> - `-1` is the **last** element of the list.
+> - `-2` the **penultimate** element of the list.
 
 <br>
 
