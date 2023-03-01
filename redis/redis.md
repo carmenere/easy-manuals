@@ -17,7 +17,7 @@ The **maximum** allowed key size is **512 MB**.<br>
 
 ### Basic commands
 - `SET key value [NX | XX] [GET] [EX seconds | PX milliseconds | EXAT unix-time-seconds | PXAT unix-time-milliseconds | KEEPTTL]` sets `key` to hold the string `value`.
-- `GET key` retrieves value of key `key`.
+- `GET key` retrieves value of key `key`, if the `key` does not exist it returns `nil`.
 - `INCR key` increments the number stored at `key` by one.
 - `DECR key` decrements the number stored at `key` by one.
 - `INCRBY key increment` increments the number stored at `key` by `increment`.
@@ -44,15 +44,9 @@ The **maximum** allowed key size is **512 MB**.<br>
 
 <br>
 
-`GET`:
-- If the key does not exist the special value `nil` is returned.
-- An **error** is returned if the value stored at key is **not a string**, because GET only handles string values.
-
-<br>
-
-`INCR`, `DECR`, `INCRBY`, `DECRBY`:
-- Redis does not have a dedicated integer type, so `INCR*` and `DECR*` operations interprets strings stored at the `key` as **64 bit signed integer** to execute the operation.
-
+> **Note**
+> - `GET` returns an **error** if the value stored at `key` is **not a string**, because `GET` only handles **string values**.
+> - Redis does not have a dedicated integer type, so `INCR*` and `DECR*` operations interprets strings stored at the `key` as **64 bit signed integer** to execute the operation.
 
 <br>
 
@@ -95,10 +89,11 @@ Rules about **keys**:
   - `1` if the timeout was removed.
   - `0` if `key` does not exist or does not have an associated timeout.
 
+<br>
 
-**Notes**:
-- After the timeout has expired, the key `key` will automatically be deleted. 
-- A key with an **associated timeout** is often said to be **volatile** in Redis terminology.
+> **Note**:
+> - After the timeout has expired, the key `key` will automatically be deleted. 
+> - A key with an **associated timeout** is often said to be **volatile** in Redis terminology.
 
 <br>
 
@@ -218,6 +213,8 @@ EXEC
 - `LMOVE` atomically moves elements from one list to another.
 - `LTRIM key start stop` reduces a list to the specified range of elements.
 - `LRANGE key start stop` returns the specified elements of the list stored at `key`. 
+
+<br>
 
 > Notes:
 > - index `-1` is the **last** element of the list.
