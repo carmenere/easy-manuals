@@ -214,16 +214,73 @@ EXEC
 <br>
 
 ## Lists
+### Overview
+**Redis lists** are *linked lists* of **string values**.
 
+<br>
+
+### Commands
+- `LPUSH key element [element ...]` **insert** all the specified `values` at the **head** of the list stored at `key`.
+- `RPUSH key element [element ...]` **insert** all the specified `values` at the **tail** of the list stored at `key`.
+- `LPOP key [count]` **removes** and returns the **first** elements of the list stored at `key`.
+- `RPOP key [count]` **removes** and returns the **last** elements of the list stored at `key`.
+- `LLEN key` returns the length of a list at `key`.
+- `LMOVE` atomically moves elements from one list to another.
+- `LTRIM key start stop` reduces a list to the specified range of elements.
+- `LRANGE key start stop` returns the specified elements of the list stored at `key`. 
+
+Notes:
+- index `-1` is the **last** element of the list.
+- index `-2` the **penultimate** element of the list.
 
 <br>
 
 ## Sets
+**Redis sets** are **unordered** *collections* of **unique strings** that act like the sets and support **set operations**.<br>
+
+### Commands
+- `SADD key member [member ...]` adds the specified values `member [member ...]` to the set stored at `key`.
+- `SREM key member [member ...]` removes the specified values `member [member ...]` from the set stored at `key`.
+- `SPOP key [count]` removes and returns one or more random members from the set value store at `key`.
+- `SMOVE source destination member` move `member` from the set at key `source` to the set at key `destination`. 
+- `SMEMBERS key` returns all the members of the set value stored at `key`.
+- `SISMEMBER key member` returns
+  - `1` if the element is a `member` of the set;
+  - `0` if the element is not a `member` of the set, or if `key` does not exist.
+- `SINTER key [key ...]` perform **intersection** of sets at keys `key [key ...]` and returns result.
+- `SINTERSTORE destination key [key ...]` this command is equal to `SINTER`, but instead of returning the resulting set, it is stored in `destination`.
+- `SUNION key [key ...]` perform **union** of sets at keys `key [key ...]` and returns result.
+- `SUNIONSTORE destination key [key ...]` this command is equal to `SUNION`, but instead of returning the resulting set, it is stored in `destination`.
+- `SDIFF key [key ...]` perform **difference** of sets at keys `key [key ...]` and returns result.
+- `SDIFFSTORE destination key [key ...]` this command is equal to `SDIFF`, but instead of returning the resulting set, it is stored in `destination`.
+- `SCARD key` returns the set **cardinality** (number of elements) of the set stored at `key`.
 
 <br>
 
 ## Hashes
+**Redis hashes** are record types modeled as collections of *field-value pairs*.<br>
+Example: `HSET user:123 username martina firstName Martina lastName Elisa country GB`.<br>
+
+### Commands
+- `HSET key field value [field value ...]` sets the specified `fields` to their respective `values` in the hash stored at `key`. This command overwrites the values of specified fields that exist in the hash.
+- `HGET key field` returns the value associated with `field` in the hash stored at `key`.
+- `HMGET key field [field ...]` returns the value**s** associated with the specified `fields` in the hash stored at `key`.
+- `HVALS key` returns all values in the hash stored at `key`.
+- `HKEYS key` returns all field names in the hash stored at `key`.
+- `HEXISTS key field` returns
+  - `1` if the hash contains `field`.
+  - `0` if the hash does not contain `field`, or `key` does not exist.
+- `HDEL key field [field ...]` removes the specified `fields` from the hash stored at `key`.
+
+<br>
+
 ## Sorted sets
+**Redis sorted sets** are **ordered** *collections* of **unique strings** that act like the sets and support **set operations**.<br>
+
+### Commands
+Some of commands are similar to `Redis sets`, but starts with **Z**, e.g., `ZADD`.<br>
+**Redis sorted sets** also introduces new commands, `ZRANGE key start stop`.<br>
+
 ## Streams
 
 <br>
