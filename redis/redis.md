@@ -77,7 +77,7 @@ OK
 Rules about **keys**:
 - Very long keys are **not** a good idea.
 - Very short keys are often **not** a good idea.
-- For instance, format **object-type:id:field** is a **good** idea.
+- For instance, format `object-type:id:field` is a **good** idea.
 
 <br>
 
