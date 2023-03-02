@@ -49,11 +49,7 @@ Commands that read the stream, such as XRANGE or XREAD, are guaranteed to return
   - `BLOCK timeout` turns `XREAD` into **blocking mode**. If `timeout = 0` it means **infinity** timeout.
     -  sometimes it's usefully to use the special ID `$` in **blocking mode** to receive **only new entries**, i.e., entries that are added to the stream starting from the moment we block. 
 
-<br>
-
-`XREAD` and `XRANGE` don't remove entries after they were read. To purge stream there are `XTRIM` or `XADD` in **trimming mode**.
-
-<br>
+`XREAD` and `XRANGE` don't remove entries after they were read. To purge stream there are `XTRIM` or `XADD` in **trimming mode**.<br>
 
 ### Examples
 - `XREAD COUNT 50 STREAMS mystream 0`
@@ -67,11 +63,7 @@ A **stream entry ID** identifies a given entry inside a stream and has format `{
 - the **first part** is the Unix time in **milliseconds** of the Redis instance generating the ID. 
 - the **second part** is just a **sequence number** and is used in order to distinguish IDs generated in the same millisecond.
 
-<br>
-
 You can also specify **only** *first part*, Redis will add **zero** for *second part*.<br>
-
-<br>
 
 Requirements for **explicit ID**:
 - the **minimum** valid ID is `0-1`;
