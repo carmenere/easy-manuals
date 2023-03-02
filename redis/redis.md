@@ -271,10 +271,6 @@ Some of commands are similar to `Redis sets`, but starts with **Z**, e.g., `ZADD
 
 <br>
 
-## Streams
-
-<br>
-
 # Redis deployment methods
 There are 4 variants to deploy Redis:
 1. **Single instance** of Redis.
