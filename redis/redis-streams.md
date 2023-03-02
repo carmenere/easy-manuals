@@ -88,7 +88,6 @@ Both `XTRIM` and `XADD` have 2 **trimming strategy**:
 > - `=` means **exact** and is used **by default**.
 > - `~` means **almost exact**, it is **more efficient** variant.
 
-<br>
 
 ### Examples
 - `XTRIM mystream MAXLEN 1000` will trim the stream `mystream` to **exactly** the latest `1000` items.
@@ -121,6 +120,8 @@ Redis **Consumer Groups** provide following guarantees:
 2. When a consumer asks for new messages it gets only new messages that were not previously delivered.
 3. Consuming a message, however, requires an explicit acknowledgment using a specific command.
 4. A **consumer group** tracks all the messages that are currently **pending**.
+
+<br>
 
 ### Pending Entries List
 **Pending Entries List** (**PEL**) is a list of messages delivered but not yet acknowledged.<br>
@@ -163,8 +164,6 @@ The `NOACK` subcommand can be used to avoid adding the message to the **PEL** in
     - **entries-read**: the logical "read counter" of the last entry delivered to group's consumers;
     - **lag**: the number of entries in the stream that are still waiting to be delivered to the group's consumers, or a NULL when that number can't be determined.
 - `XINFO STREAM key [FULL [COUNT count]]` returns information about the stream stored at `key`.
-
-<br>
 
 #### Examples
 ##### `XADD`, `XGROUP`, `XREADGROUP`
