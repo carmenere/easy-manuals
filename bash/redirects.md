@@ -37,7 +37,7 @@ Before a command is executed, its **input** and **output** may be **redirected**
 
 <br>
 
-> **Here documents** operator instructs the shell to read **input** from the current source until a line containing only `EOF` (with no trailing blanks) is seen.
+> **Here documents** operator instructs the shell to read **input** from the current source until a line containing only `EOF` (with no trailing blanks) is seen.<br>
 > **Process substitution** operator evaluates the `CMD` inside and redirects its output to a **FIFO**, a named pipe that gets a virtual file descriptor inside `/dev/fd` assigned. It acts like a **temporary file** that contains the output of the evaluated command `CDM`.
 
 <br>
