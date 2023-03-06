@@ -120,14 +120,15 @@ The command `command 2>&1` causes to following sequence of syscalls:
 <br>
 
 #### Example: command m>file n>&m
-The command `command 2>&1` causes to following sequence of syscalls:
+The command `command m>file n>&m` causes to following sequence of syscalls:
 1.	`newfd = open(file, O_CREAT|O_TRUNC|O_WRONLY, mode)`
 2.	`dup2(newfd, m)`
 3.	`dup2(m, n)`
 
 <br>
 
-#### Example: command n>&m m>file, 
+#### Example: command n>&m m>file
+The command `command n>&m m>file` causes to following sequence of syscalls:
 1.	`dup2(m, n)`
 2.	`newfd = open(file, O_CREAT|O_TRUNC|O_WRONLY, mode)`
 3.	`dup2(newfd, m)`
