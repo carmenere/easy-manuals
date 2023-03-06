@@ -1,112 +1,91 @@
-After the Linux kernel initialization is completed, the init script executes the program /sbin/init. 
-(In the case of systemd, /sbin/init is actually a symbolic link to another file /usr/lib/systemd/systemd.)
-The systemd version of init reads a series of files from the directories /etc/systemd/system and /usr/lib/systemd/system.
-Each of these files is called a "unit" and units can be of various types such as service, target, etc., as indicated by the filename suffix (.service, .target, etc.)
-A "service" is typically a daemon that runs in the background to perform some system function.
+# Systemd units
+A systemd's **unit** is a **plain text ini-style file** that encodes information about a *service*, a *socket*, a *target* and so on.<br>
+Valid `unit` names has following format `<name>.<unit-type>`.<br>
+The `<unit-type>` must be one of `.service`, `.socket`, `.device`, `.mount`, `.automount`, `.swap`, `.target`, `.path`, `.timer`, `.slice`, or `.scope`.<br>
 
+<br>
 
+#### Listing units
+`systemctl list-units`
+`systemctl list-units --type=target`
+`systemctl list-units --type=service`
 
-System Unit Search Path
-/etc/systemd/system.control/*
-/run/systemd/system.control/*
-/run/systemd/transient/*
-/run/systemd/generator.early/*
-/etc/systemd/system/*
-/etc/systemd/system.attached/*
-/run/systemd/system/*
-/run/systemd/system.attached/*
-/run/systemd/generator/*
-…
-/usr/lib/systemd/system/*
-/run/systemd/generator.late/*
+<br>
 
+## Services and Targets
+**Services** (**service units**) are system **daemons**.<br>
+**Targets** (**target units** ) are different **states** that your system can boot into, like to *System V* **runlevels**.<br>
+**Targets** in `systemd` act as **synchronization points** during the start of your system.<br>
+The purpose of **targets** is to group together various units through a chain of dependencies.<br>
 
-systemctl list-units
-systemctl list-units --type=target
-systemctl list-units --type=service
+To see the **current target**, use the command `systemctl get-default`.
+List dependencies of target: `systemctl list-dependencies getty.target`.
 
+<br>
 
+## Units load path
+Units are loaded from a set of paths determined during compilation.<br>
+Units found in directories listed **earlier** **override** files with the same name in directories **lower** in the list (**more first more priority**):
+- /etc/systemd/system/*
+- /run/systemd/system/*
+- /lib/systemd/system/*
+- /usr/lib/systemd/system/*
 
-Service unit files may include [Unit] and [Install] sections, which are described in systemd.unit(5).
+<br>
+3 category of units locations:
+- The `/etc/systemd/system/*` directory is reserved for **units** created or customized by the administrator and **units** created by `systemctl enable`.
+- The `/lib/systemd/system/*` and `/usr/lib/systemd/system/*` dirictories contain **units** distributed with installed packages.
+- The `/run/systemd/system/*` contains **units** created at run time.
 
-Service unit files must include a [Service] section, which carries information about the service and the process it supervises. 
+<br>
 
-To see the actual list that would be used based on compilation options and current environment use
+To see the **actual units load paths** run:
+- `systemd-analyze --system unit-paths`
+- `systemd-analyze --user unit-paths`
 
-systemd-analyze --user unit-paths
-systemd-analyze --system unit-paths
+<br>
 
+## Unit file structure
+**Unit** typically consist of three sections:
+- the `[Unit]` section — contains **generic options** that are not dependent on the type of the unit. 
+- the `[Install]` section — contains information about unit installation used by `systemctl enable` and `systemctl disable` commands. 
+- the **type-specific section**, e.g. [Service] for a service unit.
 
-Unit files found in directories listed earlier override files with the same name in directories lower in the list.
+<br>
 
-the /etc/systemd/system/ directory is reserved for unit files created or customized by the system administrator
-For example, there usually is sshd.service as well as sshd.socket unit present on your system.
+### Important `[Unit]` section options
+- `Requires` The units listed in `Requires` are activated **together** with the unit. If **any** of the required units **fail to start**, the **unit** is **not activated**.
+- `Wants` like `Requires` but is **weaker** than `Requires`.
+- `After` Defines the **order** in which units are started. The unit starts only after the units specified in `After` are **active**. Unlike `Requires`, `After` does not explicitly activate the specified units.
 
+<br>
 
-Also, the sshd.service.wants/ and sshd.service.requires/ directories can be created. These directories contain symbolic links to unit files that are dependencies of the sshd service. The symbolic links are automatically created either during installation according to [Install] unit file options or at runtime based on [Unit] options. It is also possible to create these directories and symbolic links manually. For more details on [Install] and [Unit] options, see the tables below.
-
-
-Unit file structure
-Unit files typically consist of three sections:
-
-The [Unit] section — contains generic options that are not dependent on the type of the unit. 
-
-The [Install] section — contains information about unit installation used by systemctl enable and disable commands. 
-
-In addition to the generic [Unit] and [Install] sections described here, each unit may have a type-specific section, e.g. [Service] for a service unit.
-
-
-
-Important [Unit] section options:
-Requires The units listed in Requires are activated together with the unit. dependencies on other units. If any of the required units fail to start, the unit is not activated.
-Wants like Requires but is weaker than Requires.
-
-After Defines the order in which units are started. The unit starts only after the units specified in After are active. Unlike Requires, After does not explicitly activate the specified units.
-
-
-
- Important [Service] section options
- Type type of service
-* simple – The default value. The process started with ExecStart is the main process of the service.
-* forking – The process started with ExecStart spawns a child process that becomes the main process of the service. The parent process exits when the startup is complete. Type=forking is used for daemons that make the fork system call. 
-* oneshot – This type is similar to simple, but the process exits before starting consequent units, useful, for at start time scripts.
-* dbus – This type is similar to simple, but consequent units are started only after the main process gains a D-Bus name.
-* notify – This type is similar to simple, but consequent units are started only after a notification message is sent via the sd_notify() function.
-* idle – similar to simple.
-
- ExecStart Specifies commands or scripts to be executed when the unit is started.
- ExecStop Specifies commands or scripts to be executed when the unit is stopped.
- ExecReload Specifies commands or scripts to be executed when the unit is reloaded.
- Restart With this option enabled, the service is restarted after its process exits, with the exception of a clean stop by the systemctl command.
-
-
-Important [Install] section options
-
-Alias Provides a space-separated list of additional names for the unit. Most systemctl commands, excluding systemctl enable, can use aliases instead of the actual unit name.
-
-RequiredBy A list of units that depend on the unit. When this unit is enabled, the units listed in RequiredBy gain a Require dependency on the unit.
-
-WantedBy A list of units that weakly depend on the unit. When this unit is enabled, the units listed in WantedBy gain a Want dependency on the unit.
-WantedBy states the target or targets that the service should be started under. Think of these targets as of a replacement of the older concept of runlevels.
-
+### Important `[Install]` section options
+`RequiredBy` A list of units that depend on the unit. When this unit is **enabled**, the units listed in `RequiredBy` gain a Require dependency on the unit.
+`WantedBy` A list of units that weakly depend on the unit. When this unit is enabled, the units listed in `WantedBy` gain a Want dependency on the unit.
+`WantedBy` states the target or targets that the service should be started under. Think of these targets as of a replacement of the older concept of runlevels.
 Also Specifies a list of units to be installed or uninstalled along with the unit.
+`DefaultInstance` Limited to instantiated units, this option specifies the default instance for which the unit is enabled. See Working with instantiated units.
 
-DefaultInstance Limited to instantiated units, this option specifies the default instance for which the unit is enabled. See Working with instantiated units.
+<br>
 
+### Important `[Service]` section options
+1. `Type` determines type of service
+   - `simple` – The default value. The process started with `ExecStart` is the main process of the service.
+   - `forking` – The process started with `ExecStart` spawns a child process that becomes the main process of the service. The parent process exits when the startup is complete. `Type=forking` is used for daemons that make the `fork` system call.
+   - `oneshot` – This type is similar to simple, but the process exits before starting consequent units, useful, for at start time scripts.
+   - `dbus` – This type is similar to simple, but consequent units are started only after the main process gains a **D-Bus** name.
+   - `notify` – This type is similar to simple, but consequent units are started only after a notification message is sent via the sd_notify() function.
+   - `idle` – similar to simple.
+2. `ExecStart` specifies commands or scripts to be executed when the unit is started.
+3. `ExecStop` specifies commands or scripts to be executed when the unit is stopped.
+4.`ExecReload` specifies commands or scripts to be executed when the unit is reloaded.
+5. `Restart` with this option enabled, the service is restarted after its process exits, with the exception of a clean stop by the systemctl command.
 
+<br>
 
-Always run the systemctl daemon-reload command after creating new unit files or modifying existing unit files. Otherwise, the systemctl start or systemctl enable commands could fail due to a mismatch between states of systemd and actual service unit files on disk.
-
-Видим, что он disabled — разрешаем его
-systemctl enable myunit
-systemctl -l status myunit
-
-
-systemctl list-dependencies getty.target
-
-
-
-nton@ubuntu:~$
+## Unit for getty@.service
+```bash
 anton@ubuntu:~$ cat /lib/systemd/system/getty@.service
 #  SPDX-License-Identifier: LGPL-2.1-or-later
 #
@@ -165,4 +144,52 @@ UnsetEnvironment=LANG LANGUAGE LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETAR
 [Install]
 WantedBy=getty.target
 DefaultInstance=tty1
-anton@ubuntu:~$
+```
+
+<br>
+
+## systemctl daemon-reload
+> Always run the `systemctl daemon-reload` command after creating new unit files or modifying existing unit files.
+> Otherwise, the `systemctl start` or `systemctl enable` commands could **fail** due to a mismatch between states of `systemd` and actual service unit files on disk.
+
+<br>
+
+## Example: run `iptables-restore` at boot
+### Iptables rules
+```bash
+cat <<EOF1 > /etc/iptables-restore-DOCKER-USER.conf
+# Generated by iptables-save v1.6.0 on Fri Aug 10 13:04:02 2018
+*filter
+:DOCKER-USER - [0:0]
+-I DOCKER-USER -s 192.168.88.0/24 -p tcp -m multiport --dports 22,80,443,8080,8888 -j ACCEPT
+-I DOCKER-USER -s 192.168.25.0/24 -p tcp -m multiport --dports 22,80,443,8080,8888 -j ACCEPT
+-A DOCKER-USER -j RETURN
+COMMIT
+# Completed on Fri Aug 10 13:04:02 2018
+EOF1
+```
+
+<br>
+
+### Service unit
+```bash
+cat <<EOF2 > /lib/systemd/system/iptables-restore-DOCKER-USER.service
+[Unit]
+Description=Restore iptables firewall rules
+After=docker.service
+[Service]
+Type=oneshot
+ExecStart=/sbin/iptables-restore -n /etc/iptables-restore-DOCKER-USER.conf
+[Install]
+WantedBy=multi-user.target
+EOF2
+```
+
+<br>
+
+### `enable`, `reload` and `start`
+```bash
+systemctl enable iptables-restore-DOCKER-USER.service
+systemctl daemon-reload
+systemctl start iptables-restore-DOCKER-USER.service
+```
