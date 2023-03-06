@@ -57,4 +57,4 @@ So,
 - the **first** `fork()` is done in order to **stop** being the *group leader*, because **child** inherits **PGID** and `child's PID` != `PGID`;
 - call `close()` for all opened `fd`;
 - call `setsid()` to became *session leader* and detache from *controlling terminal* **inherited** after `fork()`, but process **still** can open *controlling terminal*.
-- the **second** `fork()` is done in order to **stop** being the *session leader*, because **child** inherits **SID** and `child's PID` != `SID`, so, the second `fork()` **protects** a daemon from opening a new *controlling terminal*.
+- the **second** `fork()` is done in order to **stop** being the *session leader*, because **child** inherits **SID** and `child's PID` != `SID`, so, the second `fork()` **guarantees** that daemon will not be able to open a new *controlling terminal*.
