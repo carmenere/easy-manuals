@@ -28,12 +28,14 @@ Before a command is executed, its **input** and **output** may be **redirected**
 **Redirection operators** are
 |Operator|Example|Description|Default behaviour|
 |:-------|:------|:----------|:----------------|
-|`<`|`command fd<path_to_file`|**Input redirection** operator. **Read** from a file `path_to_file` to `fd`.|If `fd` is **not** specified, the `0` is used.|
-|`>`|`command fd>path_to_file`|**Output redirection** operator. **Write** `fd` to a file `path_to_file`|If `fd` is **not** specified, the `1` is used.|
+|`<`|`command fd<path_to_file`|**Input redirection** operator. **Reads** from a file `path_to_file` to `fd`.|If `fd` is **not** specified, the `0` is used.|
+|`>`|`command fd>path_to_file`|**Output redirection** operator. **Writes** `fd` to a file `path_to_file`|If `fd` is **not** specified, the `1` is used.|
 |`>>`|`command fd>>path_to_file`|**Append** `fd` to a file `path_to_file`.|If `fd` is **not** specified, the `1` is used.|
-|`<<`|`command fd<<EOF`|**Here documents** operator. This type of redirection instructs the shell to read **input** from the current source until a line containing only `EOF` (with no trailing blanks) is seen.|If `fd` is **not** specified, the `0` is used.|
+|`<<`|`command fd<<EOF`|**Here documents** operator.|If `fd` is **not** specified, the `0` is used.|
 |`<<<`|`command fd<<expression`|**Here strings** operator.|If `fd` is **not** specified, the `0` is used.|
 |`<( CMD )`|`command <( CMD )`|**Process substitution** operator. It evaluates the `CMD` inside and redirects its output to a **FIFO**, a named pipe that gets a virtual file descriptor inside `/dev/fd` assigned. It acts like a **temporary file** that contains the output of the evaluated command `CDM`.||
+
+> **Here documents** operator instructs the shell to read **input** from the current source until a line containing only `EOF` (with no trailing blanks) is seen.
 
 <br>
 
