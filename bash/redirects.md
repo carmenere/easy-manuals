@@ -1,10 +1,11 @@
 # **STDIN**, **STDOUT**, **STDERR**
 There are 3 well-known fd:
-- **standard input** (**STDIN**) has `fd`=**0**;
-- **standard output** (**STDOUT**) has `fd`=**1**;
-- **standard error** (**STDERR**) has `fd`=**2**
+- `/dev/stdin`: **standard input** (**STDIN**) has `fd`=**0**;
+- `/dev/stdout`: **standard output** (**STDOUT**) has `fd`=**1**;
+- `/dev/stderr`: **standard error** (**STDERR**) has `fd`=**2**
 
 <br>
+
 # Inheritance of **STDIN**, **STDOUT**, **STDERR**
 After the Linux kernel initialization is completed, the kernel prepares to execute the user-space `init` process.<br>
 The file is being executed resides in `/sbin/init`, `/etc/init`, or `/bin/init`.<br>
@@ -27,11 +28,12 @@ Before a command is executed, its **input** and **output** may be **redirected**
 **Redirection operators** are
 |Operator|Example|Description|Default behaviour|
 |:-------|:------|:----------|:----------------|
-|`<`|`command fd<path_to_file`|**Read** from a file `path_to_file` to `fd`.|If `fd` is **not** specified, the **STDIN** is used.|
-|`>`|`command fd>path_to_file`|**Write** `fd` to a file `path_to_file`|If `fd` is **not** specified, the **STDOUT** is used.|
-|`<<`|`command fd<<EOF`|**Here documents** operator. This type of redirection instructs the shell to read **input** from the current source until a line containing only `EOF` (with no trailing blanks) is seen.|If `fd` is **not** specified, the **STDIN** is used.|
-|`>>`|`command fd>>path_to_file`|**Append** `fd` to a file `path_to_file`.|If `fd` is **not** specified, the **STDOUT** is used.|
-|`<<<`|`command fd<<expression`|**Here strings** operator.|If `fd` is **not** specified, the **STDIN** is used.|
+|`<`|`command fd<path_to_file`|**Input redirection** operator. **Read** from a file `path_to_file` to `fd`.|If `fd` is **not** specified, the `0` is used.|
+|`>`|`command fd>path_to_file`|**Output redirection** operator. **Write** `fd` to a file `path_to_file`|If `fd` is **not** specified, the `1` is used.|
+|`>>`|`command fd>>path_to_file`|**Append** `fd` to a file `path_to_file`.|If `fd` is **not** specified, the `1` is used.|
+|`<<`|`command fd<<EOF`|**Here documents** operator. This type of redirection instructs the shell to read **input** from the current source until a line containing only `EOF` (with no trailing blanks) is seen.|If `fd` is **not** specified, the `0` is used.|
+|`<<<`|`command fd<<expression`|**Here strings** operator.|If `fd` is **not** specified, the `0` is used.|
+|`<( CMD )`|`command <( CMD )`|**Process substitution** operator. It evaluates the `CMD` inside and redirects its output to a **FIFO**, a named pipe that gets a virtual file descriptor inside `/dev/fd` assigned. It acts like a **temporary file** that contains the output of the evaluated command `CDM`.||
 
 <br>
 
@@ -62,9 +64,11 @@ Also there is **alternative syntax**, but some shells **don't support this**, e.
 command &>path_to_file
 ```
 
+<br>
+
 ### Suppress only STDERR
 ```bash
-command 2>&1
+command 2>/dev/null
 ```
 
 ### Suppress STDOUT and STDERR
@@ -75,62 +79,50 @@ command >/dev/null 2>&1
 <br>
 
 ## Duplicating file descriptors
-### 
+### Input
 ```bash
 command fd<&origin_fd
 ```
 If `fd` is **not** specified, the **STDIN** (`fd` **0**) is used.
 
+<br>
+
+### Output
 ```bash
 command origin_fd>&fd
 ```
 If `fd` is **not** specified, the **STDOUT** (`fd` **1**) is used.
 
+<br>
 
+## Syscalls
+There is syscall `int dup2(int oldfd, int newfd)` to duplicate fd.<br>
+After a successful return, the `old` and `new` file descriptors are refer to the same file and may be used interchangeably.<br>
 
+<br>
 
-Порядок важен! Перенаправление дескрипторов осуществляется в том порядке, в котором они указываются.
+#### Example: output redirection
+The command `command > /var/log/test` causes to following sequence of syscalls:
+1. `fd = open('/var/log/test', O_CREAT|O_TRUNC|O_WRONLY, 0644)`
+2. `dup2(fd, 1)`
 
-command m>file n>&m
-Перенаправляет дескриптор m в файл file, а затем дескриптор n перенаправляется в дескриптор m. 
+<br>
 
-1.	fork()/clone()
-2.	newfd = open(file, O_CREAT|O_TRUNC|O_WRONLY, mode)
-3.	dup2(newfd, m)
-4.	dup2(m, n)
+#### Example: duplicating descriptors
+The command `command 2>&1` causes to following sequence of syscalls:
+1. `dup2(1, 2)`
 
-command n>&m m>file, 
-то последовательность действий будет следующей:
-1.	fork()/clone()
-2.	dup2(m, n)
-3.	newfd = open(file, O_CREAT|O_TRUNC|O_WRONLY, mode)
-4.	dup2(newfd, m)
+<br>
 
-В этом случае дескриптор n будет перенаправлен в файл, который был ассоциирован с дескриптором m до того, как он был перенаправлен в file.
+#### Example: command m>file n>&m
+The command `command 2>&1` causes to following sequence of syscalls:
+1.	`newfd = open(file, O_CREAT|O_TRUNC|O_WRONLY, mode)`
+2.	`dup2(newfd, m)`
+3.	`dup2(m, n)`
 
+<br>
 
-
-command >file 2>&1
-
-подавляем весь вывод
-command >/dev/null 2>&1
-
-
-
-Bash handles several filenames specially when they are used in redirections, as described in the following table. If the operating system on which Bash is running provides these special files, bash will use them; otherwise it will emulate them internally with the behavior described below.
-
-/dev/fd/fd
-If fd is a valid integer, file descriptor fd is duplicated.
-
-/dev/stdin
-File descriptor 0 is duplicated.
-
-/dev/stdout
-File descriptor 1 is duplicated.
-
-/dev/stderr
-File descriptor 2 is duplicated.
-
-
-
-Moving File Descriptors
+#### Example: command n>&m m>file, 
+1.	`dup2(m, n)`
+2.	`newfd = open(file, O_CREAT|O_TRUNC|O_WRONLY, mode)`
+3.	`dup2(newfd, m)`
