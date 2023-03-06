@@ -29,7 +29,7 @@ The `<unit-type>` must be one of
 **Targets** in `systemd` act as **synchronization points** during the start of your system.<br>
 The purpose of **targets** is to group together various units through a chain of dependencies.<br>
 
-To see the **current target**, use the command `systemctl get-default`.
+To see the **current target**, use the command `systemctl get-default`.<br>
 List dependencies of target: `systemctl list-dependencies getty.target`.
 
 <br>
