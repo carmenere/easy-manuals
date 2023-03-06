@@ -47,7 +47,7 @@ If you want to be absolutely sure that your daemon cannot be tricked into **acqu
 
 <br>
 
-> Note:
+> Note:<br>
 > The `setsid()` will **fail** if the calling process is a **group leader**.<br>
 > **Only** a **session leader** can open a **controlling terminal**.
 
