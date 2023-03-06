@@ -1,4 +1,4 @@
-# fundamental concepts of job control in UNIX:
+# Fundamental concepts of job control in UNIX:
 
 ## Process groups
 **Each** *process* in the system is a member of a **process group**.<br>
@@ -48,7 +48,7 @@ If you want to be absolutely sure that your daemon cannot be tricked into **acqu
 <br>
 
 > Note:
-> The `setsid()` will **fail** if the calling process is a **group leader**.
+> The `setsid()` will **fail** if the calling process is a **group leader**.<br>
 > **Only** a **session leader** can open a **controlling terminal**.
 
 <br>
