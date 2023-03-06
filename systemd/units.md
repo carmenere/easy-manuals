@@ -1,14 +1,25 @@
 # Systemd units
 A systemd's **unit** is a **plain text ini-style file** that encodes information about a *service*, a *socket*, a *target* and so on.<br>
 Valid `unit` names has following format `<name>.<unit-type>`.<br>
-The `<unit-type>` must be one of `.service`, `.socket`, `.device`, `.mount`, `.automount`, `.swap`, `.target`, `.path`, `.timer`, `.slice`, or `.scope`.<br>
+The `<unit-type>` must be one of
+- `.service`
+- `.socket`
+- `.device`
+- `.mount`
+- `.automount`
+- `.swap`
+- `.target`
+- `.path`
+- `.timer`
+- `.slice`
+- `.scope`
 
 <br>
 
 #### Listing units
-`systemctl list-units`
-`systemctl list-units --type=target`
-`systemctl list-units --type=service`
+- `systemctl list-units`
+- `systemctl list-units --type=target`
+- `systemctl list-units --type=service`
 
 <br>
 
