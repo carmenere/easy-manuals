@@ -35,6 +35,8 @@ Before a command is executed, its **input** and **output** may be **redirected**
 |`<<<`|`command fd<<expression`|**Here strings** operator.|If `fd` is **not** specified, the `0` is used.|
 |`<( CMD )`|`command <( CMD )`|**Process substitution** operator. It evaluates the `CMD` inside and redirects its output to a **FIFO**, a named pipe that gets a virtual file descriptor inside `/dev/fd` assigned. It acts like a **temporary file** that contains the output of the evaluated command `CDM`.||
 
+<br>
+
 > **Here documents** operator instructs the shell to read **input** from the current source until a line containing only `EOF` (with no trailing blanks) is seen.
 
 <br>
