@@ -37,11 +37,13 @@ Before a command is executed, its **input** and **output** may be **redirected**
 
 > Note that the **order of redirections** is **significant**.<br>
 >
+> This command
 > ```bash
 > command > somefile 2>&1
 > ```
 > redirects both **STDOUT** and **STDERR** to the file `somefile`.
-> 
+>
+> This command
 > ```bash
 > command 2>&1 > somefile 
 > ```
