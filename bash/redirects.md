@@ -42,7 +42,8 @@ Before a command is executed, its **input** and **output** may be **redirected**
 
 <br>
 
-> Note: the **order of redirections** is **significant**!<br>
+> **Note** <br>
+> The **order of redirections** is **significant**!<br>
 >
 > This command
 > ```bash

@@ -6,7 +6,7 @@ The `/dev/console` can be pointed to a variety of devices.
 
 <br>
 
-## 
+## Kernel `console` parameter
 The Linux kernel is configured to select the console by passing it the `console` parameter.<br>
 The `console` parameter can be given **repeatedly**, but the parameter can only be given **once** for **each** *console technology*.<br>
 So `console=tty0 console=lp0 console=ttyS0` is **acceptable** but `console=ttyS0 console=ttyS1` will **not** work.<br>

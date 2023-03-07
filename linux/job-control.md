@@ -64,6 +64,7 @@ To be absolutely sure that daemon cannot **acquire a controlling terminal**, the
 
 <br>
 
+> **Note** <br>
 > The **double-fork technique** ensures that the **daemon process** is **detached** from **controlling terminal** and **isn't** the **session leader**, which in turn **guarantees** that daemon **will not be able** to **acquire a controlling terminal**.
 
 <br>
