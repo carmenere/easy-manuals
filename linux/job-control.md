@@ -39,7 +39,7 @@ Thus, **all** the processes in a session **inherit** the **controlling terminal*
 <br>
 
 ## setsid()
-A **process** can **detach** from its **controlling terminal** by creating a new session with the `setsid()` function.
+A **process** can **detach** from its **controlling terminal** by creating a **new session** with the `setsid()` function.
 
 <br>
 
