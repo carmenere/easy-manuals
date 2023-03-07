@@ -52,7 +52,7 @@ To be absolutely sure that daemon cannot **acquire a controlling terminal**, the
 
 > **Note**: <br>
 > 1) The `setsid()` will **fail** if the calling process is the **group leader**.<br>
-> 2) **Only** a **session leader** can open a **controlling terminal**.
+> 2) **Only** a **session leader** can open a **controlling terminal**.<br>
 
 <br>
 
@@ -65,7 +65,7 @@ To be absolutely sure that daemon cannot **acquire a controlling terminal**, the
 <br>
 
 > **Note** <br>
-> The **double-fork technique** ensures that the **daemon process** is **detached** from **controlling terminal** and **isn't** the **session leader**, which in turn **guarantees** that daemon **will not be able** to **acquire a controlling terminal**.
+> The **double-fork technique** ensures that the **daemon process** is **detached** from **controlling terminal** and **isn't** the **session leader**, which in turn **guarantees** that daemon **will not be able** to **acquire a controlling terminal**.<br>
 
 <br>
 
@@ -83,8 +83,8 @@ There 3 kinds of **job** in shell:
 <br>
 
 > **Note** <br>
-> **Foreground job** **receives** **keyboard-generated signals** , e.g., `SIGINT`.
-> **Background jobs** are **immune** to **keyboard-generated signals**.
+> **Foreground job** **receives** **keyboard-generated signals** , e.g., `SIGINT`.<br>
+> **Background jobs** are **immune** to **keyboard-generated signals**.<br>
 
 <br>
 
@@ -147,9 +147,9 @@ The `SIGTTOU` signal is sent to a process in **background job** when it attempts
 <br>
 
 > **Note** <br>
-> By default `TOSTOP` **mode** is **not** set.
-> To set `TOSTOP` **mode** run `stty tostop`.
-> To unset `TOSTOP` **mode** run `stty -tostop`.
+> By default `TOSTOP` **mode** is **not** set.<br>
+> To set `TOSTOP` **mode** run `stty tostop`.<br>
+> To unset `TOSTOP` **mode** run `stty -tostop`.<br>
 
 <br>
 
