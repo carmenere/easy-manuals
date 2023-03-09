@@ -80,7 +80,7 @@ The user-space apps communicate with **TTY Core** via **syscalls** and **signals
 
 <br>
 
-```C
+```
 Monitor + Keyboard + Mouse
                            \
         (hardware drivers: UART, USB, KB, Video card) 
