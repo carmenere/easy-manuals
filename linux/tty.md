@@ -57,7 +57,7 @@ The user-space apps communicate with **TTY Core** via **syscalls** and **signals
 
 <br>
 
-> **Note**
+> **Note**: <br>
 > **VT** is run in the **kernel-space** and controll all *input* and *output* **inside kernel**.<br>
 > **Terminal emulator** is run in the **user-space** and controll all *input* and *output* **inside user-space**. Any terminal app you launch from a GUI uses **PTY**.<br>
 > **Monitor** and **KB** are no longer part of **VT**, they are now **separate devices**.<br>
@@ -202,7 +202,7 @@ To instantiate **TTY Driver** there is `alloc_tty_driver()` function.<br>
 
 <br>
 
-> **Note**:
+> **Note**: <br>
 > **PTS** gets *intput* from **PTM**, **not** from keyboard.<br>
 > **PTS** sends its *output* to **PTM**, **not** to video card.<br>
 > **PTM** gets *intput* from **terminal emulator**, **not** from keyboard.<br>
