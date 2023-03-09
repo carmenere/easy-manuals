@@ -242,3 +242,43 @@ tcsetpgrp (shell_terminal, shell_pgid);
 
 When shell starts a **job** *asynchronously*, it prints a line that looks like `[1] 25647` indicating that this **job** has **number** `1` and that the PID of the **last proces**s in the **pipeline** associated with this **job** is `25647`.<br>
 When a **background job** is **complete** and you press **Return**, the shell displays a message indicating the **job** is **done**.<br>
+
+
+
+
+foreground and background jobs are killed by SIGHUP sent by kernel or shell in different circumstances.
+
+When does kernel send SIGHUP?
+	Kernel sends SIGHUP to controlling process:
+
+	Typically, the controlling process is your shell. So, to sum up:
+
+	kernel sends SIGHUP to the shell when real or pseudoterminal is disconnected/closed;
+	kernel sends SIGHUP to foreground process group when the shell terminates;
+	kernel sends SIGHUP to orphaned process group if it contains stopped processes.
+
+When does bash send SIGHUP?
+	Bash sends SIGHUP to all jobs (foreground and background):
+
+	when it receives SIGHUP, and it is an interactive shell (and job control support is enabled at compile-time);
+	when it exits, it is an interactive login shell, and huponexit option is set (and job control support is enabled at compile-time).
+	See more details here.
+
+	What about other shells?
+Usually, shells propagate SIGHUP. Generating SIGHUP at normal exit is less common.
+
+
+The shell exits by default upon receipt of a SIGHUP. Before exiting, an interactive shell resends the SIGHUP to all jobs, running or stopped. Stopped jobs are sent SIGCONT to ensure that they receive the SIGHUP. To prevent the shell from sending the signal to a par- ticular job, it should be removed from the jobs table with the disown builtin (see SHELL BUILTIN COMMANDS below) or marked to not receive SIGHUP using disown -h.
+
+If the huponexit shell option has been set with shopt, bash sends a SIGHUP to all jobs when an interactive login shell exits.
+
+
+So to summarize:
+
+& puts the job in the background, that is, makes it block on attempting to read input, and makes the shell not wait for its completion.
+disown removes the process from the shell's job control, but it still leaves it connected to the terminal. One of the results is that the shell won't send it a SIGHUP. Obviously, it can only be applied to background jobs, because you cannot enter it when a foreground job is running.
+nohup disconnects the process from the terminal, redirects its output to nohup.out and shields it from SIGHUP. One of the effects (the naming one) is that the process won't receive any sent SIGHUP. It is completely independent from job control and could in principle be used also for foreground jobs (although that's not very useful).
+
+
+Note that nohup does not remove the process from the shell's job control and also doesn't put it in the background (but since a foreground nohup job is more or less useless, you'd generally put it into the background using &). For example, unlike with disown, the shell will still tell you when the nohup job has completed (unless the shell is terminated before, of course).
+
