@@ -58,12 +58,12 @@ The user-space apps communicate with **TTY Core** via **syscalls** and **signals
 <br>
 
 > **Note**
-> **VT** is run in the **kernel-space** and controll all *input* and *output* **inside kernel**.
-> **Terminal emulator** is run in the **user-space** and controll all *input* and *output* **inside user-space**. Any terminal app you launch from a GUI uses **PTY**.
-> **Monitor** and **KB** are no longer part of **VT**, they are now **separate devices**.
-> Linux kernel privides up to **63** *VT*. Most distributions initialize only **7** VTs.
-> *VT1* - *VT6* are in **text mode**, *VT7* is for **graphical mode**. **X-Server** is started on at least one *VT* (usually `/dev/tty7`). This is **X-Session #0**.
-> Switch between *VTs*: `Alt + FN` or `Ctrl + Alt + FN` (`FN`: *F1*, *F2*, ...).
+> **VT** is run in the **kernel-space** and controll all *input* and *output* **inside kernel**.<br>
+> **Terminal emulator** is run in the **user-space** and controll all *input* and *output* **inside user-space**. Any terminal app you launch from a GUI uses **PTY**.<br>
+> **Monitor** and **KB** are no longer part of **VT**, they are now **separate devices**.<br>
+> Linux kernel privides up to **63** *VT*. Most distributions initialize only **7** VTs.<br>
+> *VT1* - *VT6* are in **text mode**, *VT7* is for **graphical mode**. **X-Server** is started on at least one *VT* (usually `/dev/tty7`). This is **X-Session #0**.<br>
+> Switch between *VTs*: `Alt + FN` or `Ctrl + Alt + FN` (`FN`: *F1*, *F2*, ...).<br>
 
 <br>
 
@@ -195,20 +195,20 @@ To instantiate **TTY Driver** there is `alloc_tty_driver()` function.<br>
 <br>
 
 **PTY** is represented by `/dev/ptmx` file: 
-1. **Terminal emulator** opens **PTY** by opening the file `/dev/ptmx` and save returned `pty_number`;
-2. Then it creates child process via `fork()`.<br>
+1. **Terminal emulator** opens **PTY** by opening the file `/dev/ptmx` and save returned `pty_number`.
+2. Then it creates child process via `fork()`.
 3. Then child becomes **session leader**, opens **PTS** (`/dev/pts/<pty_number>`), connects **STDIN**, **STDOUT** and **STDERR** to **PTS**.
 4. Call `exec()` and replace itself with **shell**.
 
 <br>
 
 > **Note**:
-> **PTS** gets *intput* from **PTM**, **not** from keyboard.
-> **PTS** sends its *output* to **PTM**, **not** to video card.
-> **PTM** gets *intput* from **terminal emulator**, **not** from keyboard.
-> **PTM** sends its *output* to **terminal emulator**, **not** to video card.
-> **Terminal emulator** gets *intput* from from keyboard.
-> **Terminal emulator** sends its *output* to video card.
+> **PTS** gets *intput* from **PTM**, **not** from keyboard.<br>
+> **PTS** sends its *output* to **PTM**, **not** to video card.<br>
+> **PTM** gets *intput* from **terminal emulator**, **not** from keyboard.<br>
+> **PTM** sends its *output* to **terminal emulator**, **not** to video card.<br>
+> **Terminal emulator** gets *intput* from from keyboard.<br>
+> **Terminal emulator** sends its *output* to video card.<br>
 
 <br>
 
