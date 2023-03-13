@@ -93,7 +93,8 @@ All *common sequences* just use the **parameters** as a **series** of **semicolo
 **SGR sequence** is used to set **display attributes**. Each display attribute remains in effect until a following occurrence of ``SGR`` resets it.<br>
 If **no** codes are given, ``CSI m`` is treated as ``CSI 0 m`` and means **reset all display attributes to their defaults**.<br>
 
-> **Note**: **Several** attributes can be set in **the same sequenc**e, separated by **semicolons**.<br>
+> **Note** <br>
+> **Several** attributes can be set in **the same sequenc**e, separated by **semicolons**.<br>
 
 <br>
 

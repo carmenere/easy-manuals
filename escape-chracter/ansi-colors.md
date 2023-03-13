@@ -20,7 +20,8 @@
 |`28`|*unset* **hidden**/**invisible** mode|
 |`29`|*unset* **strikethrough**/**crossed out** mode.|
 
-> **Note:** Some terminals may not support some of the modes listed above.
+> **Note** <br>
+> Some terminals may not support some of the modes listed above.
 
 <br>
 
