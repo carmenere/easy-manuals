@@ -26,7 +26,7 @@ a ./test/file2.txt
 a ./test/file1.txt
 ```
 
-Takes files from **./test** and creates new archive **arch.tar.gz**.
+The above command takes files from **./test** and creates new archive **arch.tar.gz**.
 
 <br>
 
