@@ -190,8 +190,8 @@ Git stores all branches (**local** and **remotes**) inside `.git/refs` directory
 
 ## Ways to make *local branch* **tracking branch**
 ### `git checkout`
-1. `git checkout -b baz` creates **new* local branch** `baz` from **current branch**.
-2. `git checkout -b foo --track origin/bar` creates **new* local branch** `foo` from `origin/bar` and **set** it **to track** the **remote branch** `bar`, `foo` is a **tracking branch**.
+1. `git checkout -b baz` creates **new local branch** `baz` from **current branch**.
+2. `git checkout -b foo --track origin/bar` creates **new local branch** `foo` from `origin/bar` and **set** it **to track** the **remote branch** `bar`, `foo` is a **tracking branch**.
     - option `--track` is used **by default**.
 3. `git checkout -b foo --no-track origin/bar` creates **new local branch** `foo` from `origin/bar` and **doesn't** set it to track the **remote branch** `bar`.
 
