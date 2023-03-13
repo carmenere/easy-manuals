@@ -37,15 +37,28 @@ According to the **POSIX standard**:
 
 <br>
 
-# TTY Device (aka Linux TTY Subsystem)
-**Console** is a **physical terminal** (like *VT100*) connected to a computer via **serial** or **USB** port or **KB** + **Monitor**.
+# Terminal vs. Console
+**Terminal** is an any source of commands to OS.<br>
 
+**Terminal** can be one of following:
+- **console**;
+- **virtual terminal**; 
+- **terminal emulator**;
+- **terminal multiplexer** (`screen`, `tmux`).
+
+<br>
+
+**Console** is a **physical terminal** (keyboard with a screen as one device, like *VT100*) connected to a computer via **Serial port** or **USB** or combination of separate devices **Keyboard** and **Monitor** that connected to PC.<br>
+Nowadays, a **terminal** is synonymous with a **terminal emulator**.<br>
+**TTY Device** (aka **TTY Subsystem**) is an **abstraction of terminal** inside kernel.
+
+<br>
+
+# TTY Device
 **TTY Device** consists of 3 layers:
-- **TTY Driver** (*Hardware Driver*): UART (serial port driver), USB
-- **TTY Line Discipline**
-- **TTY Core** (*TTY General Driver*)
-
-The user-space apps communicate with **TTY Core** via **syscalls** and **signals**.
+- **TTY Core** (*TTY General Driver*) is registered in system as **character device** and the user-space apps communicate with **TTY Core** via **syscalls** and **signals**.
+- **TTY Line Discipline**, by default **N_TTY** is used.
+- **TTY Driver** (*TTY Hardware Driver*): **UART** (serial port driver), **USB**.
 
 <br>
 
@@ -64,6 +77,23 @@ The user-space apps communicate with **TTY Core** via **syscalls** and **signals
 > Linux kernel privides up to **63** *VT*. Most distributions initialize only **7** VTs.<br>
 > *VT1* - *VT6* are in **text mode**, *VT7* is for **graphical mode**. **X-Server** is started on at least one *VT* (usually `/dev/tty7`). This is **X-Session #0**.<br>
 > Switch between *VTs*: `Alt + FN` or `Ctrl + Alt + FN` (`FN`: *F1*, *F2*, ...).<br>
+
+<br>
+
+### Source code
+Source of **Linux TTY Subsystem** is placed in the directory `drivers/tty`:
+1. **TTY Core**:
+   - `include/linux/tty.h`
+   - `linux/drivers/tty/tty_io.c`
+2. **TTY Line Discipline**:
+   - `linux/drivers/tty/n_tty.c`
+3. **TTY Drivers**:
+   - `include/linux/tty.h`
+     - **TTY Driver** of **VT**:
+       - `linux/drivers/tty/vt/vt.c`
+       - `linux/drivers/tty/vt/vc_screen.c`
+     - **TTY Driver** of **Serial**:
+       - `linux/drivers/tty/serial/serial_core.c`
 
 <br>
 

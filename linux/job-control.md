@@ -7,19 +7,18 @@ In Unix **every process** belongs to a **group** which in turn belongs to a **se
 ## Process groups
 **Each** *process* in the system is a member of a **process group**.<br>
 Process groups are identified by the **process group ID** (**PGID**).<br>
-When a process is created with `fork()`, the child inherits the **PGID** of its parent.<br>
-One key goal of process groups is that all members of a group can be signalled at once.<br>
+When a process is created with `fork()`, the child process **inherits** the **PGID** of its parent.<br>
 
 <br>
 
 ## Group leader
 **Each** *process group* has a **group leader**.<br>
-The **group leader** is the process whose **PID** is the same as the **PGID**.<br>
+The **group leader** is the process whose **PID** is the same as its **PGID**.<br>
 
 <br>
 
 ## Sessions
-**Each** *process group* is a member of a **session**.<br>
+**Each** *process* in the system is a member of a **session**.<br>
 **Sessions** are identified by a **session ID** (**SID**).<br>
 
 <br>
@@ -31,41 +30,48 @@ The **session leader** is the process whose **PID** is the same as its **PGID** 
 <br>
 
 ## Controlling terminal
-An important attribute of a process is its **controlling terminal**.
-**Controlling terminals** are, in fact, associated with sessions: **each** *session* can have **at most one** *controlling terminal*, and a *controlling terminal* can be associated with **at most one** *session*.
-When you create a process with `fork()`, the child process inherits the **controlling terminal** from its parent.
-Thus, **all** the processes in a session **inherit** the **controlling terminal** from the **session leader**.
+**Each** *session* can have **at most one** *controlling terminal*, and a *controlling terminal* can be associated with **at most one** *session*.<br>
+When you create a process with `fork()`, the child process **inherits** the **controlling terminal** from its parent.<br>
+Thus, **all** the processes in a session **inherit** the **controlling terminal** from the **session leader**.<br>
 
 <br>
 
-## setsid()
-A **process** can **detach** from its **controlling terminal** by creating a **new session** with the `setsid()` function.
+> **Note**: <br>
+> **Only** a **session leader** can open a **controlling terminal**.<br>
+
+<br>
+
+## Syscall `setsid()`
+Syscall `setsid()`:
+- **detaches** *calling process* from its **controlling terminal**;
+- **creates** **new session**;
+- **makes** *calling process* the **session leader**.
+
+<br>
+
+> **Note**
+> `setsid()` will **fail** if the *calling process* is the **group leader**.<br>
 
 <br>
 
 # Daemonization
-Daemons **should not** have *controlling terminals*. If a **daemon** has a **controlling terminal**, it **can receive signals** (e.g., **SIGTTIN**, **SIGTTOU**, **SIGTSTP**, **SIGHUP**, **SIGINT**, **SIGQUIT**) that might cause it to **halt** or **exit unexpectedly**.<br>
+Daemons **should not** have *controlling terminals*.<br>
+If a **daemon** has a **controlling terminal**, it **can receive signals** (e.g., **SIGTTIN**, **SIGTTOU**, **SIGTSTP**, **SIGHUP**, **SIGINT**, **SIGQUIT**) that might cause it to **halt** or **exit unexpectedly**.<br>
 
 To be absolutely sure that daemon cannot **acquire a controlling terminal**, the **double-fork technique** must be used.
 
 <br>
 
-> **Note**: <br>
-> 1) The `setsid()` will **fail** if the calling process is the **group leader**.<br>
-> 2) **Only** a **session leader** can open a **controlling terminal**.<br>
-
-<br>
-
 ## Double-fork technique
-- The **first** `fork()` is done in order to **stop** being the *group leader*, because **child** inherits **PGID** and `child's PID` != `PGID`;
-- Then, **child** must call `close()` for all opened `fd`;
-- Then, **child** must call `setsid()` to became *session leader* and to detache from *controlling terminal* that was **inherited** after `fork()`, but **child** **still** can open *controlling terminal*.
-- The **second** `fork()` is done in order to **stop** being the *session leader*, because **child** inherits **SID** and `child's PID` != `SID`, so, the second `fork()` .
+- The **first** `fork()` is done in order to **stop** being the *group leader*, because **child** inherits **PGID** and `child's PID != PGID`;
+- Then, **child** *may* call `close()` for all opened `fd`;
+- Then, **child** *must* call `setsid()` to became *session leader* and to detache from *controlling terminal* that was **inherited** after `fork()`, but **child still** can open *controlling terminal*.
+- The **second** `fork()` is done in order to **stop** being the *session leader*, because **child** inherits **SID** and `child's PID != SID`.
 
 <br>
 
-> **Note** <br>
-> The **double-fork technique** ensures that the **daemon process** is **detached** from **controlling terminal** and **isn't** the **session leader**, which in turn **guarantees** that daemon **will not be able** to **acquire a controlling terminal**.<br>
+> **Note**: <br>
+> The **double-fork technique** ensures that the **daemon process** is **detached** from **controlling terminal** and it **isn't** the **session leader**, which in turn **guarantees** that daemon **will not be able** to **acquire a controlling terminal**.<br>
 
 <br>
 
@@ -73,36 +79,37 @@ To be absolutely sure that daemon cannot **acquire a controlling terminal**, the
 **Job control** is a feature supported by the UNIX-like operating systems.<br>
 From OS's point of view **job** is a **set of processes** that are **all** in the same **process group**.<br>
 
-A shell that supports **job control** has its own representation of **job**, e.g., in `sh`, `bash`, `zsh` **job** is **any** **single command** or whole **pipeline** (*pipeline* is sequence of commands separated by the operator `|`). The basic idea is that **whole pipeline** is a **job**, because **every** process in a pipeline should be **manipulated** (stopped, resumed, killed) **simultaneously**. That's why `kill` allows you to send signals to entire process groups.<br>
+A shell that supports **job control** has its own representation of **job**.<br>
+**Job** is *any* **single command** or **whole pipeline** in `sh`, `bash`, `zsh` and others (*pipeline* is a sequence of commands separated by the `|` operator).<br>
+The basic idea is that **whole pipeline** is a **job**, because **every** process in a pipeline should be **manipulated** (stopped, resumed, killed) **simultaneously**. That's why `kill` allows you to send signals to **entire process groups**.<br>
 
-There 3 kinds of **job** in shell:
-- **foreground job** is an executing job that **has** *access* to the **controlling terminal**;
-- **background job** is an executing job that **hasn't any** *access* to the **controlling terminal**;
-- **suspended job** is job that **isn't** executing.
 
-<br>
-
-> **Note** <br>
-> **Foreground job** **receives** **keyboard-generated signals** , e.g., `SIGINT`.<br>
-> **Background jobs** are **immune** to **keyboard-generated signals**.<br>
 
 <br>
 
 A shell that supports **job control** must **arrange to control** which **job** can use the terminal at any time.<br>
-Otherwise there might be multiple jobs trying to read from the terminal at once, and confusion about which process should receive the input typed by the user.<br>
-To prevent this, the **shell must cooperate** with the **terminal driver** and must provide tools to **suspende**, **resume**, **terminate** its **jobs**.<br>
-There is **termios API** to do this.<br>
+Otherwise there might be multiple jobs trying to **read** from the terminal **at once**, and confusion about which process should receive the *input* typed by the user.<br>
+To prevent this, the **shell must cooperate** with the **terminal driver** and must provide tools to **suspend**, **resume**, **terminate** its **jobs**.<br>
 
-When a session ends when the user logs out (exits the shell, which terminates the session leader process), 
-the shell process sends `SIGHUP` to all jobs, and waits for the process groups to end before terminating itself.<br>
-Alternatives to prevent jobs from being terminated is to use `nohup` or a **terminal multiplexer**.<br>
+<br>
+
+So, there 3 kinds of **job** in shell:
+- **foreground job** is an *executing* **job** that can **read** and **write** to its **controlling terminal**;
+- **background job** is an *executing* **job** that **can't read** to its **controlling terminal**, but ability to **write** to its **controlling terminal** depends;
+- **suspended job** is **job** that **isn't** *executing*, e.g., **job** that is **stopped**.
+
+<br>
+
+> **Note**: <br>
+> **Foreground job** **receives** **keyboard-generated signals** , e.g., `Ctrl+C` -> `SIGINT`.<br>
+> **Background jobs** are **immune** to **keyboard-generated signals**.<br>
 
 <br>
 
 ## Job control signals
 |Signal|Description|
 |:-----|:----------|
-|`SIGINT`|Sent to a **foreground job** to **interrupt** it. It is typically send when a user typing the `Ctrl-C`. By default, `SIGINT` terminates the process.|
+|`SIGINT`|Sent to a **foreground job** to **interrupt** it. It is typically send when a user typing the `Ctrl-C`. By default, `SIGINT` **terminates** the process.|
 |`SIGTSTP`|Sent to a **foreground job** to **stop** it. It is typically send when a user typing the`Ctrl-Z`.|
 |`SIGTTIN`|Sent to a **background job** to **stop** it when it attempts to **read** from the *controlling terminal*.|
 |`SIGTTOU`|Sent to a **background job** to **stop** it when a user attempts to **write** to or **modify** the *controlling terminal*.|
@@ -112,22 +119,39 @@ Alternatives to prevent jobs from being terminated is to use `nohup` or a **term
 
 <br>
 
-> **SIG**: common prefix, means *signal*
-> **TT**: means *TTY*
-> **OU**: means *output*
-> **IN**: means *input*
+> **Note**: <br>
+> **SIG**: common prefix, means *signal*<br>
+> **TT**: means *TTY*<br>
+> **OU**: means *output*<br>
+> **IN**: means *input*<br>
+
+<br>
+
+### `SIGHUP`
+**Foreground** and **background jobs** are killed by `SIGHUP` sent by **controlling terminal** or by **shell**.<br>
+
+When does **controlling terminal**  send `SIGHUP`?<br>
+**Controlling terminal** sends `SIGHUP` to **session leader** (usually to **shell**):
+- when terminal becomes **disconnected**. 
+
+<br>
+
+When does **bash** send `SIGHUP`?<br>
+**Bash** sends `SIGHUP` to **all jobs** (*foreground* and *background*):
+- when it **receives** `SIGHUP`, and it is an **interactive** shell;
+- when it **exits**, it is an **interactive** and **login** shell, and `huponexit` option is **set**.
 
 <br>
 
 ### `SIGCONT`
-A **suspended job** can be **resumed** as a **background job** with the `bg %n`, or as the **foreground job** with `fg %n`.
-In either case, the shell redirects I/O appropriately, and sends the `SIGCONT` signal to the process, which causes the operating system to resume its execution.
-In Bash, a program can be started as a **background job** by appending `&` to the command line; its `output` is directed to the **terminal** (potentially interleaved with other programs' output), but it **cannot** read from the terminal `input`.
+A **suspended job** can be **resumed** as a **background job** with the `bg %n`, or as the **foreground job** with `fg %n`.<br>
+In either case, the shell redirects I/O appropriately, and sends the `SIGCONT` signal to the process, which causes the operating system to resume its execution.<br>
+In many shells, a **job** can be started as a **background job** by appending `&` to the command line; its `output` is directed to the **terminal** (potentially interleaved with other programs' output), but it **cannot** **read** from the terminal `input`.<br>
 
 <br>
 
 ### `SIGTTIN`
-The `SIGTTIN` signal is sent to a process in **background job** when it attempts to **read** in from the *controlling terminal*.<br>
+The `SIGTTIN` signal is sent to a **background job** when it attempts to **read** in from the *controlling terminal*.<br>
 
 <br>
 
@@ -141,15 +165,15 @@ $ python3 -c 'input()' &
 <br>
 
 ### `SIGTTOU`
-The `SIGTTOU` signal is sent to a process in **background job** when it attempts to **write** to the *controlling terminal* and if the `TOSTOP` **mode** is set.<br>
-The `SIGTTOU` signal is sent to a process in **background job** when it attempts to **change** its *controlling terminal* settings **regardless** of whether `TOSTOP` is set or not.<br>
+The `SIGTTOU` signal is sent to a **background job** when it attempts to **write** to the *controlling terminal* and if the `TOSTOP` **mode** is set.<br>
+The `SIGTTOU` signal is sent to a **background job** when it attempts to **change** its *controlling terminal* settings **regardless** of whether `TOSTOP` is set or not.<br>
 
 <br>
 
 > **Note** <br>
 > By default `TOSTOP` **mode** is **not** set.<br>
-> To set `TOSTOP` **mode** run `stty tostop`.<br>
-> To unset `TOSTOP` **mode** run `stty -tostop`.<br>
+> To **set** `TOSTOP` **mode** run `stty tostop`.<br>
+> To **unset** `TOSTOP` **mode** run `stty -tostop`.<br>
 
 <br>
 
@@ -207,20 +231,22 @@ $ python3 -c 'print("Hello world!")' &
 
 
 ## Termios API
-There 2 functions to implement job control in shell: `tcgetpgrp(3)` and `tcsetpgrp(3)`.
+There 2 functions to implement **job control** in shell: `tcgetpgrp(3)` and `tcsetpgrp(3)`:
+- `tcgetpgrp(3)` **get** terminal foreground process group;
+- `tcsetpgrp(3)` **set** terminal foreground process group.
 
-`tcgetpgrp(3)` **get** terminal foreground process group.
-`tcsetpgrp(3)` **set** terminal foreground process group.
+<br>
 
-The function `tcgetpgrp(fd)` returns the **PGID** of the **foreground job** on the terminal associated to `fd`, which must be the *controlling terminal* of the calling process.
-The function `tcsetpgrp(fd, pgrp)` makes the **job** with **PGID** `pgrp` the **foreground job** on the terminal associated to `fd`, which must be the *controlling terminal* of the calling process.
+The function `tcgetpgrp(fd)` returns the **PGID** of the **foreground job** on the terminal associated to `fd`, which must be the *controlling terminal* of the *calling process*.<br>
+The function `tcsetpgrp(fd, pgrp)` makes the **job** with **PGID** `pgrp` the **foreground job** on the terminal associated to `fd`, which must be the *controlling terminal* of the *calling process*.
 
+<br>
 
 ```C
 /* Run the foreground job.  */
 tcsetpgrp (shell_terminal, j->pgid);
 
-/* Put the shell back in the foreground; it's equal to run the background job.  */
+/* Put the shell back in the foreground.  */
 tcsetpgrp (shell_terminal, shell_pgid);
 ```
 
@@ -237,48 +263,21 @@ tcsetpgrp (shell_terminal, shell_pgid);
 |`bg %n`|Put a **job** in the **background**, where `n` is the job number.|
 |`fg %n`|Put a **job** in the **foreground**, where `n` is the job number.|
 |`stop %n`|Suspend a **background** job.|
-|`command &`|Runs a `command` in the **background**.|
-|`nohup command`|Runs a `command` and detaches it from *controlling terminal*.|
+|`command &`|`&` runs a `command` in the **background**.|
+|`nohup command`|`nohup` runs a `command` and **detaches** it from *controlling terminal*, but the **job** is **still in** *shell's job control*|
+|`disown command`|`disown` **removes** the **job** from the *shell's job control*, but **job** is **still connected** to the terminal.|
 
-When shell starts a **job** *asynchronously*, it prints a line that looks like `[1] 25647` indicating that this **job** has **number** `1` and that the PID of the **last proces**s in the **pipeline** associated with this **job** is `25647`.<br>
-When a **background job** is **complete** and you press **Return**, the shell displays a message indicating the **job** is **done**.<br>
+<br>
 
+> Note: <br>
+> If `%n` is **not** supplied **current job** number is used.
 
+<br>
 
+When shell starts a **job** *asynchronously*, it prints a line that looks like `[1] 25647` where
+- `1` is the **job number**;
+- `25647` is the **PID** of the **last process** in the **pipeline**.<br>
 
-foreground and background jobs are killed by SIGHUP sent by kernel or shell in different circumstances.
+<br>
 
-When does kernel send SIGHUP?
-	Kernel sends SIGHUP to controlling process:
-
-	Typically, the controlling process is your shell. So, to sum up:
-
-	kernel sends SIGHUP to the shell when real or pseudoterminal is disconnected/closed;
-	kernel sends SIGHUP to foreground process group when the shell terminates;
-	kernel sends SIGHUP to orphaned process group if it contains stopped processes.
-
-When does bash send SIGHUP?
-	Bash sends SIGHUP to all jobs (foreground and background):
-
-	when it receives SIGHUP, and it is an interactive shell (and job control support is enabled at compile-time);
-	when it exits, it is an interactive login shell, and huponexit option is set (and job control support is enabled at compile-time).
-	See more details here.
-
-	What about other shells?
-Usually, shells propagate SIGHUP. Generating SIGHUP at normal exit is less common.
-
-
-The shell exits by default upon receipt of a SIGHUP. Before exiting, an interactive shell resends the SIGHUP to all jobs, running or stopped. Stopped jobs are sent SIGCONT to ensure that they receive the SIGHUP. To prevent the shell from sending the signal to a par- ticular job, it should be removed from the jobs table with the disown builtin (see SHELL BUILTIN COMMANDS below) or marked to not receive SIGHUP using disown -h.
-
-If the huponexit shell option has been set with shopt, bash sends a SIGHUP to all jobs when an interactive login shell exits.
-
-
-So to summarize:
-
-& puts the job in the background, that is, makes it block on attempting to read input, and makes the shell not wait for its completion.
-disown removes the process from the shell's job control, but it still leaves it connected to the terminal. One of the results is that the shell won't send it a SIGHUP. Obviously, it can only be applied to background jobs, because you cannot enter it when a foreground job is running.
-nohup disconnects the process from the terminal, redirects its output to nohup.out and shields it from SIGHUP. One of the effects (the naming one) is that the process won't receive any sent SIGHUP. It is completely independent from job control and could in principle be used also for foreground jobs (although that's not very useful).
-
-
-Note that nohup does not remove the process from the shell's job control and also doesn't put it in the background (but since a foreground nohup job is more or less useless, you'd generally put it into the background using &). For example, unlike with disown, the shell will still tell you when the nohup job has completed (unless the shell is terminated before, of course).
-
+When a **background job** is **completed** and you press **Return**, the shell displays a message indicating the **job** is **done**.<br>
