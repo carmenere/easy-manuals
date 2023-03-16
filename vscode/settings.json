@@ -1,0 +1,51 @@
+{
+    "workbench.colorTheme": "Default Light+",
+    "editor.minimap.enabled": false,
+    "editor.rulers": [
+        120
+    ],
+    "workbench.editor.enablePreview": false,
+    "extensions.ignoreRecommendations": true,
+    "[automake]": {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4
+    },
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "files.autoSave": "afterDelay",
+    "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.env.osx": {
+
+    },
+    "explorer.confirmDelete": false,
+    "[json]": {
+
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace"
+    },
+    "rust-analyzer.linkedProjects": [
+        "foo/bar/Cargo.toml",
+        "foo/baz/Cargo.toml"
+    ],
+    "rust-analyzer.server.extraEnv": {
+        "CARGO_TARGET_DIR": ".rust-analyzer",
+        "DATABASE_URL": "postgres://user_name:user_password@127.0.0.1/db_name"
+    },
+    "rust-analyzer.runnableEnv": {
+        "CARGO_TARGET_DIR": ".rust-analyzer",
+        "DATABASE_URL": "postgres://user_name:user_password@127.0.0.1/db_name",
+        "RUST_LOG": "actix_web=debug",
+        "SO_DATABASE_HOST": "127.0.0.1"
+    },
+    "git.ignoreLimitWarning": true
+}
+
