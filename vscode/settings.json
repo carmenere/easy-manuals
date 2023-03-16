@@ -4,7 +4,6 @@
     "editor.rulers": [
         120
     ],
-    /* ${workspaceFolder} - the path of the folder opened in VS Code. */
     "workbench.editor.enablePreview": false,
     "extensions.ignoreRecommendations": true,
     "[automake]": {
