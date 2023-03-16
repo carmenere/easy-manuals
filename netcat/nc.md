@@ -35,7 +35,7 @@ dd if=/dev/zero count=1000000 of=/tmp/data_to_be_sent bs=4k
 <br>
 
 ## Send data through `nc pipe`:
-```
+```bash
 time nc -N -U /tmp/nc.sock </tmp/data_to_be_sent
 ls -hal /tmp/data
 ```
