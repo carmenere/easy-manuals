@@ -15,6 +15,8 @@ Git stores all branches (**local** and **remotes**) inside `.git/refs` directory
 **Name** of *remote branch* has following format: `<repo>/<branch>`.<br>
 **Remote branches** are updated **automatically** every time git syncs with remote repo if appropriate **upstream branches** contain new commits.<br>
 
+<br>
+
 > **Notes**:<br>
 > **Remote branches** are **read only**.<br>
 > `git checkout` to **remote branch** performs **HEAD detaching**.
