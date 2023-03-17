@@ -1,4 +1,4 @@
-# `git config`
+# git config
 |File|Description|
 |:---|:----------|
 |`/etc/gitconfig`|`git config --system` uses this file.|
@@ -36,14 +36,14 @@ There are 2 options that must be set `user.name` and `user.email`:
 
 <br>
 
-# `git rebase`
+# git rebase
 Steps:
 1. `git checkout <SRC>` makes `<SRC>` current branch.
 2. `git rebase <DST>` performs rebase the current branch `<SRC>` on the branch `<DST>`.
 
 <br>
 
-# `git merge` 
+# git merge
 Steps:
 1. `git checkout <DST>` makes `<DST>` current branch.
 2. `git merge <SRC>` performs merge the branch `<SRC>` with the branch `<DST>`.
@@ -66,14 +66,20 @@ There are two main ways Git will merge:
 A **fast-forward merge** can occur when there is a **linear path** from the last commit of **current branch** to the last commit of **target branch**.<br>
 `git` just moves (**fast forward**) the **current branch** to the **target branch**. It is *like* **branch forcing**.<br>
 
-A *fast-forward merge* is **not possible** if the branches have **diverged**, in such situation `git` uses **3-way merge**.<br>
+<br>
 
-`--no-ff` causes `git merge` to generate a merge commit even if it was a fast-forward merge.
+A *fast-forward merge* is **not possible** if the branches have **diverged**, in such situation `git` uses **3-way merge**.<br>
+**3-way merge** create a **merge commit** - additionak commit to tie together the two histories.<br>
 
 <br>
 
-# `git reset`
-## `git reset --hard ref`
+### git merge --no-ff <branch>
+`--no-ff` causes `git merge` to generate a merge commit even if it was a *fast-forward* merge.
+
+<br>
+
+# git reset
+## git reset --hard ref
 `git reset --hard ref` resets **entire repository** to the commit `ref`:
 1. Move **current branch** (`HEAD`) to the `ref`. Actually this step cancels `git commit`.
 2. Updates **index** by content of last commit in **current branch** (**current branch** here is point to `ref`). Actually this step cancels `git add` and `git commit`.
@@ -81,19 +87,19 @@ A *fast-forward merge* is **not possible** if the branches have **diverged**, in
 
 <br>
 
-## `git reset --mixed ref`
+## git reset --mixed ref
 This mode is used **by default**.<br>
 `git reset --mixed ref` stops after **step 2**. Actually this step cancels `git add` and `git commit`.
 
 <br>
 
-## `git reset --soft ref`
+## git reset --soft ref
 `git reset --soft ref` stops after **step 1**. Actually this step cancels `git commit`.
 Neither **index** nor **working directory** are changed.
 
 <br>
 
-## `git commit --amend`
+## git commit --amend
 `git commit --amend` is equal to following command sequence:
 1. `git reset --soft %last_commit%`.
 2. Perform some changes.
@@ -102,12 +108,12 @@ Neither **index** nor **working directory** are changed.
    
 <br
 
-# `git revert`
+# git revert
 The `git revert ref` create **new commit** that **inverts the changes** introduced by the `ref` and appends a **new commit** with the resulting **inverse content**.
 
 <br>
 
-# `git clean`
+# git clean
 `git clean` **removes untracked** files from working directory.<br>
 
 Flags:
@@ -123,7 +129,7 @@ Flags:
 
 <br>
 
-# `git tag`
+# git tag
 **Tag** is `ref` that point to **specific commit** in Git history.<br>
 There are 2 types of tags:
 - **annotated tags** are crated by `git tag -a v1 <commit>`;
@@ -135,7 +141,7 @@ There are 2 types of tags:
 
 <br>
 
-## `git describe`
+## git describe
 `git describe ref` finds the **most recent tag** that is reachable from a commit `ref`.<br>
 If **commit** is omitted then `HEAD` is used.<br>
 By default `git describe` only shows **annotated tags**.<br>
@@ -147,12 +153,12 @@ Format of output: `<tag>_<N>_g<hash>`:
 
 <br>
 
-# `git init`
+# git init
 `master` or `main` are the default names for a **initial branch** when you run `git init`.<br>
 
 <br>
 
-# `git clone`
+# git clone
 `origin` is the **default name** for a **remote repository** when you run `git clone`.<br>
 
 `git clone -o foo <URI>` then name `foo` will be used instead `origin`.<br>
@@ -188,8 +194,25 @@ Git stores all branches (**local** and **remotes**) inside `.git/refs` directory
 
 <br>
 
+### Tracking branch
+Consider config:
+```sh
+[branch "foo"]
+    remote = origin
+    merge = refs/heads/bar
+```
+
+<br>
+
+> **Here**:<br>
+> `refs/heads/bar` - **upstream branch**;
+> `refs/remote/origin/bar` - **remote branch**;
+> `refs/heads/foo` - **local branch** and **tracking branch**;
+
+<br>
+
 ## Ways to make *local branch* **tracking branch**
-### `git checkout`
+### git checkout
 1. `git checkout -b baz` creates **new local branch** `baz` from **current branch**.
 2. `git checkout -b foo --track origin/bar` creates **new local branch** `foo` from `origin/bar` and **set** it **to track** the **remote branch** `bar`, `foo` is a **tracking branch**.
     - option `--track` is used **by default**.
@@ -203,25 +226,32 @@ Git stores all branches (**local** and **remotes**) inside `.git/refs` directory
 
 <br>
 
-### `git push`
+### git push
 - `git push -u <repo> branch`
 - `git push --set-upstream <repo> branch`
 
 <br>
 
-### `git branch`
-`git branch` sets **current branch** **to track** the **remote branch** `bar`:
-- `git branch -u <repo>/bar`
-- `git branch --set-upstream-to=<repo>/bar`
+### git branch
+Set **current branch** to **track** the **remote branch** `refs/remotes/<repo>/foo`:
+- `git branch -u <repo>/foo`
+- `git branch --set-upstream-to=<repo>/foo`
 
 <br>
 
-`--unset-upstream` disables tracking.
+Set particular branch `bar` to **track** the **remote branch** `refs/remotes/<repo>/foo`:
+- `git branch --set-upstream-to=origin/foo bar`
 
 <br>
 
-# `git diff`
-`git diff` shows changes between the **working tree** and the **index** by default.<br>
+## Unset tracking
+- `git branch --unset-upstream` **disables tracking** for **current branch**.
+
+<br>
+
+# git diff
+`git diff ref` shows changes between the **working tree** and the **index** by default, if `ref` is **omitted** `HEAD` is used..<br>
 `git diff --cached ref` shows changes between the **index** and **commit** `ref`, if `ref` is **omitted** `HEAD` is used.<br>
+`git diff ref1 ref2` shows **diff** between `ref1` and `ref2`.<br>
 `git diff ref1 ref2 -- <path>` shows **diff** between `ref1` and `ref2` for specific file `<path>`.<br>
-`git diff --name-only HEAD origin/main` shows only files.
+`git diff --name-only ref1 ref2` shows only changed files between `ref1` and `ref2`.
