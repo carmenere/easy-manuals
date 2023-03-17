@@ -106,7 +106,7 @@ Neither **index** nor **working directory** are changed.
 3. `git add`.
 4. `git commit`.
    
-<br
+<br>
 
 # git revert
 The `git revert ref` create **new commit** that **inverts the changes** introduced by the `ref` and appends a **new commit** with the resulting **inverse content**.
