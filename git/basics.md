@@ -154,7 +154,7 @@ There are 2 types of tags:
 
 <br>
 
-## git describe
+# git describe
 `git describe ref` finds the **most recent tag** that is reachable from a commit `ref`.<br>
 If **commit** is omitted then `HEAD` is used.<br>
 By default `git describe` only shows **annotated tags**.<br>
