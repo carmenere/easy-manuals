@@ -32,3 +32,17 @@
 3. Reads `remote.origin.fetch` to determine **refspecs**.
 4. Fetches **all refs** that are fit to pattern `src`.
 5. Creates/updates appropriate **remote branches** and **local branches** that are fit `dst`.
+
+<br>
+
+# Other useful options
+- `--all`: the command `git fetch --all` is **equal** to `git remote update`.
+- `--dry-run` show what would be done, **without** making any changes.
+- `-p` or `--prune`:
+  1. removes all **remote branches** for wich **upstream branches** **don't** exists anymore;
+  2. then perform **fetching** as usual;
+
+<br>
+
+> **Note**:<br>
+> To perform **only prune** *without fetching* for remote `<repo>` run `git remote prune <repo>` or `git remote prune --dry-run <repo>`.
