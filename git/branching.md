@@ -39,9 +39,9 @@ Consider config:
 <br>
 
 > **Here**:<br>
-> `refs/heads/bar` - **upstream branch**;
-> `refs/remote/origin/bar` - **remote branch**;
-> `refs/heads/foo` - **local branch** and **tracking branch**;
+> `refs/heads/bar` - **upstream branch**.<br>
+> `refs/remote/origin/bar` - **remote branch**.<br>
+> `refs/heads/foo` - **local branch** and **tracking branch**.<br>
 
 <br>
 
