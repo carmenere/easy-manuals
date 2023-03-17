@@ -24,6 +24,7 @@ git rev-list --all | while read COMMIT; do echo "$COMMIT: $(git branch --contain
 
 ## Remove dangling commits:
 ```sh
+git fetch -p
 git reflog expire --expire-unreachable=now --all
 git gc --prune=all --aggressive
 ```
