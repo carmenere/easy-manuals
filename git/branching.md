@@ -40,7 +40,7 @@ Consider config:
 
 > **Here**:<br>
 > `refs/heads/bar` - **upstream branch**.<br>
-> `refs/remote/origin/bar` - **remote branch**.<br>
+> `refs/remotes/origin/bar` - **remote branch**.<br>
 > `refs/heads/foo` - **local branch** and **tracking branch**.<br>
 
 <br>
