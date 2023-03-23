@@ -16,7 +16,7 @@
 <br>
 
 ## git push origin
-1. Git resolves **refspec** using following alghorithm:
+1. Git resolves **refspec** using following algorithm:
    - reads `remote.repo.push`;
      - if **not set** then reads both `branch.<CURR_BRANCH>.merge` and `push.default`;
        - if `push.default` is **not set** - uses **simple**.
@@ -25,7 +25,7 @@
 <br>
 
 ## git push
-1. Git resolves name of **repo** using following alghorithm: 
+1. Git resolves name of **repo** using following algorithm:
    - `branch.<CURR_BRANCH>.pushRemote` -> `remote.pushDefault` -> `branch.<CURR_BRANCH>.remote` -> **origin**, i.e.:
      - reads `branch.<CURR_BRANCH>.pushRemote` at first;
        - if **not set** then reads `remote.pushDefault`;
