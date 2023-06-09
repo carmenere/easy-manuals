@@ -1,17 +1,3 @@
-
-configs subfolder contains buildroot defconfig which points to a linux defconfig located in board subfolder. 
-BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="board/freescale/mpc8315erdb/linux-3.12.config"
-
-
-When you clone git repository of buildroot you can find some default configuration files in the config directory. all this files are called <something>_defconfig (like raspberrypi_defconfig) 
-
-
- in defconfig we can specify only options with non-default values (i.e. options we changed for our board). This way we can keep it small and clear. 
-
- Every new kernel version brings a bunch of new options, and this way we don't need to update our defconfig file each time the kernel releases.
-
-<br>
-
 # Buildroot
 **Buildroot** is a framework for building embedded Linux distributions.<br>
 **Buildroot** builds code for the **board** **architecture** it was configured for.<br>
