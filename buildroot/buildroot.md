@@ -346,11 +346,13 @@ This variable is available both in Kconfig, so you can use it to source your Kco
 
 <br>
 
-# Start building using
-To start compiling using 
+## Start building using external tree
+To start compiling use 
 `make BR2_EXTERNAL = ../my_tree/my_x86_board_defconfig`
 
-Argument `BR2_EXTERNAL = ../my_tree/` invocates an external tree. It is possible to specify **several external-trees** for use **at the same time**.
+<br>
+
+Argument `BR2_EXTERNAL = ../my_tree/` invocates an external tree. It is possible to specify **several external-trees** for use **at the same time**.<br>
 
 `make BR2_EXTERNAL = ../my_tree/my_x86_board_defconfig` will create `output/.br-external.mk` file that stores information about the external-tree used.<br>
-Then the external options item appeared in the menu:
+Then the **external options** item appeared in the configuration menu `make menuconfig`.
