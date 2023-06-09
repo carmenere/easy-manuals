@@ -102,12 +102,11 @@ After the compilation is complete, a subdirectory will be generated in the compi
 `configs` **subfolder** contains `buildroot defconfig` which points to a `linux defconfig` located in `board` **subfolder**.<br>
 `BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="board/freescale/mpc8315erdb/linux-3.12.config"`<br>
 
-
-
+<br>
 
 # Rebuild
 ## Rebuild the package
-During the development process, if the source code of a certain package is modified, Buildroot will not recompile the package. It can be operated as follows:
+During the development process, if the source code of a certain package is modified, Buildroot will not recompile the package.
 
 ### Method one
 `make <package>-rebuild`
