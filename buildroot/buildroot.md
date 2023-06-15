@@ -307,7 +307,7 @@ make
 
 <br>
 
-## Download infrastructure in Buildroot
+# Download infrastructure in Buildroot
 One important aspect of Buildroot is to fetch source code or binary files from third party projects.<br>
 **Download infrastructure** in Buildroot can fetch the source code using different methods:
 - `wget`, for FTP/HTTP downloads
@@ -707,7 +707,7 @@ external.desc
 
 <br>
 
-## external.desc
+## `external.desc`
 Buildroot uses the `external.desc` text file to identify and differentiate **multiple** **br2_external** directories.<br>
 `external.desc` contains the description:
 ```bash
