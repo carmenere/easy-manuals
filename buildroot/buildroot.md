@@ -1,45 +1,197 @@
 # Buildroot
-**Buildroot** is a framework for building embedded Linux distributions.<br>
-**Buildroot** builds code for the **board** **architecture** it was configured for.<br>
-The entire **Buildroot** is composed of a makefiles and a `Config.in` configuration file (`Kconfig`).<br>
-**Buildroot** is used to compile a complete Linux system software (including *boot*, *kernel*, *rootfs*, and various *libraries* and *applications* in rootfs) for the **board** **architecture** it was configured for.<br>
-Adapting a general-purpose distribution by cleaning out unnecessary packages and turning it into firmware is a more time-consuming way than building a new distribution.<br>
+**Buildroot** is a framework for building embedded Linux distribution.<br>
+**Buildroot** is used to compile a complete Linux distribution (including *boot*, *kernel*, *rootfs*, and various *libraries* and *applications* in rootfs) for the **board** it was configured for.<br>
 
 <br>
 
-# Directory structure
-```sh
-buildroot/
-├── arch                # Configuration files of CPU architecture
-├── board               # Documents related to specific boards
-├── boot                # Configuration files of Bootloaders
-├── build
-├── CHANGES             # Buildroot modification log
-├── Config.in
-├── Config.in.legacy
-├── configs             # Buildroot configuration file of the specific board
-├── COPYING
-├── DEVELOPERS
-├── dl                  # Downloaded programs, source code compressed packages, patches, etc.
-├── docs                # Documentation
-├── fs                  # Configuration files of various filesystems
-├── linux               # Configuration files of Linux
-├── Makefile
-├── Makefile.legacy
-├── output              # Compile output directory
-├── package             # Configuration files of all packages
-├── README              # Simple instructions for Buildroot
-├── support             # Scripts and configuration files that provide functional support for Bulidroot
-├── system              # Configuration files of making root filesystem
-├── toolchain           # Configuration files of cross-compilation toolchain
-└── utils               # Utilities
+# Getting Buildroot
+Stable Buildroot releases are published every three months: `YYYY.02`, `YYYY.05`, `YYYY.08`, `YYYY.11`.<br>
+Download `buildroot src`: `git clone https://git.buildroot.net/buildroot`.
+Here and further `buildroot src` is the top-level Buildroot source directory.
+
+<br>
+
+# Configuring Buildroot
+Like the Linux kernel, Buildroot uses `Kconfig` language and supplies various *configuration interfaces*, e.g., `make menuconfig` (graphical menu using **ncurses**).<br>
+The **configuration file** is the `.config` file in `buildroot src`.<br>
+The `.config` file is a **full config file**: it contains the value for **all options**.<br>
+The **default** `.config`, without any customization, has **4467** lines (as of Buildroot 2021.02).<br>
+
+<br>
+
+## defconfig
+A `defconfig` stores only the **non-default** values.<br>
+For the default Buildroot configuration, the `defconfig` is empty: everything is the default.<br>
+If you change the architecture to be **ARM**, the `defconfig` is just one line: 
+```bash
+BR2_arm=y
 ```
 
 <br>
 
-# Configuration
-You can issue the **default configuration** process by running `make xxx_defconfig` and target `xxx_defconfig` is a file in the folder `arch/arm/configs/` and `xxx` is a **board** or **arch**.<br>
-The `make xxx_defconfig` creates your initial `.config`, which you can now edit through `make menuconfig` and make your changes.<br>
+To use a `defconfig`, copying it to `.config` is not sufficient as all the missing (default) options need to be expanded.<br>
+Buildroot allows to load `defconfig` stored in the `configs/` directory, by doing: `make <foo>_defconfig`. It **overwrites** the current `.config`, if any.<br>
+If `make xxx_defconfig` was run as first creates your initial `.config`, which you can now edit through `make menuconfig` and make your changes.<br>
+
+To save current settings as `defconfig` file run `make savedefconfig`.
+`make savedefconfig` uses `BR2_DEFCONFIG` configuration option from `.config` file (ver `BR2_CONFIG` in top-level `Makefile`).<br>
+`BR2_DEFCONFIG` stores **abs path** to `defconfig` file.<br>
+- `BR2_DEFCONFIG` points to the **original** `defconfig` if the configuration was loaded **from** a `defconfig` (e.g., `make menuconfig` was first);
+- `BR2_DEFCONFIG` points to `defconfig` in the current directory if the configuration was started **from scratch** (e.g., `make xxx_defconfig` was first);
+- it is possible pass arbitrary path throgh `BR2_DEFCONFIG`:
+
+```bash
+make savedefconfig BR2_DEFCONFIG=%abs_path_to_defconfig%
+```
+
+<br>
+
+Move `defconfig` file to `configs/` to make it loadable with `make xxx_defconfig`.
+
+<br>
+
+### Examples
+#### BR2_DEFCONFIG value in .config file
+```bash
+$ grep BR2_DEFCONFIG .config
+BR2_DEFCONFIG="/tmp/buildroot/configs/qemu_aarch64_virt_defconfig"
+```
+
+<br>
+
+#### Snippet from top-level `Makefile`:
+```makefile
+# Set variables related to in-tree or out-of-tree build.
+# Here, both $(O) and $(CURDIR) are absolute canonical paths.
+ifeq ($(O),$(CURDIR)/output)
+CONFIG_DIR := $(CURDIR)
+NEED_WRAPPER =
+else
+CONFIG_DIR := $(O)
+NEED_WRAPPER = y
+endif
+
+BR2_CONFIG = $(CONFIG_DIR)/.config
+
+include $(BR2_CONFIG)
+
+DEFCONFIG = $(call qstrip,$(BR2_DEFCONFIG))
+
+savedefconfig: $(BUILD_DIR)/buildroot-config/conf outputmakefile
+	@$(COMMON_CONFIG_ENV) $< \
+		--savedefconfig=$(if $(DEFCONFIG),$(DEFCONFIG),$(CONFIG_DIR)/defconfig) \
+		$(CONFIG_CONFIG_IN)
+	@$(SED) '/^BR2_DEFCONFIG=/d' $(if $(DEFCONFIG),$(DEFCONFIG),$(CONFIG_DIR)/defconfig)
+```
+
+<br>
+
+## Predefined defconfigs
+Buildroot comes with a number of **existing defconfigs** for various publicly available hardware platforms:
+- RaspberryPi
+- Microchip
+- QEMU emulated platforms
+- ...
+
+<br>
+
+`make list-defconfigs` lists all **existing defconfigs** using.<br>
+Additional instructions often available in `board/<boardname>`.
+
+<br>
+
+# Running the build
+As simple as
+```bash
+make
+```
+
+<br>
+
+Often useful to **keep a log of the build output**, for analysis or investigation: 
+```bash
+$ make 2>&1 | tee build.log
+```
+
+<br>
+
+# Build results
+By default, all the **build output** goes into a directory called `output/` within the top-level Buildroot source directory.<br>
+The build results are located in `output/images`. Depending on the configuration, this directory will contain:
+- One or several **root filesystem images**, in various formats;
+- One **kernel image**;
+- Zero or several `.dtb` files;
+- One or several **bootloader images**;
+
+<br>
+
+# Out of tree build
+**Out of tree build** allows to use an **output directory** *different* than `output/`.<br>
+It is useful to build different Buildroot configurations from the same source tree.<br>
+Customization of the **output directory** done by passing `O=/path/to/directory` on the command line.<br>
+Once one out of tree operation has been done (menuconfig, loading a defconfig, etc.), Buildroot creates a small **wrapper Makefile** in the output directory.<br>
+This **wrapper Makefile** then avoids the need to pass `O=` and the path to the Buildroot source tree.
+
+<br>
+
+# Buildroot source trees
+|File or directory|Description|
+|:----------------|:----------|
+|`Makefile`|The top-level `Makefile`, handles the configuration and general orchestration of the build.|
+|`Config.in`|The top-level `Config.in`, includes many **other** `Config.in` files.|
+|`arch/`|Contains `Config.in` files for various architectures.|
+|`toolchain/`|Packages for generating or using toolchains.|
+|`system/skeleton/`|The `rootfs` **skeleton**.|
+|`linux/`|Linux package.|
+|`package/`|All the user space packages.|
+|`fs`|Logic to generate **filesystem images** in various formats (`cpio/`, `ext2/`, `squashfs/`, `tar/`, `ubifs/`, etc).|
+|`boot/`|**Bootloader** packages.|
+|`configs/`|Default **configuration files** for various platforms (boards), similar to kernel defconfigs.|
+|`board/`|Board-specific files (kernel configuration files, kernel patches, image flashing scripts, etc.)|
+|`support/`|Misc utilities.|
+|`utils/`|Various utilities useful to Buildroot developers.|
+|`docs/`|Buildroot documentation.|
+
+<br>
+
+#### Download location
+
+<br>
+
+#### Managing the Linux kernel configuration
+The **Linux kernel** itself uses kconfig to define its configuration.<br>
+Buildroot cannot replicate all **Linux kernel** configuration options in its `menuconfig`.<br>
+Defining the **Linux kernel** configuration therefore needs to be done in a special way.
+
+<br>
+
+Running one of the **Linux kernel** configuration interfaces:
+- `make linux-menuconfig`
+- `make linux-nconfig`
+- `make linux-xconfig`
+- `make linux-gconfig`
+
+<br>
+
+# Build tree
+By default it is `output/` dir. It can be customized for **out-of-tree build** by passing `O=<dir>`.
+
+<br>
+
+Directories:
+- `$(O)/build`
+- `$(O)/host`
+- `$(O)/staging`
+- `$(O)/target`
+- `$(O)/images`
+
+<br>
+
+# Root filesystem in Buildroot
+## Root filesystem skeleton
+The base of a Linux root filesystem: UNIX directory hierarchy, a few configuration files and scripts in /etc. No programs or libraries.
+All **target packages** depend on the **skeleton package**.<br>
+**Skeleton package** is essentially the first thing copied to `$(TARGET_DIR)` at the beginning of the build.
 
 <br>
 
