@@ -14,7 +14,7 @@ The **publisher** runs ```PUBLISH <channel> <message>```.
 
 <br>
 
-> **Drawbacks**:
+> **Drawbacks**<br>
 > - When a message is published, if the consumer doesn’t receive it right now, the message disappears.
 > - All messages are gone away if Redis is shutdown.
 
