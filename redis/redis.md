@@ -1,11 +1,24 @@
 **Redis** is the contraction from  **RE**mote **DI**ctionary **S**erver.<br>
 
-# Redis data types
-Every data type has its own commands.<br>
+# Redis version
+1. Using `redis-cli`
+```
+INFO server
+```
+
 <br>
 
+2. Using `redis-server`
+```
+redis-server --version
+```
 
+<br>
 
+# Redis data types
+Every data type has its own commands.<br>
+
+<br>
 
 ## Strings
 ### Overview
