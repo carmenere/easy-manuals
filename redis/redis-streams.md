@@ -65,6 +65,11 @@ Both styles can be used **simultaneously** on **the same** streams.
 
 <br>
 
+### Destroy whole stream
+- `DEL mystream` destroys the **stream** itself and/or any **consumer groups** associated to it.
+
+<br>
+
 ### Iterating a stream
 In order to **iterate a stream**, we start fetching the first **N** elements, which is trivial:
 ```bash
@@ -280,13 +285,6 @@ There is detailed information for each message in the PEL in the **extended form
 ```bash
 localhost:6379> FLUSHALL
 OK
-localhost:6379> XADD mystream * id 10
-"1677778380263-0"
-localhost:6379> XADD mystream * id 20
-"1677778382038-0"
-localhost:6379> XADD mystream * id 30
-"1677778384391-0"
-
 
 localhost:6379> XGROUP CREATE mystream mygroup $ MKSTREAM
 OK
