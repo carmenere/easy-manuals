@@ -54,7 +54,7 @@ Both styles can be used **simultaneously** on **the same** streams.
 - `XTRIM mystream <MAXLEN | MINID> [= | ~] N` trims the stream `mystream` by evicting older entries (entries with lower IDs) if needed.
 - `XDEL mystream id [id ...]` removes the specified entries by their `id` from a stream `mystream`, and returns the number of entries deleted.
 - `XLEN mystream` returns the number of entries inside a stream `mystream`.
-- `XRANGE mystream start end [COUNT count]` returns all entries belonging to interval [`start`, `end`] (both **inclusive**) from the stream `mystream`.
+- `XRANGE mystream start end [COUNT count]` returns all entries belonging to interval [`start`, `end`] (both **inclusive** by default) from the stream `mystream`.
   - The special ID character `-` means the **minimum** possible ID inside a stream;
   - The special ID character `+` means the **maximum** possible ID inside a stream;
 - `XREVRANGE` is exactly like `XRANGE`, but returns entries in **reverse order**.
@@ -62,6 +62,18 @@ Both styles can be used **simultaneously** on **the same** streams.
   - `XREAD` returns with any entries currently available (up to the `COUNT`), or none at all.
   - `BLOCK timeout` turns `XREAD` into **blocking mode**, if `timeout = 0` it means **infinity** timeout.
   - The special ID character `$` tells Redis Streams **retrieve only new entries**, and it should only be used as the first call to `XREAD` by a consumer on a given stream. Otherwise, if you use it again you could potentially miss entries that were added between polls.
+
+<br>
+
+### Iterating a stream
+In order to **iterate a stream**, we start fetching the first **N** elements, which is trivial:
+```bash
+XRANGE writers - + COUNT N
+```
+and then instead of `-` character we use the ID of the **last entry** (e.g., "1526985685298-0") returned by the previous `XRANGE` call and prefix it with `(` (**exclusive interval**):
+```bash
+XRANGE writers (1526985685298-0 + COUNT 2
+```
 
 <br>
 
@@ -110,7 +122,7 @@ Both `XTRIM` and `XADD` have 2 **trimming strategy**:
 
 <br>
 
-> **Note**:
+> **Note**<br>
 > - `=` means **exact** and is used **by default**.
 > - `~` means **almost exact**, it is **more efficient** variant.
 
@@ -164,7 +176,7 @@ The `NOACK` subcommand can be used to avoid adding the message to the **PEL** in
     - if you want to fetch the **entire stream** from the beginning, use zero ID `0`;
     - if you want to fetch **only new** messages use the special ID character `$`.
   - `MKSTREAM` create **empty** stream `mystream` if it doesn't exist. By default, `XGROUP CREATE mystream` returns error if stream `mystream` doesn't exist.
-- `XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds] [NOACK] STREAMS mystream [mystream-2 ...] {id | >} [id ...]` provides the **consumer group** functionality, but first, you have to create a *consumer group* using the `XGROUP CREATE` command. 
+- `XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds] [NOACK] STREAMS mystream [mystream-2 ...] {id | >} [id ...]` provides the **consumer group** functionality, but first, you have to create a *consumer group* using the `XGROUP CREATE` command. This command returns entries with an IDs **greater** than the provided `id`.
   - The `XREADGROUP` command **requires** the `GROUP` keyword followed by the *group name*, and the *consumer name*. 
   - The `STREAMS` keyword is **required** and is followed by *one* or *more* streams to subscribe to, and the **starting ID** to read from for each stream.
   - The special ID character `>` means that the consumer want to **receive only new messages**, i.e., messages that were never delivered to any other consumer.
@@ -175,7 +187,10 @@ The `NOACK` subcommand can be used to avoid adding the message to the **PEL** in
   - consumers are also created **automatically** whenever an operation, such as `XREADGROUP`, references a *consumer* that **doesn't exist**.
 - `XACK` is the command that allows a consumer to mark a pending message as correctly processed.
 - `XCLAIM mystream mygroup new-consumer min-idle-time id` changes the owner of a pending message to `consumer`.
-- `XPENDING mystream mygroup` outputs a summary about the pending messages in a given consumer group `mygroup` of the stream `mystream`.
+- `XPENDING mystream mygroup` outputs a summary about the pending messages in a given consumer group `mygroup` of the stream `mystream`. It outputs:
+  - the **total number** of pending messages for given consumer group;
+  - the **smallest** ID and **greatest** ID among the pending messages;
+  - **list of consumers** in the consumer group `mygroup` with at least one pending message, and the **number of pending messages per consumer**.
 - `XINFO STREAM mystream [FULL [COUNT count]]` returns information about the stream stored at `mystream`.
 - `XINFO GROUPS mystream` returns the list of **all consumers groups** of the stream stored at `mystream`.
   - the following information is provided for each of the groups:
@@ -188,6 +203,75 @@ The `NOACK` subcommand can be used to avoid adding the message to the **PEL** in
     - **name**: the consumer's name;
     - **pending**: the number of pending messages for the **consumer**;
     - **idle**: the number of milliseconds that have passed since the consumer last interacted with the server.
+
+<br>
+
+### Extended form of `XPENDING`
+Sometimes we are interested in the details. In order to see all the pending messages with more associated information we need to also pass a **range of IDs** and a **count argument**, to limit the number of messages returned per call:
+
+```bash
+localhost:6379> XPENDING mystream mygroup - + 10
+1) 1) "1690275395539-0"
+   2) "worker-2"
+   3) (integer) 6011030
+   4) (integer) 1
+2) 1) "1690275399380-0"
+   2) "worker-2" 
+   3) (integer) 242423 
+   4) (integer) 1
+3) 1) "1690275401378-0"
+   2) "worker-2" 
+   3) (integer) 240579 
+   4) (integer) 1
+4) 1) "1690275403409-0"
+   2) "worker-1" 
+   3) (integer) 231842 
+   4) (integer) 1
+5) 1) "1690275405944-0"
+   2) "worker-1" 
+   3) (integer) 230851 
+   4) (integer) 1
+localhost:6379>
+```
+
+<br>
+
+**Filter by particular consumer** and/or **idle time**:<br>
+```bash
+localhost:6379> XPENDING mystream mygroup - + 10 worker-1
+1) 1) "1690275403409-0"
+   1) "worker-1"
+   2) (integer) 1116605
+   3) (integer) 1
+2) 1) "1690275405944-0"
+   1) "worker-1"
+   2) (integer) 1115614
+   3) (integer) 1
+localhost:6379>
+```
+
+<br>
+
+```bash
+localhost:6379> XPENDING mystream mygroup IDLE 9000 - + 10 worker-1
+1) 1) "1690275403409-0"
+   1) "worker-1"
+   2) (integer) 1116605
+   3) (integer) 1
+2) 1) "1690275405944-0"
+   1) "worker-1"
+   2) (integer) 1115614
+   3) (integer) 1
+localhost:6379>
+```
+
+<br>
+
+There is detailed information for each message in the PEL in the **extended form**. For each message **4** attributes are returned:
+- the **ID** of the message;
+- the **name of the consumer** that fetched the message and has still to acknowledge it. We call it the **current owner** of the message;
+- the **idle time**. It is the **number of milliseconds** that elapsed since the last time this message was delivered to this consumer;
+- the **deliveries counter**. The **deliveries counter** is incremented when some other consumer **claims** the message with `XCLAIM`, or when the message is **delivered again** via `XREADGROUP` with explicit ID.
 
 <br>
 
@@ -206,109 +290,127 @@ localhost:6379> XADD mystream * id 30
 
 localhost:6379> XGROUP CREATE mystream mygroup $ MKSTREAM
 OK
-localhost:6379> XREADGROUP GROUP mygroup worker-2 COUNT 10 STREAMS mystream >
-1) 1)  mystream"
-   2) 1) 1) "1677778380263-0"
-         2) 1) "id"
-            2) "10"
-      2) 1) "1677778382038-0"
-         2) 1) "id"
-            2) "20"
-      3) 1) "1677778384391-0"
-         2) 1) "id"
-            2) "30"
-localhost:6379> XREADGROUP GROUP mygroup worker-2 COUNT 10 STREAMS mystream >
-(nil)
-localhost:6379> XREADGROUP GROUP mygroup worker-2 COUNT 10 STREAMS mystream 0
-1) 1)  mystream"
-   2) 1) 1) "1677778380263-0"
-         2) 1) "id"
-            2) "10"
-      2) 1) "1677778382038-0"
-         2) 1) "id"
-            2) "20"
-      3) 1) "1677778384391-0"
-         2) 1) "id"
-            2) "30"
 
+localhost:6379> XADD mystream * id 10
+"1690275391705-0"
+localhost:6379> XADD mystream * id 20
+"1690275395539-0"
+localhost:6379> XADD mystream * id 30
+"1690275399380-0"
 localhost:6379> XADD mystream * id 40
-"1677781715318-0"
+"1690275401378-0"
 localhost:6379> XADD mystream * id 50
-"1677781717310-0"
+"1690275403409-0"
 localhost:6379> XADD mystream * id 60
-"1677781719647-0"
+"1690275405944-0"
+localhost:6379> XADD mystream * id 70
+"1690275410409-0"
+localhost:6379> XADD mystream * id 80
+"1690275412737-0"
 
-localhost:6379> XREAD STREAMS mystream 0
-1) 1)  mystream"
-   2) 1) 1) "1677778380263-0"
+# Explicit ID is used to fetch messages that are in PEL, worker-1 didn't read any at the moment
+localhost:6379> XREADGROUP GROUP mygroup worker-1 COUNT 1 STREAMS mystream 0
+1) 1) "mystream"
+   2) (empty array)
+
+# Special ID '>' is used to fetch NEW messages from stream, COUNT 1 means read only 1 message
+localhost:6379> XREADGROUP GROUP mygroup worker-1 COUNT 1 STREAMS mystream >
+1) 1) "mystream"
+   2) 1) 1) "1690275391705-0"
          2) 1) "id"
             2) "10"
-      2) 1) "1677778382038-0"
-         2) 1) "id"
-            2) "20"
-      3) 1) "1677778384391-0"
-         2) 1) "id"
-            2) "30"
-      4) 1) "1677781715318-0"
-         2) 1) "id"
-            2) "40"
-      5) 1) "1677781717310-0"
-         2) 1) "id"
-            2) "50"
-      6) 1) "1677781719647-0"
-         2) 1) "id"
-            2) "60"
-
-localhost:6379> XREADGROUP GROUP mygroup worker-1 COUNT 1 STREAMS mystream >
-1) 1)  mystream"
-   2) 1) 1) "1677781715318-0"
-         2) 1) "id"
-            2) "40"
 
 localhost:6379> XREADGROUP GROUP mygroup worker-2 COUNT 1 STREAMS mystream >
-1) 1)  mystream"
-   2) 1) 1) "1677781717310-0"
+1) 1) "mystream"
+   2) 1) 1) "1690275395539-0"
          2) 1) "id"
-            2) "50"
-
-localhost:6379> XREADGROUP GROUP mygroup worker-3 COUNT 1 STREAMS mystream >
-1) 1)  mystream"
-   2) 1) 1) "1677781719647-0"
-         2) 1) "id"
-            2) "60"
-localhost:6379>
+            2) "20"
 
 localhost:6379> XPENDING mystream mygroup
-1) (integer) 6
-2) "1677778380263-0"
-3) "1677781719647-0"
+1) (integer) 2
+2) "1690275391705-0"
+3) "1690275395539-0"
 4) 1) 1) "worker-1"
       2) "1"
    2) 1) "worker-2"
-      2) "4"
-   3) 1) "worker-3"
       2) "1"
 
+# Consumer worker-1 confirms message 1690275391705-0 
+localhost:6379> XACK mystream mygroup "1690275391705-0"
+(integer) 1
 
-localhost:6379> XREADGROUP GROUP mygroup worker-3 STREAMS mystream 0
-1) 1)  mystream"
-   2) 1) 1) "1677781719647-0"
-         2) 1) "id"
-            2) "60"
-localhost:6379> XREADGROUP GROUP mygroup worker-2 STREAMS mystream 0
-1) 1)  mystream"
-   2) 1) 1) "1677778380263-0"
-         2) 1) "id"
-            2) "10"
-      2) 1) "1677778382038-0"
-         2) 1) "id"
-            2) "20"
-      3) 1) "1677778384391-0"
-         2) 1) "id"
-            2) "30"
-      4) 1) "1677781717310-0"
+localhost:6379> XACK mystream mygroup "1690275391705-0"
+(integer) 0
+
+localhost:6379> XPENDING mystream mygroup
+1) (integer) 1
+2) "1690275395539-0"
+3) "1690275395539-0"
+4) 1) 1) "worker-2"
+      2) "1"
+
+# here we read mesasges by worker-1 and worker-2
+
+localhost:6379> XREADGROUP GROUP mygroup worker-1 STREAMS mystream "0-0"
+1) 1) "mystream"
+   2) 1) 1) "1690275403409-0"
          2) 1) "id"
             2) "50"
+      2) 1) "1690275405944-0"
+         2) 1) "id"
+            2) "60"
+      3) 1) "1690275410409-0"
+         2) 1) "id"
+            2) "70"
+      4) 1) "1690275412737-0"
+         2) 1) "id"
+            2) "80"
+localhost:6379>
+```
+
+<br>
+
+Number of pending messages **before** `XCLAIM` command:<br>
+```bash
+localhost:6379> XINFO GROUPS mystream
+1) 1) "name"
+   2) "mygroup"
+   3) "consumers"
+   4) (integer) 2
+   5) "pending"
+   6) (integer) 7
+   7) "last-delivered-id"
+   8) "1690275412737-0"
+localhost:6379>
+```
+
+<br>
+
+```bash
+localhost:6379> XCLAIM mystream mygroup worker-3 1000 "1690275403409-0" "1690275405944-0"
+1) 1) "1690275403409-0"
+   2) 1) "id"
+      2) "50"
+2) 1) "1690275405944-0"
+   2) 1) "id"
+      2) "60"
+localhost:6379>
+```
+
+<br>
+
+Number of pending messages **wasn't** changed **after** `XCLAIM` command:<br>
+```bash
+localhost:6379> XINFO GROUPS mystream
+1) 1) "name"
+   2) "mygroup"
+   3) "consumers"
+   4) (integer) 3
+   5) "pending"
+   6) (integer) 7
+   7) "last-delivered-id"
+   8) "1690275412737-0"
+localhost:6379>
 ```
 
 <br>
