@@ -31,25 +31,51 @@ If consumer read message with ```BLPOP``` it means others consumers will not see
 ## Basics
 **The Redis stream** is data type.<br>
 Streams are an **append-only** data structures.<br>
-Each stream entry consists of one or more field-value pairs, somewhat like a record or a Redis hash.
-Commands that read the stream, such as XRANGE or XREAD, are guaranteed to return the fields and values exactly in the same order they were added by XADD.
+Each **stream entry** consists of a **set** of *one* or *more* **field-value pairs**.<br>
+Stream entries are also strictly ordered over an **ID**, which must be **unique**, and which is made up of 2 numbers separated by a `-` character, consisting of a **timestamp** and a **sequence number**, e.g. `555555555-1`, `444444444-2`, etc.<br>
+Commands that read the stream, such as `XREADGROUP`, `XRANGE` or `XREAD`, are guaranteed to return the fields and values exactly in the same order they were added by `XADD`.
+
+<br>
+
+Redis Streams support two types of consumers: 
+- **individual consumers**;
+- **consumer groups**.
+
+<br>
+
+Both styles can be used **simultaneously** on **the same** streams.
 
 <br>
 
 ## Commands
-- `XADD key [<MAXLEN | MINID> [= | ~] N] <* | id> field value [field value ...]` appends the specified stream entry to the stream at the specified `key`.
-  - `*` will generate a unique ID autmatically;
-  - `id` **explicit ID** provided by client.
-- `XTRIM key <MAXLEN | MINID> [= | ~] N` trims the stream `key` by evicting older entries (entries with lower IDs) if needed.
-- `XDEL key id [id ...]` removes the specified entries by their `id` from a stream `key`, and returns the number of entries deleted.
-- `XLEN key` returns the number of entries inside a stream `key`.
-- `XRANGE key start end [COUNT count]` returns all entries belonging to interval [`start`, `end`] (both **inclusive**) from the stream `key`.
-  - The `-` and `+` special IDs mean respectively the **minimum** ID possible and the **maximum** ID possible inside a stream.
-- `XREAD [COUNT count] [BLOCK timeout] STREAMS key [key ...] id [id ...]` read data from *one* or *multiple* streams, only returning entries with an **ID greater** than the provided `id`.
-  - `BLOCK timeout` turns `XREAD` into **blocking mode**. If `timeout = 0` it means **infinity** timeout.
-    -  sometimes it's usefully to use the special ID `$` in **blocking mode** to receive **only new entries**, i.e., entries that are added to the stream starting from the moment we block. 
+- `XADD mystream [<MAXLEN | MINID> [= | ~] N] <* | id> field value [field value ...]` appends the specified stream entry to the stream at the specified `mystream`.
+  - The special ID character `*` will generate a unique ID automatically;
+  - `id` is an **explicit ID** provided by client, it is only really useful if you can rely on another definitive source of strictly increasing IDs.
+- `XTRIM mystream <MAXLEN | MINID> [= | ~] N` trims the stream `mystream` by evicting older entries (entries with lower IDs) if needed.
+- `XDEL mystream id [id ...]` removes the specified entries by their `id` from a stream `mystream`, and returns the number of entries deleted.
+- `XLEN mystream` returns the number of entries inside a stream `mystream`.
+- `XRANGE mystream start end [COUNT count]` returns all entries belonging to interval [`start`, `end`] (both **inclusive**) from the stream `mystream`.
+  - The special ID character `-` means the **minimum** possible ID inside a stream;
+  - The special ID character `+` means the **maximum** possible ID inside a stream;
+- `XREVRANGE` is exactly like `XRANGE`, but returns entries in **reverse order**.
+- `XREAD [COUNT count] [BLOCK timeout] STREAMS mystream [mystream-2 ...] id [id ...]` read data from *one* or *more* streams, only returning entries with an IDs **greater** than the provided `id`.
+  - `XREAD` returns with any entries currently available (up to the `COUNT`), or none at all.
+  - `BLOCK timeout` turns `XREAD` into **blocking mode**, if `timeout = 0` it means **infinity** timeout.
+  - The special ID character `$` tells Redis Streams **retrieve only new entries**, and it should only be used as the first call to `XREAD` by a consumer on a given stream. Otherwise, if you use it again you could potentially miss entries that were added between polls.
 
-`XREAD` and `XRANGE` don't remove entries after they were read. To purge stream there are `XTRIM` or `XADD` in **trimming mode**.<br>
+<br>
+
+> **Note**<br>
+> `XREAD` and `XRANGE` **don't** remove entries from stream after they were read.<br>
+> To **purge** stream use `XTRIM` or `XADD` commands in **trimming mode**.<br>
+
+<br>
+
+So, in summary, Redis Streams `XREAD` relies on consumers remembering the ID of the latest entry they received.<br>
+If something goes wrong, the best they can do is start reading from the newest entries again, or if they support idempotent operations, reading from further back (e.g. some time back if they can estimate their recovery time), or even from the beginning all over again (ID **0-0** or **0**).<br>
+So, Redis Streams with `XREAD` puts most of the effort of remembering IDs onto the consumer.
+
+<br>
 
 ### Examples
 - `XREAD COUNT 50 STREAMS mystream 0`
@@ -98,20 +124,20 @@ Both `XTRIM` and `XADD` have 2 **trimming strategy**:
 
 ## Consumer Groups
 ### Basic
-Every **Consumer Group** is got **isolated subset** of messages from the **same stream**, i.e., consider three consumers `C1`, `C2`, `C3` and a stream that contains the messages `1`, `2`, `3`, `4`, `5`, `6`, `7` then messages will be served according to the following diagram:
+Every **Consumer Group** is got **isolated subset** of messages from the **same stream**, i.e., consider three consumers `worker-2`, `worker-3`, `C3` and a stream that contains the messages `1`, `2`, `3`, `4`, `5`, `6`, `7` then messages will be served according to the following diagram:
 ```bash
-1 -> C1
-2 -> C2
+1 -> worker-2
+2 -> worker-3
 3 -> C3
-4 -> C1
-5 -> C2
+4 -> worker-2
+5 -> worker-3
 6 -> C3
-7 -> C1
+7 -> worker-2
 ```
 
 <br>
 
-Within a **consumer group**, a given **consumer** (that is, just a client consuming messages from the stream), has to identify with a unique **consumer name**. Which is just a string.
+Every **consumer** (a client consuming messages from the stream) **in the group** must have a **unique name**, which is just a string.
 
 <br>
 
@@ -133,55 +159,55 @@ The `NOACK` subcommand can be used to avoid adding the message to the **PEL** in
 <br>
 
 ### Commands
-- `XGROUP CREATE key group <id | $> [MKSTREAM] [ENTRIESREAD entries-read]` **creates** a new consumer group `group` for the stream `key`.
-  - The command's `<id>` argument specifies the **starting ID** for the **consumer group**. If you want to fetch the entire stream from the beginning, use **zero** starting ID for the consumer group.
-- `XGROUP DESTROY key group`  completely **destroys** a consumer group `group`, the consumer group will be destroyed **even** if there are **active consumers**, and **pending** messages.
-- `XGROUP CREATECONSUMER key group consumer` explicitly **creates** a new consumer `consumer` in the consumer group `group` for the stream `key`.
+- `XGROUP CREATE mystream group {id | $} [MKSTREAM] [ENTRIESREAD entries-read]` **creates** a new consumer group `group` for the stream `mystream`.
+  - The command's `{id | $}` argument specifies the **starting ID** for the **consumer group**.
+    - if you want to fetch the **entire stream** from the beginning, use zero ID `0`;
+    - if you want to fetch **only new** messages use the special ID character `$`.
+  - `MKSTREAM` create **empty** stream `mystream` if it doesn't exist. By default, `XGROUP CREATE mystream` returns error if stream `mystream` doesn't exist.
+- `XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds] [NOACK] STREAMS mystream [mystream-2 ...] {id | >} [id ...]` provides the **consumer group** functionality, but first, you have to create a *consumer group* using the `XGROUP CREATE` command. 
+  - The `XREADGROUP` command **requires** the `GROUP` keyword followed by the *group name*, and the *consumer name*. 
+  - The `STREAMS` keyword is **required** and is followed by *one* or *more* streams to subscribe to, and the **starting ID** to read from for each stream.
+  - The special ID character `>` means that the consumer want to **receive only new messages**, i.e., messages that were never delivered to any other consumer.
+  - The explicit ID `id` is for accessing consumer's **pending entries**: messages delivered to it, but not yet acknowledged.
+  - If client re-fetches the same message again, then the **last delivery timestamp** is updated to the current time, and the **number of deliveries** is incremented by one.
+- `XGROUP DESTROY mystream group`  completely **destroys** a consumer group `group`, the consumer group will be destroyed **even** if there are **active consumers**, and **pending** messages.
+- `XGROUP CREATECONSUMER mystream group consumer` explicitly **creates** a new consumer `consumer` in the consumer group `group` for the stream `mystream`.
   - consumers are also created **automatically** whenever an operation, such as `XREADGROUP`, references a *consumer* that **doesn't exist**.
-- `XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds] [NOACK] STREAMS key [key ...] id [id ...]` is used to read from a stream **via a consumer group**.
-  - `XREADGROUP` requires a special and mandatory option `GROUP <group-name> <consumer-name>`.
-    - the **group** is created using the `XGROUP` command.
-    - the **consumer name** is the string that is used by the client to identify itself inside the group. 
-    - the **consumer** is auto created inside the consumer group the first time it is saw. Different clients should select a different consumer name.
-  - The ID to specify in the `STREAMS` option when using `XREADGROUP` can be one of the following two:
-    - The special `>` ID, which means that the consumer want to receive only new messages, i.e., messages that were never delivered to any other consumer.
-    - Any valid ID. If the ID is not `>`, then the command will just let the client access its pending entries: messages delivered to it, but not yet acknowledged.
-  - If client re-fetches the same message again, then the **last delivery counter** is updated to the current time, and the **number of deliveries** is incremented by one.
 - `XACK` is the command that allows a consumer to mark a pending message as correctly processed.
-- `XCLAIM key group consumer min-idle-time id` changes the owner of a pending message to `consumer`.
+- `XCLAIM mystream mygroup new-consumer min-idle-time id` changes the owner of a pending message to `consumer`.
 - `XPENDING mystream mygroup` outputs a summary about the pending messages in a given consumer group `mygroup` of the stream `mystream`.
-- `XINFO CONSUMERS key group` returns the list of consumers that belong to the consumer group `mygroup` of the stream `mystream`.
-  - The following information is provided **for each consumer** in the group:
-    - **name**: the consumer's name;
-    - **pending**: the number of pending messages for the **consumer**;
-    - **idle**: the number of milliseconds that have passed since the consumer last interacted with the server.
-- `XINFO GROUPS key` returns the list of **all consumers groups** of the stream stored at `key`.
+- `XINFO STREAM mystream [FULL [COUNT count]]` returns information about the stream stored at `mystream`.
+- `XINFO GROUPS mystream` returns the list of **all consumers groups** of the stream stored at `mystream`.
   - the following information is provided for each of the groups:
     - **name**: the consumer group's name;
     - **consumers**: the number of consumers in the group;
     - **pending**: the length of the group's PEL;
     - **last-delivered-id**: the ID of the last entry delivered the group's consumers;
-    - **entries-read**: the logical "read counter" of the last entry delivered to group's consumers;
-    - **lag**: the number of entries in the stream that are still waiting to be delivered to the group's consumers, or a NULL when that number can't be determined.
-- `XINFO STREAM key [FULL [COUNT count]]` returns information about the stream stored at `key`.
+- `XINFO CONSUMERS mystream mygroup` returns the list of consumers that belong to the consumer group `mygroup` of the stream `mystream`.
+  - The following information is provided **for each consumer** in the group:
+    - **name**: the consumer's name;
+    - **pending**: the number of pending messages for the **consumer**;
+    - **idle**: the number of milliseconds that have passed since the consumer last interacted with the server.
+
+<br>
 
 #### Examples
 ##### `XADD`, `XGROUP`, `XREADGROUP`
 ```bash
 localhost:6379> FLUSHALL
 OK
-localhost:6379> XADD events * id 10
+localhost:6379> XADD mystream * id 10
 "1677778380263-0"
-localhost:6379> XADD events * id 20
+localhost:6379> XADD mystream * id 20
 "1677778382038-0"
-localhost:6379> XADD events * id 30
+localhost:6379> XADD mystream * id 30
 "1677778384391-0"
 
 
-localhost:6379> XGROUP CREATE events G1 0
+localhost:6379> XGROUP CREATE mystream mygroup $ MKSTREAM
 OK
-localhost:6379> XREADGROUP GROUP G1 C1 COUNT 10 STREAMS events >
-1) 1) "events"
+localhost:6379> XREADGROUP GROUP mygroup worker-2 COUNT 10 STREAMS mystream >
+1) 1)  mystream"
    2) 1) 1) "1677778380263-0"
          2) 1) "id"
             2) "10"
@@ -191,10 +217,10 @@ localhost:6379> XREADGROUP GROUP G1 C1 COUNT 10 STREAMS events >
       3) 1) "1677778384391-0"
          2) 1) "id"
             2) "30"
-localhost:6379> XREADGROUP GROUP G1 C1 COUNT 10 STREAMS events >
+localhost:6379> XREADGROUP GROUP mygroup worker-2 COUNT 10 STREAMS mystream >
 (nil)
-localhost:6379> XREADGROUP GROUP G1 C1 COUNT 10 STREAMS events 0
-1) 1) "events"
+localhost:6379> XREADGROUP GROUP mygroup worker-2 COUNT 10 STREAMS mystream 0
+1) 1)  mystream"
    2) 1) 1) "1677778380263-0"
          2) 1) "id"
             2) "10"
@@ -205,15 +231,15 @@ localhost:6379> XREADGROUP GROUP G1 C1 COUNT 10 STREAMS events 0
          2) 1) "id"
             2) "30"
 
-localhost:6379> XADD events * id 40
+localhost:6379> XADD mystream * id 40
 "1677781715318-0"
-localhost:6379> XADD events * id 50
+localhost:6379> XADD mystream * id 50
 "1677781717310-0"
-localhost:6379> XADD events * id 60
+localhost:6379> XADD mystream * id 60
 "1677781719647-0"
 
-localhost:6379> XREAD STREAMS events 0
-1) 1) "events"
+localhost:6379> XREAD STREAMS mystream 0
+1) 1)  mystream"
    2) 1) 1) "1677778380263-0"
          2) 1) "id"
             2) "10"
@@ -233,44 +259,44 @@ localhost:6379> XREAD STREAMS events 0
          2) 1) "id"
             2) "60"
 
-localhost:6379> XREADGROUP GROUP G1 C0 COUNT 1 STREAMS events >
-1) 1) "events"
+localhost:6379> XREADGROUP GROUP mygroup worker-1 COUNT 1 STREAMS mystream >
+1) 1)  mystream"
    2) 1) 1) "1677781715318-0"
          2) 1) "id"
             2) "40"
 
-localhost:6379> XREADGROUP GROUP G1 C1 COUNT 1 STREAMS events >
-1) 1) "events"
+localhost:6379> XREADGROUP GROUP mygroup worker-2 COUNT 1 STREAMS mystream >
+1) 1)  mystream"
    2) 1) 1) "1677781717310-0"
          2) 1) "id"
             2) "50"
 
-localhost:6379> XREADGROUP GROUP G1 C2 COUNT 1 STREAMS events >
-1) 1) "events"
+localhost:6379> XREADGROUP GROUP mygroup worker-3 COUNT 1 STREAMS mystream >
+1) 1)  mystream"
    2) 1) 1) "1677781719647-0"
          2) 1) "id"
             2) "60"
 localhost:6379>
 
-localhost:6379> XPENDING events G1
+localhost:6379> XPENDING mystream mygroup
 1) (integer) 6
 2) "1677778380263-0"
 3) "1677781719647-0"
-4) 1) 1) "C0"
+4) 1) 1) "worker-1"
       2) "1"
-   2) 1) "C1"
+   2) 1) "worker-2"
       2) "4"
-   3) 1) "C2"
+   3) 1) "worker-3"
       2) "1"
 
 
-localhost:6379> XREADGROUP GROUP G1 C2 STREAMS events 0
-1) 1) "events"
+localhost:6379> XREADGROUP GROUP mygroup worker-3 STREAMS mystream 0
+1) 1)  mystream"
    2) 1) 1) "1677781719647-0"
          2) 1) "id"
             2) "60"
-localhost:6379> XREADGROUP GROUP G1 C1 STREAMS events 0
-1) 1) "events"
+localhost:6379> XREADGROUP GROUP mygroup worker-2 STREAMS mystream 0
+1) 1)  mystream"
    2) 1) 1) "1677778380263-0"
          2) 1) "id"
             2) "10"
@@ -289,9 +315,9 @@ localhost:6379> XREADGROUP GROUP G1 C1 STREAMS events 0
 
 ##### `XINFO`
 ```bash
-localhost:6379> XINFO GROUPS events
+localhost:6379> XINFO GROUPS mystream
 1)  1) "name"
-    2) "G1"
+    2) "mygroup"
     3) "consumers"
     4) (integer) 3
     5) "pending"
@@ -303,27 +329,27 @@ localhost:6379> XINFO GROUPS events
    11) "lag"
    12) (integer) 0
 
-localhost:6379> XINFO CONSUMERS events G1
+localhost:6379> XINFO CONSUMERS mystream mygroup
 1) 1) "name"
-   2) "C0"
+   2) "worker-1"
    3) "pending"
    4) (integer) 1
    5) "idle"
    6) (integer) 713882
 2) 1) "name"
-   2) "C1"
+   2) "worker-2"
    3) "pending"
    4) (integer) 4
    5) "idle"
    6) (integer) 432374
 3) 1) "name"
-   2) "C2"
+   2) "worker-3"
    3) "pending"
    4) (integer) 1
    5) "idle"
    6) (integer) 436696
 
-localhost:6379> XINFO STREAM events
+localhost:6379> XINFO STREAM mystream
  1) "length"
  2) (integer) 6
  3) "radix-tree-keys"
