@@ -171,19 +171,19 @@ The `NOACK` subcommand can be used to avoid adding the message to the **PEL** in
 <br>
 
 ### Commands
-- `XGROUP CREATE mystream group {id | $} [MKSTREAM] [ENTRIESREAD entries-read]` **creates** a new consumer group `group` for the stream `mystream`.
+- `XGROUP CREATE mystream mygroup {id | $} [MKSTREAM] [ENTRIESREAD entries-read]` **creates** a new consumer group `mygroup` for the stream `mystream`.
   - The command's `{id | $}` argument specifies the **starting ID** for the **consumer group**.
     - if you want to fetch the **entire stream** from the beginning, use zero ID `0`;
     - if you want to fetch **only new** messages use the special ID character `$`.
   - `MKSTREAM` create **empty** stream `mystream` if it doesn't exist. By default, `XGROUP CREATE mystream` returns error if stream `mystream` doesn't exist.
-- `XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds] [NOACK] STREAMS mystream [mystream-2 ...] {id | >} [id ...]` provides the **consumer group** functionality, but first, you have to create a *consumer group* using the `XGROUP CREATE` command. This command returns entries with an IDs **greater** than the provided `id`.
+- `XREADGROUP GROUP mygroup consumer [COUNT count] [BLOCK milliseconds] [NOACK] STREAMS mystream [mystream-2 ...] {id | >} [id ...]` provides the **consumer group** functionality, but first, you have to create a *consumer group* using the `XGROUP CREATE` command. This command returns entries with an IDs **greater** than the provided `id`.
   - The `XREADGROUP` command **requires** the `GROUP` keyword followed by the *group name*, and the *consumer name*. 
   - The `STREAMS` keyword is **required** and is followed by *one* or *more* streams to subscribe to, and the **starting ID** to read from for each stream.
   - The special ID character `>` means that the consumer want to **receive only new messages**, i.e., messages that were never delivered to any other consumer.
   - The explicit ID `id` is for accessing consumer's **pending entries**: messages delivered to it, but not yet acknowledged.
   - If client re-fetches the same message again, then the **last delivery timestamp** is updated to the current time, and the **number of deliveries** is incremented by one.
-- `XGROUP DESTROY mystream group`  completely **destroys** a consumer group `group`, the consumer group will be destroyed **even** if there are **active consumers**, and **pending** messages.
-- `XGROUP CREATECONSUMER mystream group consumer` explicitly **creates** a new consumer `consumer` in the consumer group `group` for the stream `mystream`.
+- `XGROUP DESTROY mystream mygroup`  completely **destroys** a consumer group `mygroup`, the consumer group will be destroyed **even** if there are **active consumers**, and **pending** messages.
+- `XGROUP CREATECONSUMER mystream mygroup consumer` explicitly **creates** a new consumer `consumer` in the consumer group `mygroup` for the stream `mystream`.
   - consumers are also created **automatically** whenever an operation, such as `XREADGROUP`, references a *consumer* that **doesn't exist**.
 - `XACK` is the command that allows a consumer to mark a pending message as correctly processed.
 - `XCLAIM mystream mygroup new-consumer min-idle-time id` changes the owner of a pending message to `consumer`.
