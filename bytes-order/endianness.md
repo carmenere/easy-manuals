@@ -20,10 +20,10 @@ POSIX defines following functions for converting between **network byte order** 
 
 <br>
 
-`hton` means **host to network**.
-`ntoh` means **network to host**.
-`s` means **short**.
-`l` means **long**.
+`hton` means **host to network**.<br>
+`ntoh` means **network to host**.<br>
+`s` means **short**.<br>
+`l` means **long**.<br>
 
 <br>
 
