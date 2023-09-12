@@ -11,12 +11,22 @@ docker stop $(docker ps -aq)
 
 ## Stop and remove all containers
 ```bash
-docker rm -f $(docker ps -aq)
+[ -z "$(docker ps -aq)" ] || docker rm --force $(docker ps -aq)
 ```
 
 <br>
 
 ## Prune
 ```bash
-docker system prune -f -a --volumes
+docker system prune --force --all --volumes
+```
+
+<br>
+
+## Prune all (+ builder cache)
+```bash
+docker system prune --force --all --volumes
+docker volume prune --force
+docker network prune --force
+docker builder prune --force --all
 ```
