@@ -49,48 +49,6 @@ There are 2 options that must be set `user.name` and `user.email`:
 
 <br>
 
-# git rebase
-Steps:
-1. `git checkout <SRC>` makes `<SRC>` current branch.
-2. `git rebase <DST>` performs rebase the current branch `<SRC>` on the branch `<DST>`.
-
-<br>
-
-# git merge
-Steps:
-1. `git checkout <DST>` makes `<DST>` current branch.
-2. `git merge <SRC>` performs merge the branch `<SRC>` with the branch `<DST>`.
-
-<br>
-
-> **Note**:<br>
-> `git merge --continue` **continue** merge process after all conflicts were **resolved**.<br>
-> `git merge --abort` **abort** the current conflict resolution process.<br>
-
-<br>
-
-## Kinds of merge
-There are two main ways Git will merge:
-- **fast forward merge**
-- **3-way merge**
-
-<br>
-
-A **fast-forward merge** can occur when there is a **linear path** from the last commit of **current branch** to the last commit of **target branch**.<br>
-`git` just moves (**fast forward**) the **current branch** to the **target branch**. It is *like* **branch forcing**.<br>
-
-<br>
-
-A *fast-forward merge* is **not possible** if the branches have **diverged**, in such situation `git` uses **3-way merge**.<br>
-**3-way merge** create a **merge commit** - additionak commit to tie together the two histories.<br>
-
-<br>
-
-### git merge --no-ff <branch>
-`--no-ff` causes `git merge` to generate a merge commit even if it was a *fast-forward* merge.
-
-<br>
-
 # git reset
 ## git reset --hard ref
 `git reset --hard ref` resets **entire repository** to the commit `ref`:
@@ -118,7 +76,27 @@ Neither **index** nor **working directory** are changed.
 2. Perform some changes.
 3. `git add`.
 4. `git commit`.
-   
+
+<br>
+
+# git restore
+`git restore [--source=<tree>] [--staged] [--worktree] [--] <path_to_file>` restores modified file `<path_to_file>`.
+
+<br>
+
+- `-s <tree>`, `--source=<tree>`
+Restore the working tree files with the content from the given **source tree**.<br>
+It is common to specify the **source tree** by naming a **commit**, **branch** or **tag** associated with it.<br>
+If not specified, the contents are restored from `HEAD` if --staged is given, otherwise from the index.<br>
+
+<br>
+
+- `--worktree`, `--staged`
+Specify the **restore location**.<br>
+If neither option is specified, **by default** the **working tree** is restored.<br>
+Specifying `--staged` will only restore the **index**.<br>
+Specifying both restores both.
+
 <br>
 
 # git revert

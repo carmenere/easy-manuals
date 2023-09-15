@@ -1,4 +1,39 @@
-# Merge one branch ``SRC_BRANCH`` into branch ``DST_BRANCH``
+# git merge
+Steps:
+1. `git checkout <DST>` makes `<DST>` **current** branch.
+2. `git merge <SRC>` performs merge the branch `<SRC>` with the branch `<DST>`.
+
+<br>
+
+> **Note**:<br>
+> `git merge --continue` **continue** merge process after all conflicts were **resolved**.<br>
+> `git merge --abort` **abort** the current conflict resolution process.<br>
+
+<br>
+
+## Kinds of merge
+There are two main ways Git will merge:
+- **fast forward merge**
+- **3-way merge**
+
+<br>
+
+A **fast-forward merge** can occur when there is a **linear path** from the last commit of **current branch** to the last commit of **target branch**.<br>
+`git` just moves (**fast forward**) the **current branch** to the **target branch**. It is *like* **branch forcing**.<br>
+
+<br>
+
+A *fast-forward merge* is **not possible** if the branches have **diverged**, in such situation `git` uses **3-way merge**.<br>
+**3-way merge** create a **merge commit** - additionak commit to tie together the two histories.<br>
+
+<br>
+
+### git merge --no-ff <branch>
+`--no-ff` causes `git merge` to generate a merge commit even if it was a *fast-forward* merge.
+
+<br>
+
+# Example: merge one branch `SRC_BRANCH` into branch `DST_BRANCH`
 ## Prerequisites
 ```bash
 SRC_BRANCH=dev_1
@@ -23,14 +58,14 @@ git remote update
 
 <br>
 
-## Checkout to ``LOCAL_DST_BRANCH``
+## Checkout to `LOCAL_DST_BRANCH`
 ```bash
 git checkout --no-track -b "${LOCAL_DST_BRANCH}" "origin/${DST_BRANCH}"
 ```
 
 <br>
 
-## Merge ``SRC_BRANCH`` into ``LOCAL_DST_BRANCH``
+## Merge `SRC_BRANCH` into `LOCAL_DST_BRANCH`
 ```bash
 git merge -m "${COMMIT_MSG}" "origin/${SRC_BRANCH}"
 ```
@@ -43,7 +78,7 @@ git merge -m "${COMMIT_MSG}" "origin/${SRC_BRANCH}"
 git push origin "${LOCAL_DST_BRANCH}":"${LOCAL_DST_BRANCH}"
 ```
 
-### Case 2. With ``push options`` for GitLab
+### Case 2. With `push options` for GitLab
 ```bash
 git push origin "${LOCAL_DST_BRANCH}":"${LOCAL_DST_BRANCH}" \
     -o merge_request.create \
@@ -55,24 +90,24 @@ git push origin "${LOCAL_DST_BRANCH}":"${LOCAL_DST_BRANCH}" \
 
 <br>
 
-## Remove ``LOCAL_DST_BRANCH``
-## Remove ``${LOCAL_DST_BRANCH}``
-### Delete ``local branch`` with name ${LOCAL_DST_BRANCH}
+## Remove `LOCAL_DST_BRANCH`
+## Remove `${LOCAL_DST_BRANCH}`
+### Delete `local branch` with name ${LOCAL_DST_BRANCH}
 ```bash
 git branch -D "${LOCAL_DST_BRANCH}"
 ```
 
-### Delete ``upstream branch`` with name ${LOCAL_DST_BRANCH}
+### Delete `upstream branch` with name ${LOCAL_DST_BRANCH}
 ```bash
 git push origin --delete "${LOCAL_DST_BRANCH}"
 ```
 
-### Delete ``remote branch`` with name ${LOCAL_DST_BRANCH}
+### Delete `remote branch` with name ${LOCAL_DST_BRANCH}
 ```bash
 git branch --delete --remotes origin/"${LOCAL_DST_BRANCH}"
 ```
 
-### Delete all stale ``remote branches``
+### Delete all stale `remote branches`
 ```bash
 git fetch --all --prune
 ```
