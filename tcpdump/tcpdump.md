@@ -1,28 +1,28 @@
 # tcpdump
 ## Field `Flags[]`
-- `[S]` only `SYN` flag
-- `[F]` only `FIN` flag
-- `[R]` only `RST` flag
-- `[P]` only `PSH` flag
-- `[.]` only `ACK` flag, none of `SYN`, `FIN`, `RST` and `PSH` flags is **not** set
-- `[S.]` only `SYN` and `ACK` flags 
-- `[F.]` only `FIN` and `ACK` flags
-- `[P.]` only `PSH` and `ACK` flags
-- `[R.]` only `RST` and `ACK` flags
+- `[S]` means only `SYN` flag
+- `[F]` means only `FIN` flag
+- `[R]` means only `RST` flag
+- `[P]` means only `PSH` flag
+- `[.]` means only `ACK` flag, none of `SYN`, `FIN`, `RST` and `PSH` flags is **not** set
+- `[S.]` means only `SYN` and `ACK` flags 
+- `[F.]` means only `FIN` and `ACK` flags
+- `[P.]` means only `PSH` and `ACK` flags
+- `[R.]` means only `RST` and `ACK` flags
 
 <br>
 
-If flag `ACK` is set tcpdump will print out value of **filed** `ack`.
+If flag `ACK` is set tcpdump will print out value of **filed** `ack`.<br>
 If flag `URG` is set tcpdump will print out value of **filed** `urg`.
 
 <br>
 
 Examples:
-- `Flags [S], seq 3026561541, win 14600` it is `SYN` segment;
-- `Flags [S.], seq 4182060275, ack 3026561542, win 5792` it is `SYN`,`ACK` segment;
-- `Flags [.], ack 4182060276, win 913` it is `ACK` segment;
-- `Flags [F.]` it is `FIN` segment;
-- `Flags [P.]` it is `PSH` segment;
+- `Flags [S], seq 3026561541, win 14600`
+- `Flags [S.], seq 4182060275, ack 3026561542, win 5792`
+- `Flags [.], ack 4182060276, win 913`
+- `Flags [F.]`
+- `Flags [P.]`
 
 <br>
 
