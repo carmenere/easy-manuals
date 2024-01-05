@@ -22,11 +22,6 @@ Ubuntu publishes **updates** to **2 different components**:
 
 <br>
 
-**Backporting** is the action of taking parts from a newer version of a software and porting them to an older version of the same software.
-It is commonly used for **providing new features to older versions**.
-
-<br>
-
 #### Example
 ```bash
 deb http://ru.archive.ubuntu.com/ubuntu/ xenial main restricted

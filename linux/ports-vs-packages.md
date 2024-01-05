@@ -1,0 +1,2 @@
+A **port** is a set of **source files** for building from source. A **port** is contraction for **portability**.<br>
+A **package** is an **archive** that contains **binaries** and other metadata and **scripts** for **installing** and **removing**.<br>
