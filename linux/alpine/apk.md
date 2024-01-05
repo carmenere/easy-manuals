@@ -1,0 +1,1 @@
+In `alpine` equivalent of `dpkg -S <abs-path-to-file>` is `apk info --who-owns /lib/libssl.so.3`.
