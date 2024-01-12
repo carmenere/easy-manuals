@@ -25,22 +25,21 @@ If *option* has **no parameter** it's called a **flag**.<br>
 
 **Flags** can be can be **gathered together**, e.g., if `-a` and `-b` are **flags**, `-ab` is correct and equal to `-ab`.<br>
 
-Mode-flag options that do not take following arguments can be ganged together; thus, if -a and -b are mode options, -ab or -ba is also correct and enables both.
-The argument to an option, if any, follows it (optionally separated by whitespace).
-
-
-Some programs use other conventions — that is, options not preceded by a dash. Many of these are from the oldest days of Unix. For example, 'tar' and 'ar' both accept options without a dash, so:
-
-tar cvzf /tmp/somefile.tgz some/directory
-The dd command uses opt=value exclusively:
-
-dd if=/some/file of=/another/file bs=16k count=200
+<br>
 
 ## GNU style
 The **GNU style** uses **option keywords** (rather than letters) preceded by **two hyphens** `--` for **options** (aka **long-form options**).<br>
 An **option argument** (if any) can be separated by either **whitespace** or a **equal** (`=`) character.<br>
 
 If you are using the *GNU style*, it is **good practice** to support single-letter equivalents for at least the most common options.<br>
+
+<br>
+
+## Nodash
+Some programs use other conventions and **options not preceded by a dash**.
+For example, `tar` and `dd` accept options **without** a dash:
+- `tar cvzf /tmp/somefile.tgz some/directory`;
+- `dd if=/some/file of=/another/file bs=16k count=200`;
 
 <br>
 
