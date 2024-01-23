@@ -33,7 +33,7 @@ A **software license** is a **contract** (legal agreement) between a **software 
 
 # Types of software licensing models
 Types of software licensing models:
-Subscription software license model
+- **subscription** software license model;
 - **perpetual** software license model;
 - **consumptive** software license model;
 - **pay-per-use** license model;
