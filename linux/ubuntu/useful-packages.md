@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # Apt system-wide commands
 ```bash
 apt update 
