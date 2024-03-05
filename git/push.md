@@ -1,8 +1,26 @@
 # git push
-`git push` updates remote refs using local refs
+`git push` uploads content from a **local** repository to a **remote** repository.<br>
+
+`git push` assumes that **upstream** branch can **only** be **fast-forwarded** by **remote branch**. So, `git push` **fails** when **upstream** branch can **not** be **fast-forwarded** by **remote branch**.<br>
+So, if the **upstream** branch has **diverged** from **remote** branch, you need to perform `git pull` and *merge* **remote** branch into **local** one, then try `git push` again.<br>
 
 <br>
 
+# Force push
+## `--force`
+`git push <remote> --force` or `git push --force` **force** the **push** even if **upstream** branch can **not** be **fast-forwarded** by **remote branch**.<br>
+
+If somebody else built on top of your original history while you are rebasing, the tip of the branch at the remote may advance with their commit, and blindly pushing with `--force` will **lose** their work.<br>
+
+<br>
+
+## `--force-with-lease`
+Git provides **safer** option `--force-with-lease`.<br>
+`git push --force-with-lease` will **not** overwrite any work in **remote** repo if some commits were added to the **upstream** branch by someone else. It ensures you do **not** overwrite someone elses work by **force pushing**.<br>
+
+<br>
+
+# Variants
 ## git push origin src:dst
 1. Reads `remote.origin.url` to determine **URL** of *remote repo* `origin`.
 2. If `dst` doesn't exist in *remote repo* `origin` git will create it, but *local branch* `src` will not become *tracking branch*.
@@ -35,9 +53,6 @@
 
 <br>
 
-
-
-<br>
 
 ## git push origin HEAD
 This is the same as `git push origin $(git branch --show-current)`.
