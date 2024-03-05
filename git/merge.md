@@ -28,6 +28,28 @@ A *fast-forward merge* is **not possible** if the branches have **diverged**, in
 
 <br>
 
+## Merge base
+A **best common ancestor** is a **common ancestor** that **doesn't** have any *better common ancestor*.<br>
+**One** common ancestor is better than **another** common ancestor if the **latter** is an **ancestor** of the **former**.
+
+Consider example:<br>
+```bash
+--C1---C2---C3---
+```
+Here `C2` is an **ancestor** of the `C3`, so `C3` is **better common ancestor** than `C2`.<br>
+
+A **merge base** is a **best common ancestor** of two or more commits/branches.<br>
+
+For example, with this topology:
+```bash
+          C6---C7---B
+         /
+--C1---C2---C3---C4---C5---A
+```
+the **merge base** between `A` and `B` is `C2`.
+
+<br>
+
 ### git merge --no-ff <branch>
 `--no-ff` causes `git merge` to generate a merge commit even if it was a *fast-forward* merge.
 
