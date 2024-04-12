@@ -86,7 +86,7 @@ sudo systemctl status supervisor
 `supervisor` searches for daemon configs here `/etc/supervisor/conf.d/`.<br>
 
 Every **section** `[program:name]` defines separate daemon settings:
-```toml
+```bash
 [program:%name%]
 key=value
 ```
@@ -105,7 +105,7 @@ Minimal set of keys for daemon:
 ### Example: nginx
 1. Run`sudo vi /etc/supervisor/conf.d/ngx.conf`.
 2. Paste folowing snippet:
-```toml
+```bash
 [program:ngx]
 directory=/tmp
 command=/usr/sbin/nginx -g 'daemon off;'
