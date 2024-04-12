@@ -13,9 +13,9 @@ Consider example:
 Client's sessions:
 |srcIP|dstIP|srcPort|dstPort|Protocol|cfd|
 |:----|:----|:------|:------|:-------|:--|
-|localhost|localhost|80|44370|tcp|100|
-|localhost|localhost|80|57668|tcp|200|
-|localhost|localhost|80|58122|tcp|300|
+|localhost|localhost|44370|80|tcp|100|
+|localhost|localhost|57668|80|tcp|200|
+|localhost|localhost|58122|80|tcp|300|
 
 <br>
 
