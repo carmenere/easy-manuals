@@ -17,7 +17,7 @@
 ## Queries
 ### Tasks
 ```sql
-project = CSPL
+project = ABC
     AND (issuetype IN ('Epic', 'Task') OR issueFunction IN subtasksOf("issuetype = Task"))
     AND status in ('New', 'In Progress')
     AND assignee in (foo, bar)
@@ -29,7 +29,7 @@ project = CSPL
 
 ### Bugs
 ```sql
-project = CSPL
+project = ABC
     AND issuetype IN ('Bug')
     AND assignee in (foo, bar)
     AND fixVersion IN ('0.1', '0.2')
@@ -40,7 +40,7 @@ project = CSPL
 
 ### Find issues ever assigned to a user
 ```sql
-project = CSPL
+project = ABC
     AND issuetype IN ('Epic', 'Task')
     AND status in ('Ready for test', 'Done')
     AND assignee was in (foo, bar)
