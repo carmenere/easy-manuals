@@ -1,17 +1,13 @@
 echo "Reading '~/.settings/index' ..."
 
 if [ -f ~/.settings/shared ]; then
-  . ~/.settings/shared 
-fi
-
-if [ -f ~/.settings/history ]; then
-  . ~/.settings/history 
+  . ~/.settings/shared
 fi
 
 if [ -f ~/.settings/locales ]; then
-  . ~/.settings/locales 
+  . ~/.settings/locales
 fi
 
 if [ -f ~/.settings/promt ]; then
-  . ~/.settings/promt 
+  . ~/.settings/promt
 fi

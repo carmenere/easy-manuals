@@ -1,7 +1,14 @@
 #echo "Reading '~/.settings/history' ..."
 
+# In iterm2 go to Settings, tab Profiles and set Command:
+#   cd <path_to_your_project> && export _PROFILE="Foo" && . ~/.settings/history
+
 MYSHELL="$(echo "${SHELL}" | rev | cut -d'/' -f 1 | rev)"
 
+export SAVEHIST=1000000
+export HISTSIZE=200000
+
+# History files will appear in ~/.history directory:
 if [ -n "${_PROFILE}" ]; then
   if [ "${MYSHELL}" = "sh" ]; then
     export HISTFILE=~/".history/${MYSHELL}_history_${_PROFILE}"
@@ -11,7 +18,6 @@ if [ -n "${_PROFILE}" ]; then
   elif [ "${MYSHELL}" = "zsh" ]; then
     export HISTFILE=~/".history/${MYSHELL}_history_${_PROFILE}"
     fc -p "${HISTFILE}"
-    export SAVEHIST=1000000
     setopt HIST_IGNORE_ALL_DUPS
     setopt HIST_SAVE_NO_DUPS
     setopt INC_APPEND_HISTORY
@@ -20,5 +26,3 @@ if [ -n "${_PROFILE}" ]; then
   fi
   export PSQL_HISTORY=~/".psql_history_${_PROFILE}"
 fi
-
-export HISTSIZE=200000
