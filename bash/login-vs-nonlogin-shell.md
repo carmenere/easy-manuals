@@ -45,7 +45,7 @@
 **Change default** shell:
 - `chsh -s /bin/bash`
 - `chsh -s /bin/zsh`
-- 
+
 <br>
 
 # Modes of shell
