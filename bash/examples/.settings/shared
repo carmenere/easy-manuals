@@ -1,0 +1,15 @@
+#echo "Reading '~/.settings/shared' ..."
+
+# ARCH=$(uname -m)
+# OS_NAME=$(. /etc/os-release && echo ${ID})
+# OS_CODENAME=$(. /etc/os-release && echo ${VERSION_CODENAME})
+
+OS_KERNEL="$(uname -s)"
+
+if [ "${OS_KERNEL}" = "Darwin" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+export BUILDKIT_PROGRESS=plain
+
+export VARS=~/.cpe/vars.mk
