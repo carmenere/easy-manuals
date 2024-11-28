@@ -1,12 +1,10 @@
 #echo "Reading '~/.settings/promt' ..."
 
-MYSHELL="$(echo "${SHELL}" | rev | cut -d'/' -f 1 | rev)"
-
 function git_branch() {
     git branch --show-current 2> /dev/null
 }
 
-# If the shell is zsh, the variable $ZSH_VERSION is defined. 
+# If the shell is zsh, the variable $ZSH_VERSION is defined.
 if [ -n "${ZSH_VERSION}" ]; then
     setopt PROMPT_SUBST
     export PS1='%F{green}%n%f@%F{red}%m%f %3~ [$(git_branch)] %# '
