@@ -1,0 +1,24 @@
+#echo "Reading '~/.settings/history' ..."
+
+MYSHELL="$(echo "${SHELL}" | rev | cut -d'/' -f 1 | rev)"
+
+if [ -n "${_PROFILE}" ]; then
+  if [ "${MYSHELL}" = "sh" ]; then
+    export HISTFILE=~/".history/${MYSHELL}_history_${_PROFILE}"
+  elif [ "${MYSHELL}" = "bash" ]; then
+    export HISTFILE=~/".history/${MYSHELL}_history_${_PROFILE}"
+    fc -p "${HISTFILE}"
+  elif [ "${MYSHELL}" = "zsh" ]; then
+    export HISTFILE=~/".history/${MYSHELL}_history_${_PROFILE}"
+    fc -p "${HISTFILE}"
+    export SAVEHIST=1000000
+    setopt HIST_IGNORE_ALL_DUPS
+    setopt HIST_SAVE_NO_DUPS
+    setopt INC_APPEND_HISTORY
+  else
+    echo "Skipping history setting!"
+  fi
+  export PSQL_HISTORY=~/".psql_history_${_PROFILE}"
+fi
+
+export HISTSIZE=200000
