@@ -19,11 +19,12 @@ apt install -y dosfstools p7zip-rar p7zip-full
 <br>
 
 # Copy files from .iso image to partition:
-1. Run `mkdir -p /mnt/efi`.
-2. Run `mount /dev/sdXn /mnt/efi`.
-3. Run `7z x /path/to/ubuntu-*.iso -o/mnt/efi`.
-4. Run `sync`.
-5. Run `umount /mnt/efi`.
+1. Run `apt install p7zip-full`.
+2. Run `mkdir -p /mnt/efi`.
+3. Run `mount /dev/sdXn /mnt/efi`.
+4. Run `7z x /path/to/ubuntu-*.iso -o/mnt/efi`.
+5. Run `sync`.
+6. Run `umount /mnt/efi`.
 
 <br>
 
