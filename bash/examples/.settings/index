@@ -8,6 +8,6 @@ if [ -f ~/.settings/locales ]; then
   . ~/.settings/locales
 fi
 
-if [ -f ~/.settings/promt ]; then
-  . ~/.settings/promt
+if [ -f ~/.settings/prompt ]; then
+  . ~/.settings/prompt
 fi
