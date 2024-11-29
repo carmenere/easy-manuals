@@ -1,11 +1,28 @@
 # On ``server`` side
-1. Enable **AgentForwarding**: set ``AllowAgentForwarding`` to ``yes``:
-
+1. **Check**: 
 ```bash
-sed -i 's/^AllowAgentForwarding.*/AllowAgentForwarding yes/' /etc/ssh/sshd_config
+grep 'AllowAgentForwarding' /etc/ssh/sshd_config
 ```
 
-2. Check: 
+<br>
+
+2. Enable **AgentForwarding**: set ``AllowAgentForwarding`` to ``yes``:
+- if it is **commented** and **yes**:
+```bash
+sudo sed -i 's/^#AllowAgentForwarding\s\+yes\s*$/AllowAgentForwarding yes/' /etc/ssh/sshd_config
+```
+- **or** if it is **commented** and **no**:
+```bash
+sudo sed -i 's/^#AllowAgentForwarding\s\+no\s*$/AllowAgentForwarding yes/' /etc/ssh/sshd_config
+```
+- **or** if it is **UNcommented** and **no**:
+```bash
+sudo sed -i 's/^AllowAgentForwarding\s\+no\s*$/AllowAgentForwarding yes/' /etc/ssh/sshd_config
+```
+
+<br>
+
+3. **Check**: 
 ```bash
 grep 'AllowAgentForwarding' /etc/ssh/sshd_config
 ```

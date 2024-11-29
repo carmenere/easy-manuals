@@ -10,6 +10,12 @@ if [ "${OS_KERNEL}" = "Darwin" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# If the shell is zsh, the variable $ZSH_VERSION is defined. 
+if [ -n "${ZSH_VERSION}" ]; then
+  autoload -U colors && colors
+  autoload -Uz compinit && compinit
+fi
+
 export BUILDKIT_PROGRESS=plain
 
 export VARS=~/.cpe/vars.mk
