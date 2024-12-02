@@ -29,6 +29,13 @@ grep 'AllowAgentForwarding' /etc/ssh/sshd_config
 
 <br>
 
+4. **Restart** `ssh`:
+```bash
+sudo systemctl restart ssh
+```
+
+<br>
+
 # On ``client`` side
 1. Add to your ``~/.ssh/config`` file
 ```bash
