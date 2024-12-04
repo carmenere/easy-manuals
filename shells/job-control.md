@@ -1,3 +1,31 @@
+# Table of contents
+- [Table of contents](#table-of-contents)
+- [Fundamental concepts of job control in UNIX](#fundamental-concepts-of-job-control-in-unix)
+  - [Process groups](#process-groups)
+  - [Group leader](#group-leader)
+  - [Sessions](#sessions)
+  - [Session leader](#session-leader)
+  - [Controlling terminal](#controlling-terminal)
+  - [Syscall `setsid()`](#syscall-setsid)
+- [Daemonization](#daemonization)
+  - [Double-fork technique](#double-fork-technique)
+- [Job control](#job-control)
+  - [Foreground and background jobs](#foreground-and-background-jobs)
+  - [Example: async DNS resolver](#example-async-dns-resolver)
+  - [Job control signals](#job-control-signals)
+    - [`SIGHUP`](#sighup)
+    - [`SIGCONT`](#sigcont)
+    - [`SIGTTIN`](#sigttin)
+      - [Example](#example)
+    - [`SIGTTOU`](#sigttou)
+      - [Examples: change the *controlling terminal* settings](#examples-change-the-controlling-terminal-settings)
+      - [Examples: write to the *controlling terminal* when `TOSTOP` **mode** is not set](#examples-write-to-the-controlling-terminal-when-tostop-mode-is-not-set)
+      - [Examples: set `TOSTOP` mode and then write to the *controlling terminal*](#examples-set-tostop-mode-and-then-write-to-the-controlling-terminal)
+  - [Termios API](#termios-api)
+  - [Job control commands](#job-control-commands)
+
+<br>
+
 # Fundamental concepts of job control in UNIX
 In Unix **every process** belongs to a **group** which in turn belongs to a **session**:
 *Session* (**SID**) **->** *Process Group* (**PGID**) **->** *Process* (**PID**)
@@ -44,7 +72,7 @@ Thus, **all** the processes in a session **inherit** the **controlling terminal*
 ## Syscall `setsid()`
 Syscall `setsid()`:
 - **detaches** *calling process* from its **controlling terminal**;
-- **creates** **new session**;
+- **creates new session**;
 - **makes** *calling process* the **session leader**.
 
 <br>
@@ -83,8 +111,6 @@ A shell that supports **job control** has its own representation of **job**.<br>
 **Job** is *any* **single command** or **whole pipeline** in `sh`, `bash`, `zsh` and others (*pipeline* is a sequence of commands separated by the `|` operator).<br>
 The basic idea is that **whole pipeline** is a **job**, because **every** process in a pipeline should be **manipulated** (stopped, resumed, killed) **simultaneously**. That's why `kill` allows you to send signals to **entire process groups**.<br>
 
-
-
 <br>
 
 A shell that supports **job control** must **arrange to control** which **job** can use the terminal at any time.<br>
@@ -93,16 +119,46 @@ To prevent this, the **shell must cooperate** with the **terminal driver** and m
 
 <br>
 
-So, there 3 kinds of **job** in shell:
+## Foreground and background jobs
+So, there are 3 kinds of **job**:
 - **foreground job** is an *executing* **job** that can **read** and **write** to its **controlling terminal**;
-- **background job** is an *executing* **job** that **can't read** to its **controlling terminal**, but ability to **write** to its **controlling terminal** depends;
+- **background job** is an *executing* **job** that **can't read** to its **controlling terminal**, but it still able to **write** to its **controlling terminal**, but it depends on terminal settings and writing to  **controlling terminal** can be forbidden too;
 - **suspended job** is **job** that **isn't** *executing*, e.g., **job** that is **stopped**.
 
 <br>
 
+To run command as **background job** append `&` to the end of command.<br>
+
+<br>
+
 > **Note**: <br>
-> **Foreground job** **receives** **keyboard-generated signals** , e.g., `Ctrl+C` -> `SIGINT`.<br>
-> **Background jobs** are **immune** to **keyboard-generated signals**.<br>
+> 1. *Foreground job* **receives keyboard-generated signals** , e.g., `Ctrl+C` -> `SIGINT`.<br>
+> 2. *Background jobs* are **immune** to **keyboard-generated signals**.<br>
+> 3. **Output** of *background jobs* may **interleave** with other jobs.<br>
+> 4. All *background jobs* are run **asynchronously**.<br>
+
+<br>
+
+## Example: async DNS resolver
+```bash
+declare -a domains=(
+    "google.com"
+    "youtube.com"
+    "facebook.com"
+)
+
+RESOLVED_DOMAINS=/tmp/resloved.txt
+
+rm "${RESOLVED_DOMAINS}"
+for i in "${domains[@]}"
+do
+   dig +noall +answer "$i" 1 >> "${RESOLVED_DOMAINS}" 2>&1 &
+done
+
+cat "${RESOLVED_DOMAINS}"
+
+grep -E '\d+\.\d+\.\d+\.\d+' "${RESOLVED_DOMAINS}" | cut -d 'A' -f 2 | tr -d '\t' | sort | uniq | wc -l
+```
 
 <br>
 
@@ -146,7 +202,6 @@ When does **bash** send `SIGHUP`?<br>
 ### `SIGCONT`
 A **suspended job** can be **resumed** as a **background job** with the `bg %n`, or as the **foreground job** with `fg %n`.<br>
 In either case, the shell redirects I/O appropriately, and sends the `SIGCONT` signal to the process, which causes the operating system to resume its execution.<br>
-In many shells, a **job** can be started as a **background job** by appending `&` to the command line; its `output` is directed to the **terminal** (potentially interleaved with other programs' output), but it **cannot** **read** from the terminal `input`.<br>
 
 <br>
 
