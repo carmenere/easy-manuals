@@ -3,3 +3,10 @@
 
 # IDE
 .vscode/
+.idea/
+
+# direnv
+.envrc
+
+#
+**/.env
