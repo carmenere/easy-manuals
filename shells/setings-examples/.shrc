@@ -1,5 +1,0 @@
-echo "Reading '~/.shrc' ..."
-
-if [ -f ~/.settings/index ]; then
-  . ~/.settings/index
-fi

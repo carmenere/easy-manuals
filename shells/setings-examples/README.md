@@ -1,1 +1,0 @@
-Do not foreget create directory `~/.history`.
