@@ -1,3 +1,23 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [Merge many branches ``SRC_BRANCH_i`` into branch ``DST_BRANCH``](#merge-many-branches-src_branch_i-into-branch-dst_branch)
+  * [Prerequisites](#prerequisites)
+  * [Update all remote branches](#update-all-remote-branches)
+  * [Checkout to ``LOCAL_DST_BRANCH``](#checkout-to-local_dst_branch)
+  * [Merge all ``SRC_BRANCH_i`` into ``LOCAL_DST_BRANCH``](#merge-all-src_branch_i-into-local_dst_branch)
+  * [Push](#push-)
+    * [Case 1. Just push](#case-1-just-push)
+    * [Case 2. With ``push options`` for GitLab](#case-2-with-push-options-for-gitlab)
+  * [Remove ``${LOCAL_DST_BRANCH}``](#remove-local_dst_branch)
+    * [Delete ``local branch`` with name ${LOCAL_DST_BRANCH}](#delete-local-branch-with-name-local_dst_branch)
+    * [Delete ``upstream branch`` with name ${LOCAL_DST_BRANCH}](#delete-upstream-branch-with-name-local_dst_branch)
+    * [Delete ``remote branch`` with name ${LOCAL_DST_BRANCH}](#delete-remote-branch-with-name-local_dst_branch)
+    * [Delete all stale ``remote branches``](#delete-all-stale-remote-branches)
+<!-- TOC -->
+
+<br>
+
 # Merge many branches ``SRC_BRANCH_i`` into branch ``DST_BRANCH``
 ## Prerequisites
 ```bash

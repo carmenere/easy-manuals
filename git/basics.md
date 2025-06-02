@@ -1,3 +1,30 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [git init](#git-init)
+* [git clone](#git-clone)
+* [git config](#git-config)
+  * [Set value](#set-value)
+  * [List settings](#list-settings)
+  * [Mandatory options to set](#mandatory-options-to-set)
+  * [Unset specific option](#unset-specific-option)
+  * [Get option's value](#get-options-value)
+* [git reset](#git-reset)
+  * [git reset --hard ref](#git-reset---hard-ref)
+  * [git reset --mixed ref](#git-reset---mixed-ref)
+  * [git reset --soft ref](#git-reset---soft-ref)
+  * [git commit](#git-commit)
+  * [git commit --amend](#git-commit---amend)
+* [git restore](#git-restore)
+* [git revert](#git-revert)
+* [git clean](#git-clean)
+  * [Examples](#examples)
+* [git tag](#git-tag)
+* [git describe](#git-describe)
+<!-- TOC -->
+
+<br>
+
 # git init
 `master` or `main` are the default names for a **initial branch** when you run `git init`.<br>
 
@@ -67,6 +94,26 @@ This mode is used **by default**.<br>
 ## git reset --soft ref
 `git reset --soft ref` stops after **step 1**. Actually this step cancels `git commit`.
 Neither **index** nor **working directory** are changed.
+
+<br>
+
+## git commit
+The text up to the **first blank line** in a **commit message** is treated as the **commit title** (aka **subject**).<br>
+
+Also it is possible to **separate** **title** from **description**:
+`git commit -m "I am title." -m "I am description."`
+
+Example:
+```bash
+git log -1
+commit cdb7c8f7c04cbfbb9f484745e7bdb04a9bcd9a98 (HEAD -> master)
+Author: Anton Romanov <a.romanovich86@gmail.com>
+Date:   Mon Jun 2 17:04:27 2025 +0300
+
+    I am title.
+
+    I am description.
+```
 
 <br>
 

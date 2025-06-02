@@ -1,3 +1,21 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [Branches](#branches)
+  * [Upstream branch](#upstream-branch)
+  * [Remote branch](#remote-branch)
+  * [Tracking branch](#tracking-branch)
+    * [Tracking branch](#tracking-branch-1)
+  * [Ways to make *local branch* **tracking branch**](#ways-to-make-local-branch-tracking-branch)
+    * [git checkout](#git-checkout)
+    * [`git checkout` error](#git-checkout-error)
+    * [git push](#git-push)
+    * [git branch](#git-branch)
+  * [Unset tracking](#unset-tracking)
+<!-- TOC -->
+
+<br>
+
 # Branches
 ## Upstream branch
 **Upstream branch** – any branch in `.git/refs/heads` of **remote** repository.<br>
@@ -57,6 +75,30 @@ Consider config:
 > if **omit** `-b new_branch` and `origin/` prefix then `git checkout bar` will try find `bar` in `refs/remotes/repo` and if it doesn't exist - returns error.<br>
 > `git checkout bar` is equal to `git checkout -b bar --track origin/bar`.<br>
 > `git checkout -b foo origin/bar` is equal to  `git checkout -b foo --track origin/bar`.<br>
+
+<br>
+
+### `git checkout` error
+**Command**:
+```bash
+git checkout foo
+```
+
+**Output**:
+```bash
+error: The following untracked working tree files would be overwritten by checkout
+ ...
+Please move or remove them before you can switch branches.
+Aborting
+```
+
+<br>
+
+This is caused by following, suppose you have some file in **tag** `1.3.1`, e.g., `migrations/INIT.sql`, but in tag `1.0.0` you have not this file.<br>
+If you *checkout* to tag `1.0.0` and create there file `migrations/INIT.sql` even with the same content `git` **rejects** your attempt to *checkout* into tag `1.3.1`.<br>
+If you provide `-f` option then `git checkout -f` will *checkout* and overwrites file `migrations/INIT.sql` from tag `1.3.1`.<br>
+
+Also you can call `git clean` to **explicitly clear workdir** before `git checkout`.
 
 <br>
 

@@ -1,3 +1,36 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [git rebase](#git-rebase)
+* [Example](#example)
+  * [git status](#git-status)
+  * [Create new file](#create-new-file)
+  * [Commit `a.txt`](#commit-atxt)
+    * [git log](#git-log)
+  * [Create new branch `feat-1`](#create-new-branch-feat-1)
+  * [Create new file `feat.txt`](#create-new-file-feattxt-)
+  * [Commit `feat.txt`](#commit-feattxt)
+    * [git log](#git-log-1)
+  * [Then create another file `b.txt` in `main` branch](#then-create-another-file-btxt-in-main-branch)
+  * [Commit `b.txt`](#commit-btxt)
+    * [git log](#git-log-2)
+  * [**Rebase**](#rebase)
+    * [git checkout feat-1](#git-checkout-feat-1)
+    * [git rebase main](#git-rebase-main)
+  * [Compare commits **before** rebase and **after** rebase](#compare-commits-before-rebase-and-after-rebase)
+    * [In branch `main`](#in-branch-main)
+      * [git checkout main](#git-checkout-main)
+      * [git log](#git-log-3)
+    * [In branch `feat-1`](#in-branch-feat-1)
+      * [git checkout feat-1](#git-checkout-feat-1-1)
+      * [git log](#git-log-4)
+  * [Remove dangling commits:](#remove-dangling-commits-)
+  * [Try git checkout b9001a33 again](#try-git-checkout-b9001a33-again)
+* [git rebase --onto](#git-rebase---onto)
+<!-- TOC -->
+
+<br>
+
 # git rebase
 Steps:
 1. `git checkout feature` makes `feature` **current** branch.

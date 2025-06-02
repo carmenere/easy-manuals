@@ -1,3 +1,16 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [git fetch](#git-fetch)
+  * [git fetch origin src:dst](#git-fetch-origin-srcdst)
+  * [git fetch origin src](#git-fetch-origin-src)
+  * [git fetch origin](#git-fetch-origin)
+  * [git fetch](#git-fetch-1)
+* [Other useful options](#other-useful-options)
+<!-- TOC -->
+
+<br>
+
 # git fetch
 `git fetch` downloads **objects** and **refs** from another repository.
 
