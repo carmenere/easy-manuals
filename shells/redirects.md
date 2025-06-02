@@ -1,3 +1,24 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [**STDIN**, **STDOUT**, **STDERR**](#stdin-stdout-stderr)
+* [Inheritance of **STDIN**, **STDOUT**, **STDERR**](#inheritance-of-stdin-stdout-stderr)
+* [Redirects](#redirects)
+  * [Redirect STDOUT and STDERR to the same file](#redirect-stdout-and-stderr-to-the-same-file)
+    * [Suppress only STDERR](#suppress-only-stderr)
+    * [Suppress STDOUT and STDERR](#suppress-stdout-and-stderr)
+  * [Duplicating file descriptors](#duplicating-file-descriptors)
+    * [Input](#input)
+    * [Output](#output)
+  * [Syscalls](#syscalls)
+      * [Example: output redirection](#example-output-redirection)
+      * [Example: duplicating descriptors](#example-duplicating-descriptors)
+      * [Example: command m>file n>&m](#example-command-mfile-nm)
+      * [Example: command n>&m m>file](#example-command-nm-mfile)
+<!-- TOC -->
+
+<br>
+
 # **STDIN**, **STDOUT**, **STDERR**
 There are 3 well-known fd:
 - `/dev/stdin`: **standard input** (**STDIN**) has `fd`=**0**;

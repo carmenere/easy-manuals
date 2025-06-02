@@ -1,3 +1,18 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [IFS](#ifs)
+* [Argument](#argument)
+  * [Unix style](#unix-style)
+  * [GNU style](#gnu-style)
+  * [Nodash](#nodash)
+  * [Bare hyphen](#bare-hyphen)
+  * [Terminating double hyphen](#terminating-double-hyphen)
+* [Example](#example)
+<!-- TOC -->
+
+<br>
+
 # IFS
 **IFS** (**Internal Field Separator**) is the special shell variable which determines shell how **split** **sequence of characters** into **words**.<br>
 The **default value** of **IFS** is a three-character string comprising a **space** (`\s`), **tab** (`\t`), and **newline** (`\n`).<br>

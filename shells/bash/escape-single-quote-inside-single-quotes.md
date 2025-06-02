@@ -1,3 +1,14 @@
+<!-- TOC -->
+* [Escaping quotes in bash](#escaping-quotes-in-bash)
+  * [Using ``'"'"'`` to escape `'`](#using--to-escape-)
+  * [ANSI C quoting](#ansi-c-quoting)
+    * [Examples](#examples)
+      * [Broken code](#broken-code)
+      * [Working code](#working-code)
+<!-- TOC -->
+
+<br>
+
 # Escaping quotes in bash
 ## Using ``'"'"'`` to escape `'`
 Assume that you need to execute such a command:

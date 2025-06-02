@@ -1,3 +1,14 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [git pull](#git-pull)
+  * [git pull](#git-pull-1)
+  * [git pull --ff-only](#git-pull---ff-only)
+  * [git pull --rebase](#git-pull---rebase)
+<!-- TOC -->
+
+<br>
+
 # git pull
 `git pull` incorporates changes from a **remote repo** into the **current branch**.<br>
 Under the hood the `git pull origin src:dst` runs `git fetch` with the given parameters and then calls either `git rebase` or `git merge`:
@@ -28,3 +39,6 @@ If current branch and remote branch were diverged and **fast-forward** is **not 
 
 To set `--ff-only` behaviour by default for `git pull` run:
 `git config --local pull.ff only`
+
+## git pull --rebase
+If **remote** branch was rebased, use `git pull --rebase` to pull and merge remote into **local**.<br>

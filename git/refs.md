@@ -1,3 +1,21 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [Refs](#refs)
+  * [](#)
+* [Branches](#branches)
+  * [Branch forcing](#branch-forcing)
+  * [HEAD](#head)
+  * [Dangling commits](#dangling-commits)
+* [Refspecs](#refspecs)
+  * [Refspecs and Git config file](#refspecs-and-git-config-file)
+* [Config options](#config-options)
+    * [`git` without `refspec`](#git-without-refspec)
+    * [`git` without `repo`](#git-without-repo)
+<!-- TOC -->
+
+<br>
+
 # Refs
 So, there are 3 ways to refer to commits in Git:
 - by **full** SHA-1 **hash** of *commit*;

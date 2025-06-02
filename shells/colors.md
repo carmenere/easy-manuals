@@ -1,3 +1,16 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [Escape sequences](#escape-sequences)
+* [Codes of colors](#codes-of-colors)
+* [Codes of formats](#codes-of-formats)
+* [Tests](#tests)
+  * [Set vars](#set-vars)
+  * [Print out](#print-out)
+<!-- TOC -->
+
+<br>
+
 # Escape sequences
 Format of **escape sequence**: `\e[CODEm` or `\033[CODEm` or `\033[CODE1;CODE2m`.<br>
 `CODE` stands for **code of color** or **code of format**.<br>

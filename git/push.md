@@ -1,3 +1,21 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [git push](#git-push)
+* [Force push](#force-push)
+  * [`--force`](#--force)
+  * [`--force-with-lease`](#--force-with-lease)
+* [Variants](#variants)
+  * [git push origin src:dst](#git-push-origin-srcdst)
+  * [git push origin src](#git-push-origin-src)
+  * [git push origin](#git-push-origin)
+  * [git push](#git-push-1)
+  * [git push origin HEAD](#git-push-origin-head)
+  * [git push origin :dst](#git-push-origin-dst)
+<!-- TOC -->
+
+<br>
+
 # git push
 `git push` uploads content from a **local** repository to a **remote** repository.<br>
 
