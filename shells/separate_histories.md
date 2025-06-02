@@ -1,3 +1,15 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [`SHELL` env](#shell-env)
+* [Separate histories](#separate-histories)
+  * [`direnv` util](#direnv-util)
+  * [ZSH](#zsh)
+* [Bash](#bash)
+<!-- TOC -->
+
+<br>
+
 # `SHELL` env
 The env `SHELL` is a **user's default shell** and it is does not change. It is set in `/etc/passwd`.<br>
 If your default shell **zsh** then `SHELL` env contains **zsh** and then if you run `bash` or `sh` the `SHELL` env will continue anyway contain **zsh**.<br>

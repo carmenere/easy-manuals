@@ -1,3 +1,12 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [ZSH](#zsh)
+* [Bash](#bash)
+<!-- TOC -->
+
+<br>
+
 # ZSH
 Add to `~/.zshrc` following:
 ```bash

@@ -1,3 +1,15 @@
+# Table of contents
+<!-- TOC -->
+* [Table of contents](#table-of-contents)
+* [tmux](#tmux)
+  * [Comamnds](#comamnds)
+  * [General](#general)
+  * [Navigation](#navigation)
+  * [Panes](#panes)
+<!-- TOC -->
+
+<br>
+
 # tmux
 The **prefix** is the **combination of keys** you press **before** any **command**.<br>
 **By default**, **prefix** is `Ctrl + B` or `C-b`, but it can be customized to be any combination.<br>
