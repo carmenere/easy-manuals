@@ -13,7 +13,7 @@ OPTS=$(getopt [options] -- "$@")
 eval set -- "${OPTS}"
 while true; do
   case "$1" in
-
+    ...
   esac
 done
 ```
