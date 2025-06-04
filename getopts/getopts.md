@@ -37,9 +37,9 @@ function xxx() {
   while getopts ${OPTSTRING} opt; do
     echo "opt=$opt"
     case ${opt} in
-      x) echo "OPTARG = ${OPTARG}"; if [ "${OPTARG:0:1}" = "-" ]; then echo "Option ${opt} requires an argument"; return 99; fi
+      x) if [ "${OPTARG:0:1}" = "-" ]; then echo "Option ${opt} requires an argument"; return 99; fi
          echo "Option -x was triggered, Argument: ${OPTARG}";;
-      y) echo "OPTARG = ${OPTARG}"; echo "Option -y was triggered, Argument: ${OPTARG}";;
+      y) echo "Option -y was triggered, Argument: ${OPTARG}";;
       :) echo "Option -${OPTARG} requires an argument."; return 1;;
       ?) echo "Invalid option: -${OPTARG}."; return 1 ;;
     esac
