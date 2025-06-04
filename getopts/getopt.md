@@ -55,12 +55,23 @@ function yyy() {
   HELP=false
   while true; do
     case "$1" in
-      -f|--file) echo "FILE"; FILE="$2"; shift 2;;
-      -d|--directory) echo "DIRECTORY"; DIRECTORY="$2"; shift 2;;
+      -f|--file) FILE="$2"; shift 2;;
+      -d|--directory) DIRECTORY="$2"; shift 2;;
       -h|--help) echo "HELP"; HELP="$2"; shift;;
       --) shift; break;;
       *) echo "Unknown option $1"; return 99;;
     esac
   done
+  echo "FILE=${FILE}";
+  echo "DIRECTORY=${DIRECTORY}";
 }
+```
+
+<br>
+
+Example:
+```bash
+yyy --directory=abc --file=123
+FILE=123
+DIRECTORY=abc
 ```

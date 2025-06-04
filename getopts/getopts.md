@@ -46,8 +46,21 @@ function xxx() {
 }
 ```
 
+<br>
+
 The `\?` catches **invalid options** (like `-z`) and shows an error message.<br>
 The `:` catches cases when **required arguments are misiing**, like `-u` without a value.<br>
+
+<br>
+
+Example:
+```bash
+xxx -x abc -y 333
+Option -x was triggered, Argument: abc
+Option -y was triggered, Argument: 333
+```
+
+<br>
 
 `getopts` **does not** support **optional arguments** for options, in other words, if option must have argument any next string will be intepreted as its argument.<br>
 If we call xxx from the example above like `xxx -x -y` then `-y` will be interpreted as argument of `-x` option!<br>
