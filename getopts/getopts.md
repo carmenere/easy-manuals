@@ -35,7 +35,6 @@ function xxx() {
   local OPTSTRING OPTIND opt OPTARG
   OPTSTRING=":x:y:"
   while getopts ${OPTSTRING} opt; do
-    echo "opt=$opt"
     case ${opt} in
       x) if [ "${OPTARG:0:1}" = "-" ]; then echo "Option ${opt} requires an argument."; return 99; fi
          echo "Option -${opt} was triggered, Argument: ${OPTARG}";;
