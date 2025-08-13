@@ -9,6 +9,14 @@
   * [Bare hyphen](#bare-hyphen)
   * [Terminating double hyphen](#terminating-double-hyphen)
 * [Example](#example)
+* [POSIX](#posix)
+  * [Utility general syntax](#utility-general-syntax)
+  * [Argument](#argument-1)
+  * [Operand](#operand)
+  * [Option](#option)
+  * [Option-Argument](#option-argument)
+  * [Flag](#flag)
+  * [Double dash](#double-dash)
 <!-- TOC -->
 
 <br>
