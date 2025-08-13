@@ -80,3 +80,46 @@ Consider the command `ls -I README -l foo 'bar car' baz`:
 - the `-l` and `-I` are **options**;
 - the `-I` has a **parameter** `README`;
 - `foo`, `bar car` and `baz` are **opernads**;
+
+<br>
+
+# POSIX
+[POSIX.1-2017](https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/basedefs/V1_chap03.html)
+
+
+## Utility general syntax
+`utility_name[-a][-b][-c option_argument] [-d|-e][-f[option_argument]][operand...]`
+
+<br>
+
+## Argument
+In the shell command language, a parameter passed to a utility as the equivalent of a single string in the argv array created by one of the exec functions.<br>
+An argument is one of the **options**, **option-arguments**, or **operands** following the command name.<br>
+
+<br>
+
+## Operand
+**Operand** is a **positional argument** (aka **non-option argument**) of command itself.<br>
+Operands generally follow the options in a command line.<br>
+
+
+<br>
+
+## Option
+An argument to a command that is generally used to specify changes in the utility's default behavior.<br>
+
+<br>
+
+## Option-Argument
+A parameter that follows certain options. In some cases an option-argument is included within the same argument string as the option-in most cases it is the next argument.<br>
+
+<br>
+
+## Flag
+A **flag** is an **option** that **has no option-argument**.<br>
+
+<br>
+
+## Double dash
+More precisely, a double dash `--` is used to indicate **the end of options**, after which **only operands** are accepted.<br>
+In other words, **any following arguments hould be treated as operands**, even if they begin with the `-` character.<br>
