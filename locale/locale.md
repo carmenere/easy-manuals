@@ -10,6 +10,8 @@
     - [`locale`](#locale-1)
     - [`locale -k LC_TIME`](#locale--k-lc_time)
     - [`locale -a`](#locale--a)
+- [Lexicographical sorting vs. natural sorting](#lexicographical-sorting-vs-natural-sorting)
+  - [Examples](#examples-1)
 - [Collation](#collation)
 <!-- TOC -->
 
@@ -22,23 +24,47 @@ Each *locale category* *controls* a **specific aspect** of a locale, such as **d
 
 <br>
 
+A **name of locale** has a format: `language_COUNTRY.encoding` or `language-COUNTRY.encoding`, the `.encoding` is **optional**:
+- `language` is the **language code**;
+- `COUNTRY` is the **country code**;
+
+**Interpretation**:
+- `sv_SE` means **Swedish** (`sv`) as spoken in **Sweden** (`SE`);
+- `en_US` means **English** (`en`) as spoken in **USA** (`US`);
+
+**Examples**:
+- the **locale** `en_US.UTF-8` has **3 parts**: `en` is the **language code**, and `US` is the **country code** and **encoding** `UTF-8`;
+- the **locale** `en_US` has **2 parts**: `en` is the **language code**, and `US` is the **country code**;
+
+
+
+<br>
+
 There are **different locale categories**:
 - **defined by POSIX**:
   - `LC_CTYPE`
-    - determines the rules governing
-      - the **character classes** (**letters**, **numbers**, **punctuation marks** and so on);
+    - determines the rules governing:
+      - the **character classes**
+        - What is a **letter**?
+        - What is a **digit**?
+        - What is a **whitespace**?
+        - Is it a **punctuation mark**? (/ˌpʌŋk.tʃuˈeɪ.ʃən/)
       - the **case conversion**;
+        - Is it **upper-case** or **lower-case**?
       - the **interpretation of byte sequences as characters** (**single-byte** or **multibyte characters**);
   - `LC_COLLATE`
     - determines the rules governing the behavior of **string comparison** and **sorting**;
-  - `LC_MESSAGES`
-    - determines the format and values for positive and negative responses;
   - `LC_MONETARY`
     - determines the rules governing **currency formatting**, including the **currency symbol**;
   - `LC_NUMERIC`
     - determines the rules governing **non-monetary numbers formatting**;
   - `LC_TIME`
-    - determines the rules governing **date and time formatting**
+    - determines the rules governing **date and time formatting**;
+  - `LC_MESSAGES`
+    - determines in which language a user sees **error messages**, **prompts**, and other **interface text**;
+    - **example**:
+      -  in the case of the PostgreSQL server the `LC_MESSAGES` determines the **language of server-generated messages**, in other words, the messages that are emitted by the PostgreSQL **server itself**;
+      - **client applications** with multilingual support such as **psql** configure their output based on the the **variables** in their **local environment**, e.g `LANG`, `LC_MESSAGES` or `LC_ALL`;
   - `LC_ALL`
     - it is **special category**;
     - **overrides** all the other localisation settings:
@@ -87,21 +113,23 @@ Each *locale category* can be **configured independently** by appropriate **loca
 The *locale environment variables* **have the same names** as the *locale categories*.<br>
 The **locale environment variables** tell the OS **how to display** certain kinds of text or **specific aspect** of a locale.<br>
 
+Each **locale environment variables** sets the **name of locale** for appropriate **category**: `<NAME-OF-VAR>=<name-of-locale>`.<br>
+
 |Category|Variable|
 |:-------|:-------|
-|**LC_COLLATE**|`LC_COLLATE`|
-|**LC_CTYPE**|`LC_CTYPE`|
-|**LC_MONETARY**|`LC_MONETARY`|
-|**LC_NUMERIC**|`LC_NUMERIC`|
-|**LC_TIME**|`LC_TIME`|.|
-|**LC_MESSAGES**|`LC_MESSAGES`|
-|**LC_ALL**|`LC_ALL`|
-|**LC_ADDRESS**|`LC_ADDRESS`
-|**LC_IDENTIFICATION**|`LC_IDENTIFICATION`|
-|**LC_MEASUREMENT**|`LC_MEASUREMENT`|
-|**LC_NAME**|`LC_NAME`|
-|**LC_PAPER**|`LC_PAPER`|
-|**LC_TELEPHONE**|`LC_TELEPHONE`|
+|**LC_COLLATE**|`LC_COLLATE=<locale>`|
+|**LC_CTYPE**|`LC_CTYPE=<locale>`|
+|**LC_MONETARY**|`LC_MONETARY=<locale>`|
+|**LC_NUMERIC**|`LC_NUMERIC=<locale>`|
+|**LC_TIME**|`LC_TIME=<locale>`|
+|**LC_MESSAGES**|`LC_MESSAGES=<locale>`|
+|**LC_ALL**|`LC_ALL=<locale>`|
+|**LC_ADDRESS**|`LC_ADDRESS=<locale>`|
+|**LC_IDENTIFICATION**|`LC_IDENTIFICATION=<locale>`|
+|**LC_MEASUREMENT**|`LC_MEASUREMENT=<locale>`|
+|**LC_NAME**|`LC_NAME=<locale>`|
+|**LC_PAPER**|`LC_PAPER=<locale>`|
+|**LC_TELEPHONE**|`LC_TELEPHONE=<locale>`|
 
 <br>
 
@@ -114,15 +142,15 @@ The **locale environment variables** are prioritized:
 <br>
 
 The variable `LANGUAGE` operates **independently** for message translation within GNU applications.<br>
-Not all programs have translations for all languages. **By default**, an **English** message is shown in place of a nonexistent translation.<br>
-If you understand other languages, you can set up a priority list of languages. This is done through a variable, called `LANGUAGE`.<br>
+Not all programs have translations for all languages. If you understand other languages, you can set up a priority list of languages. This is done through a variable, called `LANGUAGE`.<br>
 
 <br>
 
 For example, consider that
 - the **primary language** is set to `sv_SE`: `LANG=sv_SE` (or `LC_ALL=sv_SE`);
-- the `LANGUAGE` is set to `sv:de`
-It means when **Swedish** is **not available**, the text will be translated to **German** (`de`) than **English** (by default).
+- the `LANGUAGE` is set to `sv:de`;
+
+It means when **Swedish** is **not available**, the text will be translated to **German** (`de`) than **English** (**by default**, an **English** message is shown in place of a nonexistent translation);
 
 <br>
 
@@ -480,16 +508,39 @@ POSIX
 
 <br>
 
+# Lexicographical sorting vs. natural sorting
+There 2 types of sorting:
+- **lexicographical sorting** (/ˌlɛksɪˈkɒɡrəfɪk(ə)l/) or **alphanumerical sorting**  (/ˌælfən(j)uˈmɛrɪk(ə)l/);
+- **natural sorting**;
+
+<br>
+
+## Examples
+The **natural sort**:
+```bash
+z2
+z11
+```
+because the number `2` is **numerically smaller than** `11`.<br>
+
+<br>
+
+The **lexicographical sort**/**alphanumerical sorting**:
+```bash
+z11
+z2
+```
+because `1` is **lexicographically smaller than** `2`.<br>
+
+<br>
+
 # Collation
 **Collation** is a **set of rules** used for **sorting** and **comparison properties**.<br>
 
 Usually **code point values** are **used** as a **default collation** - `A` with code point `65` is **before** `a` with code point `97`.<br>
 **Sort algorithm** using **different** collations can produce **different** result for the **same** input strings.<br>
 
-<br>
-
-**Example 1**: What is correct?
-
+**Example 1**: What is correct?<br>
 1. 
 ```bash
 a.b
@@ -513,10 +564,8 @@ ae
 ```
 
 <br>
-<br>
 
-**Example 2**: What is correct?
-
+**Example 2**: What is correct?<br>
 1. 
 ```bash
 #
