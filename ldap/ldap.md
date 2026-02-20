@@ -83,7 +83,7 @@ The **RDN** of *root entry* is called the **base DN**, this is like *name of the
 
 <br>
 
-**Example of DIT**:
+**Example of DIT**:<br>
 ![ldap-dit](/img/ldap-dit.png)
 
 <br>
@@ -105,12 +105,12 @@ RDN,RDN,RDN
 
 <br>
 
-Example of **DN**:
+Example of **DN**:<br>
 ![ldap-dn](/img/ldap-dn.webp)
 
 <br>
 
-Example of **multiple attributes** in **one RDN**:
+Example of **multiple attributes** in **one RDN**:<br>
 ![multibalued-rdn](/img/multibalued-rdn.webp)
 
 <br>
