@@ -92,12 +92,12 @@ The **RDN** of *root entry* is called the **base DN**, this is like *name of the
 
 **Each entry** in **DIT** is **uniquely identified** by its **DN** (*Distinguished Name*).<br>
 An **RDN** is an **attribute** with its **value** in the form `attribute=value` normally expressed in a **UTF-8** string format.<br>
+**Multiple attributes** can be combined into **one RDN** with plus signs `+`.<br>
 In **OpenLDAP** you *can choose any attribute as RDN* that is allowed in the entry.<br>
 In Active Directory the *RDN attribute is defined in the appropriate schema* - so you **can't** choose attribute as RDN.<br>
 When you have the choice (using OpenLDAP) use a **RDN** that can **uniquely identify** an entry **under the same parent** entry.<br>
 
 An **RDN** (*Relative Distinguished Name*) is a component of the **DN**.<br>
-**Multiple attributes** can be combined into **one RDN** with plus signs `+`.<br>
 So, **DN** is a **sequence of RDN** (*Relative DN*) connected by commas:
 ```
 RDN,RDN,RDN
