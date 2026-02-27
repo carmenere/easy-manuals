@@ -1,21 +1,21 @@
 # time
-Measures how long a **command**, **script** or **shell function** takes to run. Note, to measure **shell function** run it inside subshell, e.g. `time ( shell_func_name )`.<br>
+## Linux `time` cli util
+The `time` cli util measures how long a **command**, **script** or **shell function** takes to run. Note, to measure **shell function** run it inside subshell, e.g. `time ( shell_func_name )`.<br>
 
-There are 3 type of time:
-- **Real time** (aka **wall clock time**, **wall time** ot **total time**) - time from **start** to **finish** of the call, it is gathered from the **gettimeofday** (2) call.This is **all elapsed time including time slices used by other processes** and **time the process spends blocked** (for example if it is **waiting for I/O** to complete).
-- **User** is the amount of **CPU time spent in user-mode code** (outside the kernel) within the process. This is only **actual CPU time** used in executing the process. Other processes and time the process spends blocked do not count towards this figure.
-- **Sys** is the amount of **CPU time spent in the kernel** within the process. This means executing **CPU time spent in system calls within the kernel**, as opposed to library code, which is still running in user-space. Like 'user', this is only CPU time used by the process. See below for a brief description of kernel mode (also known as 'supervisor' mode) and the system call mechanism.
+There are **3 type of time**:
+- **real time** (aka **elapsed time**, **wall-clock time**, **wall time** ot **total time**) - time from **start** to **finish** of the call, it is gathered by the `gettimeofday()` or `clock_gettime()` syscalls. It **also counts** time while a process is **suspended**/**blocked**, for example while it is **waiting for I/O**.
+- **user time** is the **actual CPU execution time** a process **spent in userspace**. It **does not count** time while a process is **suspended**/**blocked**.
+- **sys time** is the **actual CPU execution time** a process **spent in the kernelspace**, i.e. **during systemcalls**. It **does not count** time while a process is **suspended**/**blocked**.
 
 <br>
 
 So,
-- **Real** represents **actual elapsed time**, while **user** and **sys** values represent **CPU execution time**.
-- **User+Sys** will tell you how much **actual CPU time your process used**.<br>
+- **real** tells you **actual elapsed time**;
+- **user** and **sys** tells you **actual CPU execution time**;
 
 <br>
 
-Note that this is **across all CPUs**, so if the process has **multiple threads** (and this process is running on a computer with more than one processor) it could potentially exceed the **wall clock time** reported by **Real** (which usually occurs).<br>
-In other words, on a **multicore** system, the **user** and/or **sys** time (as well as their sum) **can** actually **exceed** the **real** time.<br>
+**Note** that **user+sys** are counted **per a thread**. If a process has **multiple threads** on a **multicore** system, the **user** and/or **sys** time **can exceed** the **real** time.<br>
 
 <br>
 
@@ -33,17 +33,17 @@ The **Epoch** is a moment of time `January 1, 1970, 00:00:00 UTC`.<br>
   - resolution: **nanoseconds**, depending on the **clock source**;
   - supports several **clock sources**:
     - `CLOCK_REALTIME`:
-      - similar to `gettimeofday()` it represents the amount of time (in **seconds** and **nanoseconds**) since the **Epoch**;
-      - it is **affected by NTP**, and can move **forwards** and **backwards**;
+      - similar to `gettimeofday()` it represents the **seconds** and **nanoseconds** since the **Epoch**;
+      - for this clock **both** `clock_gettime()` and `clock_settime()` are available;
+      - so, `CLOCK_REALTIME` **can** be changed by *NTP* or *system administrator*, and **can move forwards** and **backwards**;
     - `CLOCK_MONOTONIC`:
-      - **for precise measurement of elapsed time**;
-      - is **not** affected by NTP;
-      - it represents the absolute elapsed wall-clock time since some arbitrary, fixed point in the past;
+      - it represents the **wall-clock** time in **seconds** and **nanoseconds** since an **unspecified point in the past** (for example, in linux it is **system start-up time**);
+      - for this clock **only** `clock_gettime()` is available;
+      - so `CLOCK_MONOTONIC` **cannot** be changed via `clock_settime()`, in other words, `CLOCK_MONOTONIC` **is not changed after system start-up time**;
 
 <br>
 
 ## Hardware specific instructions
-### `amd64`/`x86`
 The **Time Stamp Counter** (**TSC**) is a **64-bit register** present on all `amd64`/`x86` CPUs processors.<br>
 It counts the number of **CPU cycles** (ticks) since its reset.<br>
 
@@ -52,17 +52,3 @@ It counts the number of **CPU cycles** (ticks) since its reset.<br>
 There are 2 instructions to read time:
 - `RDTSC` **only** returns **TSC** value;
 - `RDTSCP` returns **TSC** value and **processor ID**, it is better for multicore;
-
-<br>
-
-# Rust `Instant` crate
-```rust
-let now = Instant::now();
-...
-let elapsed = now.elapsed();
-```
-
-<br>
-
-The `elapsed` corresponds the **real** time of cli command `time`.<br>
-The `Instant` uses `clock_gettime` syscall with **clock source** `CLOCK_MONOTONIC`.<br>
