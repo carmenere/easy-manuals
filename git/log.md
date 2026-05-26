@@ -3,6 +3,7 @@
 - [Table of contents](#table-of-contents)
 - [Status indicators for files](#status-indicators-for-files)
 - [`git log`](#git-log)
+  - [List all commits as graph and show only short hash and message](#list-all-commits-as-graph-and-show-only-short-hash-and-message)
   - [List all commits that modify a file](#list-all-commits-that-modify-a-file)
   - [Show diff (patch) per every commit for a file](#show-diff-patch-per-every-commit-for-a-file)
   - [List all commits where specifi string was added or removed in a file](#list-all-commits-where-specifi-string-was-added-or-removed-in-a-file)
@@ -36,6 +37,21 @@ The option `--name-status` displays **status indicators** for files in `git log`
 
 # `git log`
 The `git log` searches in the **current branch**, to search the entire repository history add `--all`, e.g. `git log --all -- <file>`
+
+<br>
+
+## List all commits as graph and show only short hash and message
+- **for current branch**:
+```bash
+git log -10 --graph --oneline
+```
+
+<br>
+
+- **for specific branch** `branch_name`:
+```bash
+git log -10 --graph --oneline <branch_name>
+```
 
 <br>
 
