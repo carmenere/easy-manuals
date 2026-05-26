@@ -3,7 +3,11 @@
 - [Table of contents](#table-of-contents)
 - [Status indicators for files](#status-indicators-for-files)
 - [`git log`](#git-log)
-  - [List all commits as graph and show only short hash and message](#list-all-commits-as-graph-and-show-only-short-hash-and-message)
+  - [`--pretty=format`](#--prettyformat)
+  - [Example: hash \[date\] \[commiter\] message](#example-hash-date-commiter-message)
+  - [List all commits as graph](#list-all-commits-as-graph)
+  - [Show commits in chronological order](#show-commits-in-chronological-order)
+  - [Show commits in reverse chronological order](#show-commits-in-reverse-chronological-order)
   - [List all commits that modify a file](#list-all-commits-that-modify-a-file)
   - [Show diff (patch) per every commit for a file](#show-diff-patch-per-every-commit-for-a-file)
   - [List all commits where specifi string was added or removed in a file](#list-all-commits-where-specifi-string-was-added-or-removed-in-a-file)
@@ -40,7 +44,54 @@ The `git log` searches in the **current branch**, to search the entire repositor
 
 <br>
 
-## List all commits as graph and show only short hash and message
+## `--pretty=format`
+`git log --pretty=format:"%h %ad- %s [%an]"`
+
+Here:
+- `%h`: short commit hash
+- `%H`: full commit hash
+- `%s`: subject (aka commit title)
+- `%b`: body (commit message without title)
+- `%B`: full commit message: title + body
+- `%an`: author name
+- `%ae`: author email 
+- `%cn`: committer name
+- `%ce`: committer email
+
+<br>
+
+| Date placeholder | Format                             | Example                                    |
+|:-----------------|:-----------------------------------|:-------------------------------------------|
+| %ad, %cd         | respects `--date=<format>` option  | **Mon** **Jun** 2 17:04:27 **2025** +0300  |
+| %aD, %cD         | **RFC2822**                        | **Mon**, 2 **Jun** **2025** 17:04:27 +0300 |
+| %at, %ct         | **UNIX** timestamp                 | 1748873067                                 |
+| %aI, %cI         | strict **ISO 8601** format         | **2025**-06-02T17:04:27+03:00              |
+| %as, %cs         | **short** format (YYYY-MM-DD)      | **2025**-06-02                             |
+| %ar, %cr         | **relative**                       | 18 minutes ago                             |
+
+
+The letter `a` in _date placeholder_ means **author date**: the date when the **original changes** were made.<br>
+The letter `c` in _date placeholder_ means **committer date**: the date when the changes were made, for example, during a rebase or amend operation.<br>
+
+<br>
+
+**Example**:
+```bash
+git log --pretty=format:"%H | %ad | %aD | %at | %aI | %as | %ar"
+git log --pretty=format:"%H | %cd | %cD | %ct | %cI | %cs | %cr"
+```
+
+<br>
+
+## Example: hash [date] [commiter] message
+- `--first-parent` ignores the individual commits brought from merged branch and prints out only the commits from **current branch** (**upstream**):
+```bash
+git log -10 --graph --pretty=format:"%C(yellow)%h%Creset [%cd] %C(green)[%cn]%Creset  %s" --date=iso --first-parent
+```
+
+<br>
+
+## List all commits as graph
 - **for current branch**:
 ```bash
 git log -10 --graph --oneline
@@ -51,6 +102,27 @@ git log -10 --graph --oneline
 - **for specific branch** `branch_name`:
 ```bash
 git log -10 --graph --oneline <branch_name>
+```
+
+<br>
+
+
+## Show commits in chronological order
+```bash
+git log --pretty=format:"%H %d" --reverse --ancestry-path 6865efd4759b4cd5349f9e6b014017e099383e84^..master
+6865efd4759b4cd5349f9e6b014017e099383e84  (tag: release-1.7.1)
+437cb7b6631c26ad74f992c4745b42ae2836105b
+a22a4f4847ff04005ba1b50b227933e6e816c55d  (tag: release-1.7.2)
+```
+
+<br>
+
+## Show commits in reverse chronological order
+```bash
+git log --pretty=format:"%H %d"  6865efd4759b4cd5349f9e6b014017e099383e84
+6865efd4759b4cd5349f9e6b014017e099383e84  (tag: release-1.7.1)
+e36718de4b3570b8174bb76787ca6c73386bbb9f
+215497a467a34003c5259b832da4678f33d163b4  (tag: release-1.7.0)
 ```
 
 <br>
