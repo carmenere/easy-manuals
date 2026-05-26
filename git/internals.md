@@ -1,16 +1,15 @@
 # Table of contents
 <!-- TOC -->
-* [Table of contents](#table-of-contents)
-* [git for-each-ref](#git-for-each-ref)
-* [git cat-file](#git-cat-file)
-* [git log](#git-log)
-* [git rev-list](#git-rev-list)
-* [Dangling commits](#dangling-commits)
-  * [Find dangling commits](#find-dangling-commits)
-  * [Remove dangling commits](#remove-dangling-commits)
-* [git show](#git-show-)
-* [git-ls-remote](#git-ls-remote)
-* [git show-ref](#git-show-ref)
+- [Table of contents](#table-of-contents)
+- [git for-each-ref](#git-for-each-ref)
+- [git cat-file](#git-cat-file)
+- [git rev-list](#git-rev-list)
+- [Dangling commits](#dangling-commits)
+  - [Find dangling commits](#find-dangling-commits)
+  - [Remove dangling commits](#remove-dangling-commits)
+- [git show](#git-show)
+- [git-ls-remote](#git-ls-remote)
+- [git show-ref](#git-show-ref)
 <!-- TOC -->
 
 <br>
@@ -66,65 +65,6 @@ The **option** `--batch-check` or `--batch-check=<format>` prints object informa
 **Example** (in combination with `git rev-list`):
 ```bash
 git rev-list a22a4f4847ff04005ba1b50b227933e6e816c55d | head -n 3 | git cat-file --batch-check='%(objectname) %(objecttype)'
-```
-
-<br>
-
-# git log
-Show commits in **chronological order**:
-```bash
-git log --pretty=format:"%H %d" --reverse --ancestry-path 6865efd4759b4cd5349f9e6b014017e099383e84^..master
-6865efd4759b4cd5349f9e6b014017e099383e84  (tag: release-1.7.1)
-437cb7b6631c26ad74f992c4745b42ae2836105b
-a22a4f4847ff04005ba1b50b227933e6e816c55d  (tag: release-1.7.2)
-```
-
-<br>
-
-Show commits in **reverse chronological order**:
-```bash
-git log --pretty=format:"%H %d"  6865efd4759b4cd5349f9e6b014017e099383e84
-6865efd4759b4cd5349f9e6b014017e099383e84  (tag: release-1.7.1)
-e36718de4b3570b8174bb76787ca6c73386bbb9f
-215497a467a34003c5259b832da4678f33d163b4  (tag: release-1.7.0)
-```
-
-<br>
-
-`git log --pretty=format:"%h %ad- %s [%an]"`
-
-Here:
-- `%h`: short commit hash
-- `%H`: full commit hash
-- `%s`: subject (aka commit title)
-- `%b`: body (commit message without title)
-- `%B`: full commit message: title + body
-- `%an`: author name
-- `%ae`: author email 
-- `%cn`: committer name
-- `%ce`: committer email
-
-<br>
-
-| Date placeholder | Format                             | Example                                    |
-|:-----------------|:-----------------------------------|:-------------------------------------------|
-| %ad, %cd         | respects `--date=<format>` option  | **Mon** **Jun** 2 17:04:27 **2025** +0300  |
-| %aD, %cD         | **RFC2822**                        | **Mon**, 2 **Jun** **2025** 17:04:27 +0300 |
-| %at, %ct         | **UNIX** timestamp                 | 1748873067                                 |
-| %aI, %cI         | strict **ISO 8601** format         | **2025**-06-02T17:04:27+03:00              |
-| %as, %cs         | **short** format (YYYY-MM-DD)      | **2025**-06-02                             |
-| %ar, %cr         | **relative**                       | 18 minutes ago                             |
-
-
-The letter `a` in _date placeholder_ means **author date**: the date when the **original changes** were made.<br>
-The letter `c` in _date placeholder_ means **committer date**: the date when the changes were made, for example, during a rebase or amend operation.<br>
-
-<br>
-
-**Example**:
-```bash
-git log --pretty=format:"%H | %ad | %aD | %at | %aI | %as | %ar"
-git log --pretty=format:"%H | %cd | %cD | %ct | %cI | %cs | %cr"
 ```
 
 <br>
