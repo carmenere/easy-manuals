@@ -1,11 +1,15 @@
 # Table of contents
 <!-- TOC -->
 - [Table of contents](#table-of-contents)
-- [Status indicators for files](#status-indicators-for-files)
+- [Commiter vs. Author](#commiter-vs-author)
+- [Commit message: subject vs body](#commit-message-subject-vs-body)
 - [`git log`](#git-log)
+  - [Status indicators for files for `--name-status` option](#status-indicators-for-files-for---name-status-option)
+  - [Date and time formats](#date-and-time-formats)
   - [`--pretty=format`](#--prettyformat)
-  - [Example: hash \[date\] \[commiter\] message](#example-hash-date-commiter-message)
+  - [`--first-parent`](#--first-parent)
   - [List all commits as graph](#list-all-commits-as-graph)
+  - [Create alias `git mlog`](#create-alias-git-mlog)
   - [Show commits in chronological order](#show-commits-in-chronological-order)
   - [Show commits in reverse chronological order](#show-commits-in-reverse-chronological-order)
   - [List all commits that modify a file](#list-all-commits-that-modify-a-file)
@@ -18,7 +22,36 @@
 
 <br>
 
-# Status indicators for files
+# Commiter vs. Author
+The **author** is the person who **originally wrote the code** or **made the changes**.<br> 
+The **committer** is the person who **added the changes to the repository**.<br>
+
+**Person who perfrm** *cherry-pick*, *rebass* and *merge* **becomes** the **committer**, but **author stays the same**.<br>
+
+So, the **committer date** represent **when** the **commit was actually applied to the repository** (e.g., during a *cherry-picking*, *rebasing* or *merging*).<br>
+
+<br>
+
+# Commit message: subject vs body
+A **commit message** consists of:
+- **header** (aka **subject**, **commit title**) is the **first line** of the commit message;
+  - must be written in the **imperative mood** (e.g., "Fix bug" instead of "Fixed bug");
+  - **formatting**:
+    - **max length** is **50** characters;
+    - capitalized;
+    - ends without a period;
+- **body** is **everything after** the subject line;
+  - **formatting**:
+    - lines are typically wrapped at **72** characters;
+
+<br>
+
+# `git log`
+The `git log` searches in the **current branch**, to search the entire repository history add `--all`, e.g. `git log --all -- <file>`
+
+<br>
+
+## Status indicators for files for `--name-status` option
 The option `--name-status` displays **status indicators** for files in `git log`/`git show`:
 - `R<num>` (Renamed)
 - `C` (Copied)
@@ -39,51 +72,92 @@ The option `--name-status` displays **status indicators** for files in `git log`
 
 <br>
 
-# `git log`
-The `git log` searches in the **current branch**, to search the entire repository history add `--all`, e.g. `git log --all -- <file>`
+## Date and time formats
+- `--date=<format>`
+  - `iso` or `iso8601`
+  - `iso-strict` or `iso8601-strict`
+  - `relative` shows dates **relative to the current time**, e.g. “2 hours ago”;
+    - the `-local` suffix has no effect;
+  - `rfc` or `rfc2822`
+  - `short` shows **only** the **date**, in `YYYY-MM-DD` format, **without time**;
+  - `raw` shows the date as *seconds since the epoch* **with** *local timezone* as an offset from UTC;
+  - `unix` shows the date as *seconds since the epoch* **without** *local timezone*;
+  - the `-local` **suffix** does not affect `raw` and `unix`, because the *seconds since the epoch* value is **always measured in UTC**;
+  - **by default**, dates are shown in the **original time zone** (either committer’s or author’s), **but** if `-local` **suffix** is appended to the format (e.g., `iso-local`), the **user’s local time zone** is used instead:
+    - `default-local`
+    - `iso-local`
+    - `iso-strict-local`
+    - `local-local`
+    - `raw-local`
+    - `relative-local`
+    - `rfc-local`
+    - `short-local`
 
 <br>
 
-## `--pretty=format`
-`git log --pretty=format:"%h %ad- %s [%an]"`
-
-Here:
-- `%h`: short commit hash
-- `%H`: full commit hash
-- `%s`: subject (aka commit title)
-- `%b`: body (commit message without title)
-- `%B`: full commit message: title + body
-- `%an`: author name
-- `%ae`: author email 
-- `%cn`: committer name
-- `%ce`: committer email
-
-<br>
-
-| Date placeholder | Format                             | Example                                    |
-|:-----------------|:-----------------------------------|:-------------------------------------------|
-| %ad, %cd         | respects `--date=<format>` option  | **Mon** **Jun** 2 17:04:27 **2025** +0300  |
-| %aD, %cD         | **RFC2822**                        | **Mon**, 2 **Jun** **2025** 17:04:27 +0300 |
-| %at, %ct         | **UNIX** timestamp                 | 1748873067                                 |
-| %aI, %cI         | strict **ISO 8601** format         | **2025**-06-02T17:04:27+03:00              |
-| %as, %cs         | **short** format (YYYY-MM-DD)      | **2025**-06-02                             |
-| %ar, %cr         | **relative**                       | 18 minutes ago                             |
-
-
-The letter `a` in _date placeholder_ means **author date**: the date when the **original changes** were made.<br>
-The letter `c` in _date placeholder_ means **committer date**: the date when the changes were made, for example, during a rebase or amend operation.<br>
-
-<br>
-
-**Example**:
+**Set** *custom date and time format*:
 ```bash
-git log --pretty=format:"%H | %ad | %aD | %at | %aI | %as | %ar"
-git log --pretty=format:"%H | %cd | %cD | %ct | %cI | %cs | %cr"
+git config --global log.date local
+```
+
+**Unset** **to default**:
+```bash
+git config --global --unset log.date
 ```
 
 <br>
 
-## Example: hash [date] [commiter] message
+To view the log in a time zone **other than current** one (e.g., UTC or a specific region), you can temporarily set the `TZ` environment variable before the command:
+- `TZ=UTC git log --date=local`;
+- `TZ=America/New_York git log --date=local`;
+
+<br>
+
+## `--pretty=format`
+**Examples**:
+```bash
+git log --pretty=format:"%C(color)%h%C(reset) | %ad | %aD | %at | %aI | %as | %ar"
+git log --pretty=format:"%C(color)%h%C(reset) | %cd | %cD | %ct | %cI | %cs | %cr"
+```
+
+<br>
+
+**Placeholders** for `--pretty=format`:
+- `%h`: is a **short commit hash**;
+- `%H`: is a **full commit hash**
+- `%s`: is a **subject**;
+- `%b`: is a **body**;
+- `%B`: is a **full commit message**: **subject** + **body**;
+- **color** placeholder:
+  - `%C(color attribute)<element>%C(reset)`: specifies the **color** and/or **attribute** for `<element>`, the `%C(reset)` is a stop marker;
+  - **example**: `%C(bold blue)<%an>%C(reset)`;
+    - **colors**: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, and `white`;
+    - **attributes**: `bold`, `dim`, `ul` (underline), `blink`, and `reverse`;
+- **committer** placeholders:
+  - `%cn`: *committer* **name**;
+  - `%ce`: *committer* **email**;
+  - `%cd`: *committer* **date**, **respects** `--date=<format>` option;
+  - `%cD`: *committer* **date**, **RFC2822** style, e.g. `Mon, 2 Jun 2025 17:04:27 +0000`;
+  - `%cr`: *committer* **date**, **relative**, e.g. `18 minutes ago`;
+  - `%ct`: *committer* **date**, **UNIX** timestamp;
+  - `%ci`: *committer* **date**, **ISO 8601** format;
+  - `%cI`: *committer* **date**, **strict ISO 8601** format;
+  - `%cs`: *committer* **date**, **short** format (`YYYY-MM-DD`);
+- **author** placeholders:
+  - `%an`: *author* **name**;
+  - `%ae`: *author* **email**;
+  - `%ad`: *author* **date**, **respects** `--date=<format>` option;
+  - `%aD`: *author* **date**, **RFC2822** style, e.g. `Mon, 2 Jun 2025 17:04:27 +0300`;
+  - `%ar`: *author* **date**, **relative**, e.g. `18 minutes ago`;
+  - `%at`: *author* **date**, **UNIX** timestamp;
+  - `%ai`: *author* **date**, **ISO 8601** format;
+  - `%aI`: *author* **date**, **strict ISO 8601** format;
+  - `%as`: *author* **date**, **short** format (`YYYY-MM-DD`);
+
+<br>
+
+
+## `--first-parent`
 - `--first-parent` ignores the individual commits brought from merged branch and prints out only the commits from **current branch** (**upstream**):
 ```bash
 git log -10 --graph --pretty=format:"%C(yellow)%h%Creset [%cd] %C(green)[%cn]%Creset  %s" --date=iso --first-parent
@@ -102,6 +176,19 @@ git log -10 --graph --oneline
 - **for specific branch** `branch_name`:
 ```bash
 git log -10 --graph --oneline <branch_name>
+```
+
+<br>
+
+## Create alias `git mlog`
+```bash
+git config --global alias.mlog "log --graph --pretty=format:'%C(yellow)%h%Creset [%cd] %C(green)[%cn]%Creset  %s' --date=iso-local --first-parent"
+```
+
+**Usage** of alias:
+```bash
+git mlog -10
+git mlog -10 <branch>
 ```
 
 <br>
