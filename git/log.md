@@ -4,21 +4,23 @@
 - [Commiter vs. Author](#commiter-vs-author)
 - [Commit message: subject vs body](#commit-message-subject-vs-body)
 - [`git log`](#git-log)
-  - [Status indicators for files for `--name-status` option](#status-indicators-for-files-for---name-status-option)
   - [Date and time formats](#date-and-time-formats)
   - [`--pretty=format`](#--prettyformat)
   - [`--first-parent`](#--first-parent)
   - [List all commits as graph](#list-all-commits-as-graph)
   - [Create alias `git mlog`](#create-alias-git-mlog)
-  - [Show commits in chronological order](#show-commits-in-chronological-order)
-  - [Show commits in reverse chronological order](#show-commits-in-reverse-chronological-order)
-  - [List all commits that modify a file](#list-all-commits-that-modify-a-file)
   - [Show diff (patch) per every commit for a file](#show-diff-patch-per-every-commit-for-a-file)
-  - [List all commits where specifi string was added or removed in a file](#list-all-commits-where-specifi-string-was-added-or-removed-in-a-file)
-  - [List all commits and status indicators of files each commit](#list-all-commits-and-status-indicators-of-files-each-commit)
-  - [List all commits filered by status indicator](#list-all-commits-filered-by-status-indicator)
-  - [Identify who has changed code](#identify-who-has-changed-code)
-  - [Show commit](#show-commit)
+  - [Filtering](#filtering)
+    - [By branch](#by-branch)
+    - [By author or committer](#by-author-or-committer)
+    - [By date](#by-date)
+    - [By commit messages](#by-commit-messages)
+    - [By file or directory](#by-file-or-directory)
+    - [By content](#by-content)
+    - [By status indicator](#by-status-indicator)
+      - [Status indicators](#status-indicators)
+- [`git blame`](#git-blame)
+- [`git show`](#git-show)
 
 <br>
 
@@ -48,27 +50,6 @@ A **commit message** consists of:
 
 # `git log`
 The `git log` searches in the **current branch**, to search the entire repository history add `--all`, e.g. `git log --all -- <file>`
-
-<br>
-
-## Status indicators for files for `--name-status` option
-The option `--name-status` displays **status indicators** for files in `git log`/`git show`:
-- `R<num>` (Renamed)
-- `C` (Copied)
-- `M` (Modified)
-- `A` (Added)
-- `D` (Deleted)
-- 
-
-<br>
-
-**Note** that `--name-status` displays **similarity score** for renamed files in format: `R<number>`:
-- `R100` indicates the file was **moved** or **renamed** with **100%** identical content;
-- `R90` indicates the file was **moved** or **renamed** with **90%** identical content, in other words, **10%** of file **was modified** during the rename;
-
-<br>
-
-**By default**, Git requires at least **50% similarity** to classify a **deletion** and **addition** as **rename**.<br>
 
 <br>
 
@@ -193,41 +174,6 @@ git mlog -10 <branch>
 
 <br>
 
-
-## Show commits in chronological order
-```bash
-git log --pretty=format:"%H %d" --reverse --ancestry-path 6865efd4759b4cd5349f9e6b014017e099383e84^..master
-6865efd4759b4cd5349f9e6b014017e099383e84  (tag: release-1.7.1)
-437cb7b6631c26ad74f992c4745b42ae2836105b
-a22a4f4847ff04005ba1b50b227933e6e816c55d  (tag: release-1.7.2)
-```
-
-<br>
-
-## Show commits in reverse chronological order
-```bash
-git log --pretty=format:"%H %d"  6865efd4759b4cd5349f9e6b014017e099383e84
-6865efd4759b4cd5349f9e6b014017e099383e84  (tag: release-1.7.1)
-e36718de4b3570b8174bb76787ca6c73386bbb9f
-215497a467a34003c5259b832da4678f33d163b4  (tag: release-1.7.0)
-```
-
-<br>
-
-## List all commits that modify a file
-```bash
-git log -- <file>
-```
-
-<br>
-
-If file was renamed in the past add `--follow`:
-```bash
-git log --follow -- <file>
-```
-
-<br>
-
 ## Show diff (patch) per every commit for a file
 ```bash
 git log -p -- <file>
@@ -235,33 +181,154 @@ git log -p -- <file>
 
 <br>
 
-## List all commits where specifi string was added or removed in a file
-- **exact match**:
+## Filtering
+### By branch
 ```bash
-git log -S "text" -- <file>
-```
-- **regex**:
-```bash
-git log -G "text" -- <file>
+git log <branch_name>
 ```
 
 <br>
 
-## List all commits and status indicators of files each commit
+### By author or committer
+- by **author**:
 ```bash
-git log --all --full-history --name-status
+git mlog --after="2025-05-05" --before="2026-05-06" --author="Anton Romanov"
+```
+- by **committer**:
+```bash
+git mlog --after="2025-05-05" --before="2026-05-06" --committer="Anton Romanov"
+```
+- **exclude an author**:
+```bash
+git mlog --after="2025-05-05" --before="2026-05-06" --author='^(?!Anton Romanov)' --perl-regexp
 ```
 
 <br>
 
-## List all commits filered by status indicator
+### By date
+- **after a date**: `--since=` or `--after=`
 ```bash
-git log --all --full-history  --diff-filter=R -- "**/src/*foo.rs"
+git mlog --since="2026-05-05" --committer="Anton Romanov"
+git mlog --after="2026-05-05" --committer="Anton Romanov"
+```
+- by **before a date**: `--until=` or `--before=`
+```bash
+git mlog --until="2026-05-20" --committer="Anton Romanov"
+git mlog --before="2026-05-20" --committer="Anton Romanov"
+```
+- **date range**:
+```bash
+git mlog --since="2026-05-05" --until="2026-05-20" --committer="Anton Romanov"
+git mlog --after="2026-05-05" --before="2026-05-20" --committer="Anton Romanov"
 ```
 
 <br>
 
-## Identify who has changed code
+### By commit messages
+- **case sensitive search in commit messages**: `--grep=` (**case sensitive**)
+```bash
+git log --grep="pattern"
+```
+- **case insensitive search in commit messages**: add the `-i` flag:
+```bash
+git log -i --grep="PATTERN"
+```
+- **invert search**: search commits that **do not match** the `pattern`
+```bash
+git log --invert-grep --grep="pattern"
+```
+
+<br>
+
+### By file or directory
+- lists all commits that modify a **specific file**:
+```bash
+git log -- path/to/file
+```
+- lists all commits that modify files in a **specific directory**:
+```bash
+git log -- path/to/dir/
+```
+- **by glob pattern**:
+```bash
+git log -- "**/src/*foo.rs"
+```
+- **by line range**: shows changes specifically to lines **15** through **25**:
+```bash
+git log -L 15,25:path/to/file
+```
+
+<br>
+
+If file was **renamed** in the past add `--follow`:
+```bash
+git log --follow -- path/to/file
+```
+
+<br>
+
+### By content
+- **exact match** in the **specific file** `path/to/file`:
+```bash
+git log -S "pattern" -- path/to/file
+```
+- **exact match** in **any file**:
+```bash
+git log -S "pattern" -- path/to/file
+```
+- **regex** in the **specific file** `path/to/file`:
+```bash
+git log -G "pattern" -- path/to/file
+```
+- **regex** in **any file**:
+```bash
+git log -G "pattern"
+```
+
+<br>
+
+### By status indicator
+```bash
+git log --diff-filter=R -- "**/src/*foo.rs"
+```
+
+<br>
+
+#### Status indicators
+**Git status indicators** tell you the **state of files**.<br>
+
+<br>
+
+The `git log --name-status` lists the modified files for each commit along with their **status letter**:
+```bash
+git mlog --name-status
+```
+
+<br>
+
+Git uses **special notation** to represent the **status indicators**:
+- `A`: **Added**;
+- `C`: **Copied**;
+- `D`: **Deleted**;
+- `M`: **Modified**;
+- `R<num>`: **Renamed**;
+- `T`: **Type changed**, e.g., a *regular file* became a *symbolic link*
+- `U`: **Unmerged**, the file has **unresolved merge conflicts**;
+
+<br>
+
+**Note** that `--name-status` displays **similarity score** for **renamed** files in format: `R<number>`:
+- `R100` indicates the file was **moved** or **renamed** with **100%** identical content;
+- `R90` indicates the file was **moved** or **renamed** with **90%** identical content, in other words, **10%** of file **was modified** during the rename;
+
+<br>
+
+**By default**, Git requires at least **50% similarity** to classify a **deletion** and **addition** as **rename**.<br>
+
+<br>
+
+# `git blame`
+The `git blame` command identifies who has changed code:
 - **full file**:
 ```bash
 git blame <file>
@@ -273,7 +340,7 @@ git blame -L 10,20 <file>
 
 <br>
 
-## Show commit
+# `git show`
 - *commit info* + **diff**
 ```bash
 git show d0d540c7f9
