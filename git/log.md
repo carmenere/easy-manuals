@@ -36,20 +36,32 @@ So, the **committer date** represent **when** the **commit was actually applied 
 
 # Commit message: subject vs body
 A **commit message** consists of:
-- **header** (aka **subject**, **commit title**) is the **first line** of the commit message;
+- **commit header** (aka **subject**, **commit title**) is the **first line** of the commit message;
   - must be written in the **imperative mood** (e.g., "Fix bug" instead of "Fixed bug");
   - **formatting**:
     - **max length** is **50** characters;
     - capitalized;
     - ends without a period;
-- **body** is **everything after** the subject line;
+- **commit body** is **everything after** the subject line;
   - **formatting**:
     - lines are typically wrapped at **72** characters;
+
+A **commit subject** is a **first** `-m` *argument* and **commit body** is a **second** `-m` *argument*:
+- `git commit -m "subject" -m "body"`
+
 
 <br>
 
 # `git log`
-The `git log` searches in the **current branch**, to search the entire repository history add `--all`, e.g. `git log --all -- <file>`
+The `git log` searches in the **current branch**, to search the entire repository history add `--all`.<br>
+The `git log --all` command displays the entire commit history **across all branches**, **tags**, and **references** in your repository.<br>
+
+<br>
+
+**Example**:
+```
+git log --all --graph --oneline
+```
 
 <br>
 
@@ -106,9 +118,11 @@ git log --pretty=format:"%C(color)%h%C(reset) | %cd | %cD | %ct | %cI | %cs | %c
 **Placeholders** for `--pretty=format`:
 - `%h`: is a **short commit hash**;
 - `%H`: is a **full commit hash**
-- `%s`: is a **subject**;
+- `%s`: is a **subject** (**commit header**, **commit title**);
 - `%b`: is a **body**;
 - `%B`: is a **full commit message**: **subject** + **body**;
+- `%d`: is a decorated ref names, e.g. `(HEAD -> stable-1.28, tag: release-1.28.3, origin/stable-1.28)`
+  - use `%C(auto)%d%Creset`
 - **color** placeholder:
   - `%C(color attribute)<element>%C(reset)`: specifies the **color** and/or **attribute** for `<element>`, the `%C(reset)` is a stop marker;
   - **example**: `%C(bold blue)<%an>%C(reset)`;
@@ -162,11 +176,23 @@ git log -10 --graph --oneline <branch_name>
 <br>
 
 ## Create alias `git mlog`
+**Set alias**:
 ```bash
-git config --global alias.mlog "log --graph --pretty=format:'%C(yellow)%h%Creset [%cd] %C(green)[%cn]%Creset  %s' --date=iso-local --first-parent"
+git config --global alias.mlog "log --graph --pretty=format:'%C(yellow)%h%Creset [%cd] %C(green)[%cn]%Creset  %s %C(auto)%d%Creset' --date=iso-local"
+git config --global alias.mlog "log --graph --pretty=format:'%C(yellow)%h%Creset [%cd] %C(green)[%cn]%Creset  %s %C(auto)%d%Creset' --date=iso-local --first-parent"
+git config --global alias.mlog "log --graph --pretty=format:'%C(yellow)%h%Creset [%cd] %C(green)[%cn]%Creset  %s %C(auto)%d%Creset' --date=iso-local --first-parent --all"
 ```
 
-**Usage** of alias:
+<br>
+
+**Show alias**:
+```bash
+git config --get alias.mlog
+```
+
+<br>
+
+**Use** alias:
 ```bash
 git mlog -10
 git mlog -10 <branch>
