@@ -1,9 +1,11 @@
 # Docker
-**Docker** is a **set of** container management **projects** ran by the **company** called **Docker**. These projects work together to provide a comprehensive platform for container deployment.
+**Docker** is a **set of** container management **projects** ran by the **company** called **Docker**.<br>
+
+<br>
 
 The most important projects are:
 - **docker-cli** - a command line interface toolset: users create and manage Docker containers by issuing docker CLI commands;
-- **containerd** - a daemon that listens to the user commands, it controls the container lifecycle: pulls images, manages networking, uses runc to run containers;
+- **containerd** - a daemon that listens to the user commands, it controls the container lifecycle: pushes and pulls images, manages networking, uses **runc** to run containers;
 - **runc** - a **low level** **container runtime** that does the **low level stuff** to **create** and **run** *containerised processes*;
 
 <br>
@@ -18,7 +20,7 @@ The **Open Container Initiative** (**OCI**) is an open project under the Linux F
 
 <br>
 
-The *OCI* established **standards for containers**. Currently, the *OCI* issued **3 specifications**:
+The *OCI* establishes **standards for containers**. Currently, the *OCI* issued **3 specifications**:
 - **Image spec** - defines how to package images, last version: **v1.1.1**;
 - **Runtime spec** - defines how to run containers from images, last version: **v1.3.0**;
 - **Distribution spec**, last version: **v1.1.1**;
@@ -61,16 +63,18 @@ The **execution chain** is: `Kubernetes` → `CRI` → `high-level runtime` → 
 
 <br>
 
-Historically, *Kubernetes* shipped with **dockershim**, Because *Docker Engine* does **not** implement **CRI**.<br>
+Historically, *Kubernetes* shipped with **dockershim**, because *Docker Engine* does **not** implement **CRI**.<br>
 The **dockershim** is a lightweight adapter that allowed *Kubernetes* to interact with the docker engine.<br>
 However, **dockershim** was **deprecated** in *Kubernetes* **v1.24**. As of version **v1.23**, *Kubernetes* requires runtimes to be **CRI compatible**.<br>
 
-The **CRI-O** is an **OCI-compatible native implementation** of the **CRI** for Kubernetes.<br>
-But with the **CRI compatibility plugin** called **cri-containerd**, Kubernetes can communicate with Docker via **containerd**.<br>
+With the **CRI compatibility plugin** called **cri-containerd**, Kubernetes can communicate with Docker via **containerd**.<br>
 
 <br>
 
-**cri-containerd** vs. **cri-containerd**:<br>
+**dockershim** vs. **cri-containerd**:<br>
 ![CRI](/img/CRI.png)
 
 <br>
+
+# CRI-O
+The **CRI-O** is an **OCI-compatible native implementation** of the **CRI** for Kubernetes.<br>
